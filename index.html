@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ivolve Care & Support | Solas Housing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // App Colors (Themeable)
+              'app-bg': 'var(--app-bg)',
+              'app-sidebar': 'var(--app-sidebar)',
+              'app-sidebar-text': 'var(--app-sidebar-text)',
+              'app-sidebar-text-hover': 'var(--app-sidebar-text-hover)',
+              'app-sidebar-active': 'var(--app-sidebar-active)',
+              'app-header': 'var(--app-header)',
+              'app-header-text': 'var(--app-header-text)',
+              'app-card-bg': 'var(--app-card-bg)',
+              'app-text-dark': 'var(--app-text-dark)',
+              'app-text-gray': 'var(--app-text-gray)',
+
+              // Static Branding & Status Colors (Not Themeable)
+              'ivolve-dark-green': '#025A40',
+              'ivolve-mid-green': '#008C67',
+              'ivolve-bright-green': '#6BD052',
+              'ivolve-blue': '#009EA5',
+              'ivolve-off-white': '#FFF6F1',
+              'ivolve-purple': '#8B5CF6',
+              'ivolve-yellow': '#F59E0B',
+              'status-red': '#dc2626',
+              'status-orange': '#f97316',
+              'solas-dark': '#1f2937',
+              'solas-gray': '#4b5563',
+              'solas-light-gray': '#f3f4f6',
+              'ivolve-warning-bg': 'rgba(255, 237, 213, 0.6)',
+              'ivolve-warning-bg-deep': 'rgba(251, 146, 60, 0.4)',
+              'tag-occupied': '#00B050',
+              'tag-void': '#009EA5',
+              'tag-oom': '#4b5563',
+              'tag-master': '#F59E0B',
+              'region-north': '#f97316',
+              'region-midlands': '#1e40af',
+              'region-south': '#ec4899',
+              'region-south-west': '#7e22ce',
+              'region-wales-border': '#dc2626',
+              'region-wales-text': '#025A40',
+              'rp-harbour-bg': '#a5f3fc',
+              'rp-harbour-text': '#e11d48',
+              'be-st-bg': '#2E234B',
+              'be-st-border': '#6DAF4A',
+              'row-void-bg': '#cffafe',
+              'row-oom-bg': '#e5e7eb',
+              'row-occupied-bg': '#dcfce7',
+              'bg-tag-master-row': '#fef3c7',
+              'tag-shared-living': '#1e3a8a',
+              'tag-self-contained': '#5b21b6',
+              // Entity Colors
+              'entity-heathcotes-bg': '#dcfce7',
+              'entity-heathcotes-text': '#166534',
+              'entity-gresham-bg': '#e0e7ff',
+              'entity-gresham-text': '#312e81',
+              'entity-tlc-bg': '#fce7f3',
+              'entity-tlc-text': '#9d174d',
+              'entity-newdirections-bg': '#e0f2fe',
+              'entity-newdirections-text': '#0c4a6e',
+              'entity-fieldbay-bg': '#fef9c3',
+              'entity-fieldbay-text': '#854d0e',
+              // Stakeholder Branding
+              'nyc-blue': '#005B8A',
+              'notts-gray': '#3A3A3A',
+              'newport-green': '#006A44',
+              'newport-gold': '#FFBF00',
+              'best-purple': '#4F2D7F',
+              'best-green': '#78BE20',
+              // Org Chart Colors
+              'org-chart-bg': '#f9fafb',
+              'org-node-bg': '#ffffff',
+              'org-node-border': '#d1d5db',
+              'org-line-color': '#9ca3af',
+              'org-vacancy-bg': '#fefce8',
+              'org-vacancy-border': '#facc15',
+              'org-joining-bg': '#f0fdf4',
+              'org-joining-border': '#4ade80',
+              // Department Colors
+              'dept-board': '#f59e0b',
+              'dept-exec': '#f59e0b',
+              'dept-property': '#f97316',
+              'dept-ops': '#1e40af',
+              'dept-finance': '#0ea5e9',
+              'dept-commercial': '#ec4899',
+              'dept-bizdev': '#ec4899',
+              'dept-people': '#8b5cf6',
+              'dept-quality': '#14b8a6',
+              'dept-it': '#64748b',
+              'dept-landd': '#84cc16',
+              'dept-default-bg': '#e5e7eb',
+              'dept-default-text': '#374151',
+              'dept-default-border': '#d1d5db',
+              // Dev Hub Colors
+              'devhub-orange': '#c2410c',
+              'devhub-grad-green-from': '#bbf7d0',
+              'devhub-grad-green-to': '#86efac',
+              'devhub-grad-blue-from': '#bfdbfe',
+              'devhub-grad-blue-to': '#93c5fd',
+              'devhub-grad-yellow-from': '#fef08a',
+              'devhub-grad-yellow-to': '#fde047',
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-app-bg font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
