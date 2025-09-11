@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode, useMemo } from 'react';
-import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, MaintenanceJob, Contact, MaintenanceStatus, ComplianceItem, Document, LinkedContact } from '../types';
-import { fetchAllProperties, fetchAllStakeholders, fetchIvolveStaff, fetchAllPpmSchedules, fetchAllPeople } from '../services/api';
+import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, MaintenanceJob, Contact, MaintenanceStatus, ComplianceItem, Document, LinkedContact, Framework, Tender } from '../types';
+import { fetchAllProperties, fetchAllStakeholders, fetchIvolveStaff, fetchAllPpmSchedules, fetchAllPeople, fetchAllFrameworks, fetchAllTenders } from '../services/api';
 import * as storage from '../services/storage';
 
 const CURRENT_USER_ID = 'MF01';
@@ -11,6 +11,8 @@ interface DataContextState {
   ivolveStaff: IvolveStaff[];
   ppmSchedules: PpmSchedule[];
   people: Person[];
+  frameworks: Framework[];
+  tenders: Tender[];
   loading: boolean;
   error: string | null;
   pinnedContactIds: Set<string>;
@@ -28,6 +30,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [ivolveStaff, setIvolveStaff] = useState<IvolveStaff[]>([]);
   const [ppmSchedules, setPpmSchedules] = useState<PpmSchedule[]>([]);
   const [people, setPeople] = useState<Person[]>([]);
+  const [frameworks, setFrameworks] = useState<Framework[]>([]);
+  const [tenders, setTenders] = useState<Tender[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pinnedContactIds, setPinnedContactIds] = useState<Set<string>>(new Set());
@@ -46,23 +50,29 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           setIvolveStaff(savedState.ivolveStaff);
           setPpmSchedules(savedState.ppmSchedules);
           setPeople(savedState.people);
+          setFrameworks(savedState.frameworks || []);
+          setTenders(savedState.tenders || []);
           setPinnedContactIds(new Set(savedState.pinnedContactIds)); // Rehydrate Set from array
           console.log("App state loaded from localStorage.");
         } else {
           // If no saved state, fetch from mock API (seeding)
           console.log("No saved state found. Seeding from mock API.");
-          const [propertiesData, stakeholdersData, staffData, ppmData, peopleData] = await Promise.all([
+          const [propertiesData, stakeholdersData, staffData, ppmData, peopleData, frameworksData, tendersData] = await Promise.all([
             fetchAllProperties(),
             fetchAllStakeholders(),
             fetchIvolveStaff(),
             fetchAllPpmSchedules(),
             fetchAllPeople(),
+            fetchAllFrameworks(),
+            fetchAllTenders(),
           ]);
           setProperties(propertiesData);
           setStakeholders(stakeholdersData);
           setIvolveStaff(staffData);
           setPpmSchedules(ppmData);
           setPeople(peopleData);
+          setFrameworks(frameworksData);
+          setTenders(tendersData);
 
           const initiallyPinned = new Set<string>();
           staffData.forEach(s => { if (s.isPinned) initiallyPinned.add(s.id) });
@@ -90,11 +100,13 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         ivolveStaff,
         ppmSchedules,
         people,
+        frameworks,
+        tenders,
         pinnedContactIds: Array.from(pinnedContactIds), // Convert Set to array for JSON
       };
       storage.saveState(stateToSave);
     }
-  }, [properties, stakeholders, ivolveStaff, ppmSchedules, people, pinnedContactIds, loading]);
+  }, [properties, stakeholders, ivolveStaff, ppmSchedules, people, frameworks, tenders, pinnedContactIds, loading]);
 
 
   const currentUserProfile = useMemo(() => ivolveStaff.find(s => s.id === CURRENT_USER_ID) || null, [ivolveStaff]);
@@ -202,6 +214,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     ivolveStaff,
     ppmSchedules,
     people,
+    frameworks,
+    tenders,
     loading,
     error,
     pinnedContactIds,

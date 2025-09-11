@@ -506,3 +506,40 @@ export interface CustomWidget {
     title: string;
     query: string;
 }
+
+// --- Frameworks & Tenders ---
+
+export enum FrameworkStatus {
+  Live = 'Live',
+  ExpiringSoon = 'Expiring Soon',
+  Expired = 'Expired',
+  OnExtension = 'On Extension',
+}
+
+export enum TenderStatus {
+  Potential = 'Potential',
+  InProgress = 'In Progress',
+  Submitted = 'Submitted',
+  Won = 'Won',
+  Lost = 'Lost',
+}
+
+export interface Framework {
+  id: string;
+  name: string;
+  type: ServiceType; 
+  status: FrameworkStatus;
+  laId: string;
+  renewalDate: string;
+  contractEndDate: string;
+  notes: string;
+}
+
+export interface Tender {
+  id: string;
+  name: string;
+  laId: string;
+  status: TenderStatus;
+  dueDate: string;
+  leadUserId: string;
+}

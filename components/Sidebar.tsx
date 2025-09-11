@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeView, onNavigate, onDevHu
 
   const navItems = [
     { name: 'My Space', viewId: 'Dashboard', icon: <MySpaceIcon /> },
-    { name: 'Frameworks', icon: <FileTextIcon /> },
+    { name: 'Frameworks', viewId: 'Frameworks', icon: <FileTextIcon /> },
     { name: 'Growth and Development', viewId: 'Development', icon: <DevelopmentIcon />, disabled: true },
     { name: 'Properties', icon: <PropertiesIcon /> },
     { name: t('people_plural_capitalized'), viewId: 'People', icon: <PeopleIcon /> },

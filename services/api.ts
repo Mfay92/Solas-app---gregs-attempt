@@ -1,5 +1,5 @@
-import { MOCK_PROPERTIES, MOCK_STAKEHOLDERS, MOCK_IVOLVE_STAFF, MOCK_PPM_SCHEDULES, MOCK_PEOPLE } from './mockData';
-import type { Property, Stakeholder, IvolveStaff, PpmSchedule, Person } from '../types';
+import { MOCK_PROPERTIES, MOCK_STAKEHOLDERS, MOCK_IVOLVE_STAFF, MOCK_PPM_SCHEDULES, MOCK_PEOPLE, MOCK_FRAMEWORKS, MOCK_TENDERS } from './mockData';
+import type { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, Framework, Tender } from '../types';
 
 export const fetchAllProperties = async (): Promise<Property[]> => {
   console.log('Fetching all properties');
@@ -53,5 +53,23 @@ export const fetchAllPeople = async (): Promise<Person[]> => {
         setTimeout(() => {
             resolve(MOCK_PEOPLE);
         }, 400);
+    });
+};
+
+export const fetchAllFrameworks = async (): Promise<Framework[]> => {
+    console.log('Fetching all frameworks');
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(MOCK_FRAMEWORKS);
+        }, 180);
+    });
+};
+
+export const fetchAllTenders = async (): Promise<Tender[]> => {
+    console.log('Fetching all tenders');
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(MOCK_TENDERS);
+        }, 220);
     });
 };

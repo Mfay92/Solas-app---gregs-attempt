@@ -1,4 +1,4 @@
-import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType } from '../types';
+import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType, Framework, FrameworkStatus, Tender, TenderStatus } from '../types';
 
 const MOCK_COMMISSIONERS = {
     harrogate: { id: 'c-hg', name: 'Susan Collins', role: 'Commissioner', phone: '01423 500 600', email: 's.collins@northyorks.gov.uk' },
@@ -726,4 +726,90 @@ export const MOCK_PEOPLE: Person[] = [
         timeline: [], documents: [],
         title: 'Mr', firstLanguage: 'English', isNonVerbal: false
     },
+];
+
+export const MOCK_FRAMEWORKS: Framework[] = [
+    {
+        id: 'FW-NYC-001',
+        name: 'North Yorkshire Supported Living Framework 2022-2026',
+        type: ServiceType.SupportedLiving,
+        status: FrameworkStatus.Live,
+        laId: 'la-nyc',
+        renewalDate: '2026-03-31',
+        contractEndDate: '2026-06-30',
+        notes: 'Tier 1 provider for complex needs. Strong relationship with commissioner Susan Collins.'
+    },
+    {
+        id: 'FW-NCC-001',
+        name: 'Nottingham City Residential Care Framework',
+        type: ServiceType.Residential,
+        status: FrameworkStatus.ExpiringSoon,
+        laId: 'la-ncc',
+        renewalDate: '2025-01-31',
+        contractEndDate: '2025-04-30',
+        notes: 'Currently on Lot 2. Bid for Lot 1 in progress for renewal.'
+    },
+    {
+        id: 'FW-NPT-001',
+        name: 'Newport Nursing & Complex Care DPS',
+        type: ServiceType.NursingCare,
+        status: FrameworkStatus.Expired,
+        laId: 'la-npt',
+        renewalDate: '2024-06-30',
+        contractEndDate: '2024-06-30',
+        notes: 'Framework has expired. A new tender is expected Q4 2024. Currently operating on spot purchase agreements.'
+    },
+    {
+        id: 'FW-NYC-002',
+        name: 'North Yorkshire Residential Framework',
+        type: ServiceType.Residential,
+        status: FrameworkStatus.OnExtension,
+        laId: 'la-nyc',
+        renewalDate: '2024-12-31',
+        contractEndDate: '2024-09-30',
+        notes: 'Currently on a 3-month extension while new framework is finalized.'
+    }
+];
+
+export const MOCK_TENDERS: Tender[] = [
+    {
+        id: 'TEN-NCC-001',
+        name: 'Nottingham City Residential Framework 2025 Renewal',
+        laId: 'la-ncc',
+        status: TenderStatus.InProgress,
+        dueDate: '2024-11-15',
+        leadUserId: 'RL01', // Rachel Lewis
+    },
+    {
+        id: 'TEN-NYC-001',
+        name: 'North Yorkshire Extra Care Bid',
+        laId: 'la-nyc',
+        status: TenderStatus.Submitted,
+        dueDate: '2024-08-30',
+        leadUserId: 'CC01', // Chloe Anderson
+    },
+    {
+        id: 'TEN-NPT-001',
+        name: 'Newport Community Support Tender',
+        laId: 'la-npt',
+        status: TenderStatus.Won,
+        dueDate: '2024-07-01',
+        leadUserId: 'RL01', // Rachel Lewis
+    },
+    {
+        id: 'TEN-CWC-001',
+        name: 'Cheshire West & Chester Mental Health Services',
+        laId: 'la-nyc', // using NYC as a placeholder for Cheshire
+        status: TenderStatus.Lost,
+        dueDate: '2024-06-15',
+        leadUserId: 'RL01',
+    },
+     {
+        id: 'TEN-POT-001',
+        name: 'Potential Tender - Liverpool LD Services',
+        laId: 'la-ncc', // Placeholder
+        status: TenderStatus.Potential,
+        dueDate: '2025-02-01',
+        leadUserId: 'RL01',
+    }
 ];
