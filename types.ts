@@ -324,6 +324,7 @@ export interface CareNeed {
 }
 
 export interface FundingDetails {
+  id: string;
   source: string;
   weeklyAmount: number;
   details: string;
@@ -351,6 +352,14 @@ export interface PersonContact {
   isNextOfKin?: boolean;
   isAppointee?: boolean;
   isDeputy?: boolean;
+}
+
+export interface Medication {
+    id: string;
+    name: string;
+    dosage: string;
+    frequency: string;
+    notes?: string;
 }
 
 export interface Person {
@@ -389,6 +398,11 @@ export interface Person {
   nhsNumber?: string;
   myStory?: string;
   importantToMe?: string[];
+
+  // Health Information
+  allergies?: string[];
+  medicalConditions?: string[];
+  medications?: Medication[];
 }
 
 export interface AgreementDates {

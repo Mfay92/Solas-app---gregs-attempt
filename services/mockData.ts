@@ -766,8 +766,7 @@ export const MOCK_PEOPLE: Person[] = [
             { id: 'cn1', category: 'Mobility', detail: 'Requires assistance with stairs.' },
             { id: 'cn2', category: 'Medication', detail: 'Prompting required for morning medication.' },
         ],
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'North Yorkshire Council', weeklyAmount: 850.00, details: 'Personal Independence Payment (PIP) and Housing Benefit.' }],
+        funding: [{ id: 'fund-p1-1', source: 'North Yorkshire Council', weeklyAmount: 850.00, details: 'Personal Independence Payment (PIP) and Housing Benefit.' }],
         tenancy: { type: 'Licence Agreement', startDate: '2022-01-20', documents: [{ id: 'doc-p1-1', name: 'Alice J - Licence Agreement', type: 'PDF', date: '2022-01-20', year: 2022, url: '#'}] },
         timeline: [
             { id: 'pt1-1', date: '2024-07-15', type: TimelineEventType.Care, description: 'Annual support plan review completed.', actor: 'Nora Hayes' },
@@ -777,15 +776,20 @@ export const MOCK_PEOPLE: Person[] = [
              { id: 'doc-p1-2', name: 'Support Plan Review 2024', type: 'PDF', date: '2024-07-15', year: 2024, url: '#'},
         ],
         contacts: [],
-        title: 'Miss', firstLanguage: 'English', isNonVerbal: false, maritalStatus: 'Single', ethnicity: 'White British', nationality: 'British', nationalInsuranceNumber: 'AB123456C'
+        title: 'Miss', firstLanguage: 'English', isNonVerbal: false, maritalStatus: 'Single', ethnicity: 'White British', nationality: 'British', nationalInsuranceNumber: 'AB123456C',
+        allergies: ['Penicillin', 'Dust Mites'],
+        medicalConditions: ['Asthma', 'Type 2 Diabetes'],
+        medications: [
+            { id: 'med-1', name: 'Metformin', dosage: '500mg', frequency: 'Twice daily', notes: 'Take with food.' },
+            { id: 'med-2', name: 'Salbutamol Inhaler', dosage: '100mcg', frequency: 'As needed', notes: 'For asthma symptoms.' }
+        ]
     },
     {
         id: 'P002', preferredFirstName: 'Ben', legalFirstName: 'Benjamin', surname: 'Williams', photoUrl: 'https://i.pravatar.cc/150?u=P002', dob: '1988-11-30', status: PersonStatus.Current,
         propertyId: 'STRE00_PROP', unitId: 'STRE02', moveInDate: '2021-09-01', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'CB01',
         careNeeds: [{ id: 'cn3', category: 'Social Engagement', detail: 'Support to attend weekly community group.' }],
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'NHS CCG', weeklyAmount: 920.50, details: 'Continuing Healthcare funding package.' }],
+        funding: [{ id: 'fund-p2-1', source: 'NHS CCG', weeklyAmount: 920.50, details: 'Continuing Healthcare funding package.' }],
         tenancy: { type: 'Licence Agreement', startDate: '2021-09-01', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -798,8 +802,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'EXAM00_PROP', unitId: 'EXAM01', moveInDate: '2023-08-01', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Nottingham City Council', weeklyAmount: 780.00, details: '' }],
+        funding: [{ id: 'fund-p3-1', source: 'Nottingham City Council', weeklyAmount: 780.00, details: '' }],
         tenancy: { type: 'Assured Shorthold Tenancy', startDate: '2023-08-01', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -810,8 +813,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'EXAM00_PROP', unitId: 'EXAM02', moveInDate: '2022-05-10', moveOutDate: '2024-06-15',
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Nottingham City Council', weeklyAmount: 750.00, details: '' }],
+        funding: [{ id: 'fund-p4-1', source: 'Nottingham City Council', weeklyAmount: 750.00, details: '' }],
         tenancy: { type: 'Assured Shorthold Tenancy', startDate: '2022-05-10', documents: [] },
         timeline: [
             { id: 'pt4-1', date: '2024-06-15', type: TimelineEventType.Moves, description: 'Moved out to independent living property.', actor: 'Daniel Evans' },
@@ -825,8 +827,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'EXAM00_PROP', unitId: 'EXAM03', moveInDate: '2024-03-12', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Personal Budget', weeklyAmount: 650.00, details: '' }],
+        funding: [{ id: 'fund-p5-1', source: 'Personal Budget', weeklyAmount: 650.00, details: '' }],
         tenancy: { type: 'Assured Shorthold Tenancy', startDate: '2024-03-12', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -839,8 +840,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'WALE01_PROP', unitId: 'WALE01-1', moveInDate: '2022-03-15', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01', // Placeholder manager
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
+        funding: [{ id: 'fund-p6-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
         tenancy: { type: 'Licence Agreement', startDate: '2022-03-15', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -851,8 +851,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'WALE01_PROP', unitId: 'WALE01-2', moveInDate: '2022-04-01', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
+        funding: [{ id: 'fund-p7-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
         tenancy: { type: 'Licence Agreement', startDate: '2022-04-01', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -863,8 +862,7 @@ export const MOCK_PEOPLE: Person[] = [
         propertyId: 'WALE01_PROP', unitId: 'WALE01-4', moveInDate: '2023-01-20', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
-// FIX: The `funding` property should be an array of objects.
-        funding: [{ source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
+        funding: [{ id: 'fund-p8-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
         tenancy: { type: 'Licence Agreement', startDate: '2023-01-20', documents: [] },
         timeline: [], documents: [],
         contacts: [],
@@ -891,12 +889,12 @@ export const MOCK_PEOPLE: Person[] = [
         { id: 'P024', unitId: 'STRAW03', firstName: 'Xavier', lastName: 'Edwards', dob: '1990-09-02' },
         { id: 'P025', unitId: 'LIVP01', firstName: 'Yasmine', lastName: 'Carter', dob: '1997-06-06' },
         { id: 'P026', unitId: 'LIVP02', firstName: 'Zoe', lastName: 'Wright', dob: '1993-02-14' },
-    ].map(p => ({
+    ].map((p, index) => ({
         id: p.id, preferredFirstName: p.firstName, legalFirstName: p.firstName, surname: p.lastName,
         photoUrl: `https://i.pravatar.cc/150?u=${p.id}`, dob: p.dob, status: PersonStatus.Current,
         propertyId: MOCK_PROPERTIES.find(prop => prop.units.some(u => u.id === p.unitId))?.id || '',
         unitId: p.unitId, moveInDate: '2023-01-01', moveOutDate: null, keyWorkerId: 'NH01', areaManagerId: 'CB01',
-        careNeeds: [], funding: [{ source: 'Local Authority', weeklyAmount: 800.00, details: '' }],
+        careNeeds: [], funding: [{ id: `fund-p${index+9}-1`, source: 'Local Authority', weeklyAmount: 800.00, details: '' }],
         tenancy: { type: 'Licence Agreement', startDate: '2023-01-01', documents: [] },
         timeline: [], documents: [], contacts: [], title: 'Mr', firstLanguage: 'English', isNonVerbal: false,
         ...p

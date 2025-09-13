@@ -27,15 +27,19 @@ const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
       case 'About me':
         return <PersonOverviewView person={person} />;
       case `Support & Care`:
-        return <CareNeedsView careNeeds={person.careNeeds} />;
+        // FIX: Pass the entire 'person' object as expected by the CareNeedsView component.
+        return <CareNeedsView person={person} />;
       case 'Health & Medication':
-        return <HealthView />;
+        // FIX: Pass the 'person' prop as required by the HealthView component.
+        return <HealthView person={person} />;
       case 'Circle of Support':
-        return <CircleOfSupportView contacts={person.contacts} />;
+        // FIX: Pass the entire 'person' object as expected by the CircleOfSupportView component.
+        return <CircleOfSupportView person={person} />;
       case `Housing & ${t('tenancy')}`:
         return <TenancyView tenancy={person.tenancy} />;
       case 'Finance & Benefits':
-        return <FinanceView funding={person.funding} />;
+        // FIX: Pass the entire 'person' object as expected by the FinanceView component.
+        return <FinanceView person={person} />;
       case 'Timeline':
         return <TimelineView events={person.timeline} moveInDate={person.moveInDate} moveOutDate={person.moveOutDate} />;
       case 'Documents':

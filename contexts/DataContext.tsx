@@ -20,6 +20,7 @@ interface DataContextState {
   handleTogglePin: (contactId: string) => void;
   handleUpdatePropertyLinks: (propertyId: string, updatedStaffLinks: LinkedContact[]) => void;
   handleAddNewPerson: (newPersonData: Partial<Person>) => void;
+  handleUpdatePerson: (personId: string, updatedData: Partial<Person>) => void;
 }
 
 const DataContext = createContext<DataContextState | undefined>(undefined);
@@ -234,6 +235,14 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
+  const handleUpdatePerson = (personId: string, updatedData: Partial<Person>) => {
+      setPeople(prevPeople =>
+          prevPeople.map(person =>
+              person.id === personId ? { ...person, ...updatedData } : person
+          )
+      );
+  };
+
 
   const value = {
     properties,
@@ -250,6 +259,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     handleTogglePin,
     handleUpdatePropertyLinks,
     handleAddNewPerson,
+    handleUpdatePerson,
   };
 
   return (
