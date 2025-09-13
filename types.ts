@@ -1,5 +1,6 @@
 
 
+
 export enum ServiceType {
   SupportedLiving = 'Supported Living',
   Residential = 'Residential',
@@ -362,6 +363,32 @@ export interface Medication {
     notes?: string;
 }
 
+export enum BenefitType {
+    UCHousing = 'UC Housing Element',
+    UCStandard = 'UC Standard Allowance',
+    UCLimitedCapability = 'UC Limited Capability for work/ work related activity',
+    ESA = 'ESA',
+    JSA = 'JSA',
+    PIPCare = 'PIP Care Component',
+    PIPMobility = 'PIP Mobility Component',
+    DLACare = 'DLA Care',
+    DLAMobility = 'DLA Mobility',
+    SDA = 'SDA',
+}
+
+export interface Benefit {
+    type: BenefitType;
+    amount: number;
+    frequency: 'Weekly' | 'Monthly' | 'Fortnightly';
+    startDate: string;
+}
+
+export interface OtherIncome {
+    source: string;
+    amount: number;
+    frequency: string;
+}
+
 export interface Person {
   id: string;
   preferredFirstName: string;
@@ -386,6 +413,8 @@ export interface Person {
   
   // Expanded "About Me" fields
   title: 'Mr' | 'Miss' | 'Mrs' | '';
+  email?: string;
+  phone?: string;
   firstLanguage: string;
   isNonVerbal: boolean;
   secondLanguage?: string;
@@ -403,6 +432,24 @@ export interface Person {
   allergies?: string[];
   medicalConditions?: string[];
   medications?: Medication[];
+  pets?: string;
+
+  // Housing History & Status
+  previousAccommodationType?: string;
+  hasCapacityToConsent?: boolean;
+  rightToResideStatus?: string;
+  
+  // Finance Information
+  housingBenefitRefNumber?: string;
+  housingBenefitCouncil?: string;
+  housingBenefitAmount?: number;
+  benefits?: Benefit[];
+  otherIncome?: OtherIncome[];
+  savingsInfo?: string;
+  hasMobilityVehicle?: boolean;
+  hasSmiExemption?: boolean;
+  managesOwnMoney?: boolean;
+  isOnS117?: boolean;
 }
 
 export interface AgreementDates {

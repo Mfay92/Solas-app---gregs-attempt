@@ -71,7 +71,7 @@ const CareNeedsView: React.FC<CareNeedsViewProps> = ({ person }) => {
             initialData={editingNeed}
         />
       )}
-      <Card title={cardTitle} titleClassName="text-solas-dark">
+      <Card title={cardTitle} titleClassName="bg-ivolve-dark-green text-white">
         {person.careNeeds.length > 0 ? (
           <div className="space-y-4">
             {person.careNeeds.map((need) => (
@@ -86,7 +86,7 @@ const CareNeedsView: React.FC<CareNeedsViewProps> = ({ person }) => {
                 <p className="text-sm text-solas-gray mt-1">{need.detail}</p>
                 {need.supportStrategies && (
                   <div className="mt-3 pt-3 border-t">
-                      <h5 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Support Strategies</h5>
+                      <h5 className="text-xs font-bold text-ivolve-dark-green uppercase tracking-wider">Support Strategies</h5>
                       <p className="text-sm text-solas-gray mt-1 whitespace-pre-wrap">{need.supportStrategies}</p>
                   </div>
                 )}

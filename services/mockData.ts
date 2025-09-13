@@ -1,4 +1,4 @@
-import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType, GrowthOpportunity, OpportunityType, BDStage, DevelopmentStage } from '../types';
+import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType, GrowthOpportunity, OpportunityType, BDStage, DevelopmentStage, BenefitType } from '../types';
 
 const MOCK_COMMISSIONERS = {
     harrogate: { id: 'c-hg', name: 'Susan Collins', role: 'Commissioner', phone: '01423 500 600', email: 's.collins@northyorks.gov.uk' },
@@ -777,12 +777,27 @@ export const MOCK_PEOPLE: Person[] = [
         ],
         contacts: [],
         title: 'Miss', firstLanguage: 'English', isNonVerbal: false, maritalStatus: 'Single', ethnicity: 'White British', nationality: 'British', nationalInsuranceNumber: 'AB123456C',
+        email: 'alice.j@example.com', phone: '07712 345678',
         allergies: ['Penicillin', 'Dust Mites'],
         medicalConditions: ['Asthma', 'Type 2 Diabetes'],
         medications: [
             { id: 'med-1', name: 'Metformin', dosage: '500mg', frequency: 'Twice daily', notes: 'Take with food.' },
             { id: 'med-2', name: 'Salbutamol Inhaler', dosage: '100mcg', frequency: 'As needed', notes: 'For asthma symptoms.' }
-        ]
+        ],
+        pets: 'A cat named Mittens.',
+        hasCapacityToConsent: true,
+        rightToResideStatus: 'Full UK Citizen',
+        managesOwnMoney: true,
+        hasSmiExemption: false,
+        housingBenefitRefNumber: 'HB-AJ-12345',
+        housingBenefitCouncil: 'North Yorkshire Council',
+        housingBenefitAmount: 110.00,
+        benefits: [
+            { type: BenefitType.UCStandard, amount: 95.50, frequency: 'Weekly', startDate: '2022-01-20' },
+            { type: BenefitType.PIPCare, amount: 68.10, frequency: 'Weekly', startDate: '2022-01-20' },
+            { type: BenefitType.PIPMobility, amount: 26.90, frequency: 'Weekly', startDate: '2023-05-10' },
+        ],
+        savingsInfo: 'Has a savings account with approximately £2,500. No other significant assets.',
     },
     {
         id: 'P002', preferredFirstName: 'Ben', legalFirstName: 'Benjamin', surname: 'Williams', photoUrl: 'https://i.pravatar.cc/150?u=P002', dob: '1988-11-30', status: PersonStatus.Current,

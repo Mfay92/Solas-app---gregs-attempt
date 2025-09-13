@@ -112,7 +112,7 @@ const CircleOfSupportView: React.FC<CircleOfSupportViewProps> = ({ person }) => 
                 initialData={editingContact}
             />
         )}
-        <Card title={cardTitle} titleClassName="text-solas-dark">
+        <Card title={cardTitle} titleClassName="bg-ivolve-dark-green text-white">
         <p className="text-sm text-solas-gray mb-4">
             This is a private contact list for this individual only. These contacts will not appear in the main Contact Hub.
         </p>

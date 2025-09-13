@@ -1,39 +1,94 @@
 
 
+
 import React from 'react';
-import { TenancyDetails } from '../../../types';
+import { Person } from '../../../types';
 import Card from '../../Card';
 import { usePersona } from '../../../contexts/PersonaContext';
 import DocumentsView from '../DocumentsView';
+import { useData } from '../../../contexts/DataContext';
+import { useUI } from '../../../contexts/UIContext';
+import { BuildingIcon, UserCircleIcon } from '../../Icons';
 
 type TenancyViewProps = {
-  tenancy: TenancyDetails;
+  person: Person;
 };
 
-const TenancyView: React.FC<TenancyViewProps> = ({ tenancy }) => {
+const InfoItem: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
+    <div>
+        <h4 className="text-sm font-bold text-ivolve-dark-green">{label}</h4>
+        <p className="mt-1 text-md text-gray-900">{value ?? <span className="text-gray-400 italic">Not provided</span>}</p>
+    </div>
+);
+
+const TenancyView: React.FC<TenancyViewProps> = ({ person }) => {
+  const { tenancy } = person;
   const { t } = usePersona();
+  const { properties, stakeholders } = useData();
+  const { selectStakeholder, selectStakeholderContact } = useUI();
+
+  const property = properties.find(p => p.id === person.propertyId);
+  const rpStakeholder = stakeholders.find(s => s.name === property?.tags.rp);
+  
+  const hoLink = property?.linkedContacts?.find(lc => lc.role.toLowerCase().includes('housing officer'));
+  const hoStakeholder = hoLink?.stakeholderId ? stakeholders.find(s => s.id === hoLink.stakeholderId) : null;
+  const hoContact = hoStakeholder?.contacts.find(c => c.id === hoLink?.contactId);
+
   return (
     <div className="space-y-6">
-        <Card title={`${t('tenancy')} Details`} titleClassName="text-solas-dark">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h4 className="font-semibold text-sm text-gray-700">Agreement Type</h4>
-                    <p className="text-md text-gray-900">{tenancy.type}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card title={`${t('tenancy')} Details`} titleClassName="bg-ivolve-dark-green text-white">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green">Agreement Type</h4>
+                        <p className="text-md text-gray-900">{tenancy.type}</p>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green">Start Date</h4>
+                        <p className="text-md text-gray-900">{new Date(tenancy.startDate).toLocaleDateString('en-GB')}</p>
+                    </div>
+                     <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green">End Date</h4>
+                        <p className="text-md text-gray-900">{tenancy.endDate ? new Date(tenancy.endDate).toLocaleDateString('en-GB') : 'N/A'}</p>
+                    </div>
+                     <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green">Notice Period</h4>
+                        <p className="text-md text-gray-900">{tenancy.noticePeriod || 'N/A'}</p>
+                    </div>
                 </div>
-                <div>
-                    <h4 className="font-semibold text-sm text-gray-700">Start Date</h4>
-                    <p className="text-md text-gray-900">{new Date(tenancy.startDate).toLocaleDateString('en-GB')}</p>
+            </Card>
+
+            <Card title="Housing Management" titleClassName="bg-ivolve-dark-green text-white">
+                <div className="space-y-4">
+                    <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green flex items-center space-x-2"><BuildingIcon/> <span>Registered Provider</span></h4>
+                        {rpStakeholder ? (
+                             <button onClick={() => selectStakeholder(rpStakeholder.id)} className="text-md text-ivolve-blue hover:underline">{property?.tags.rp}</button>
+                        ) : (
+                             <p className="text-md text-gray-900">{property?.tags.rp}</p>
+                        )}
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-sm text-ivolve-dark-green flex items-center space-x-2"><UserCircleIcon/> <span>Housing Officer / Managing Agent</span></h4>
+                        {hoContact && hoStakeholder ? (
+                            <button onClick={() => selectStakeholderContact(hoStakeholder.id, hoContact.id)} className="text-md text-ivolve-blue hover:underline">{hoContact.name}</button>
+                        ) : (
+                            <p className="text-md text-gray-500 italic">Not assigned</p>
+                        )}
+                    </div>
                 </div>
-                 <div>
-                    <h4 className="font-semibold text-sm text-gray-700">End Date</h4>
-                    <p className="text-md text-gray-900">{tenancy.endDate ? new Date(tenancy.endDate).toLocaleDateString('en-GB') : 'N/A'}</p>
+            </Card>
+
+            <Card title="Tenancy Status & Background" titleClassName="bg-ivolve-dark-green text-white">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <InfoItem label="Capacity to Consent" value={typeof person.hasCapacityToConsent === 'boolean' ? (person.hasCapacityToConsent ? 'Yes' : 'No') : undefined} />
+                    <InfoItem label="Under Section 117" value={typeof person.isOnS117 === 'boolean' ? (person.isOnS117 ? 'Yes' : 'No') : undefined} />
+                    <InfoItem label="Right to Reside Status" value={person.rightToResideStatus} />
+                    <InfoItem label="Previous Accommodation" value={person.previousAccommodationType} />
                 </div>
-                 <div>
-                    <h4 className="font-semibold text-sm text-gray-700">Notice Period</h4>
-                    <p className="text-md text-gray-900">{tenancy.noticePeriod || 'N/A'}</p>
-                </div>
-            </div>
-        </Card>
+            </Card>
+        </div>
+
         {tenancy.documents.length > 0 && (
             <DocumentsView documents={tenancy.documents} />
         )}

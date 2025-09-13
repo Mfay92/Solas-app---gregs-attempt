@@ -18,27 +18,23 @@ type PersonContentProps = {
 const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
   const { t } = usePersona();
   
-  const TABS = ['About me', `Support & Care`, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Timeline', 'Documents'];
+  const TABS = ['About Me', `Support & Care`, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Timeline', 'Documents'];
   const [activeTab, setActiveTab] = useState(TABS[0]);
 
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'About me':
+      case 'About Me':
         return <PersonOverviewView person={person} />;
       case `Support & Care`:
-        // FIX: Pass the entire 'person' object as expected by the CareNeedsView component.
         return <CareNeedsView person={person} />;
       case 'Health & Medication':
-        // FIX: Pass the 'person' prop as required by the HealthView component.
         return <HealthView person={person} />;
       case 'Circle of Support':
-        // FIX: Pass the entire 'person' object as expected by the CircleOfSupportView component.
         return <CircleOfSupportView person={person} />;
       case `Housing & ${t('tenancy')}`:
-        return <TenancyView tenancy={person.tenancy} />;
+        return <TenancyView person={person} />;
       case 'Finance & Benefits':
-        // FIX: Pass the entire 'person' object as expected by the FinanceView component.
         return <FinanceView person={person} />;
       case 'Timeline':
         return <TimelineView events={person.timeline} moveInDate={person.moveInDate} moveOutDate={person.moveOutDate} />;

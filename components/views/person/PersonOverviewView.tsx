@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Person } from '../../../types';
 import Card from '../../Card';
@@ -9,7 +10,7 @@ type PersonOverviewViewProps = {
 
 const InfoItem: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
     <div>
-        <h4 className="text-sm font-medium text-gray-500">{label}</h4>
+        <h4 className="text-sm font-bold text-ivolve-dark-green">{label}</h4>
         <p className="mt-1 text-md text-gray-900">{value || <span className="text-gray-400 italic">Not provided</span>}</p>
     </div>
 );
@@ -30,7 +31,7 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
 
     return (
         <div className="space-y-6">
-            <Card title="Personal Details" titleClassName="text-solas-dark">
+            <Card title="Personal Details" titleClassName="bg-ivolve-dark-green text-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
                     <InfoItem label="Legal First Name" value={person.legalFirstName} />
                     <InfoItem label="Preferred First Name" value={person.preferredFirstName} />
@@ -40,6 +41,8 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                         label="Date of Birth" 
                         value={`${new Date(person.dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} (Age ${age})`}
                     />
+                    <InfoItem label="Email Address" value={person.email} />
+                    <InfoItem label="Phone Number" value={person.phone} />
                     <InfoItem label="Marital Status" value={person.maritalStatus} />
                     <InfoItem label="Ethnicity" value={person.ethnicity} />
                     <InfoItem label="Nationality" value={person.nationality} />
@@ -47,7 +50,7 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Communication" titleClassName="text-solas-dark">
+            <Card title="Communication" titleClassName="bg-ivolve-dark-green text-white">
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
                      <InfoItem 
                         label="First Language" 
@@ -63,14 +66,14 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Official Information" titleClassName="text-solas-dark">
+            <Card title="Official Information" titleClassName="bg-ivolve-dark-green text-white">
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
                     <InfoItem label="National Insurance No." value={person.nationalInsuranceNumber} />
                     <InfoItem label="NHS Number" value={person.nhsNumber} />
                 </div>
             </Card>
 
-             <Card title="My Story & Preferences" titleClassName="text-solas-dark">
+             <Card title="My Story & Preferences" titleClassName="bg-ivolve-dark-green text-white">
                  <div className="space-y-6">
                     <div>
                         <h4 className="text-sm font-medium text-gray-500 mb-1">My Story</h4>
