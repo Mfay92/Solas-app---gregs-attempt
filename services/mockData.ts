@@ -1,4 +1,4 @@
-import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType, GrowthOpportunity, OpportunityType, BDStage, DevelopmentStage, BenefitType } from '../types';
+import { Property, ServiceType, UnitStatus, TimelineEventType, MaintenanceStatus, NominalCode, Stakeholder, StakeholderType, ContractorTrade, CommissioningInfo, IvolveStaff, ContactTier, PpmSchedule, Document, Person, PersonStatus, KeyDates, LegalEntity, ComplianceType, GrowthOpportunity, OpportunityType, BDStage, DevelopmentStage, BenefitType, ApplicationStage } from '../types';
 
 const MOCK_COMMISSIONERS = {
     harrogate: { id: 'c-hg', name: 'Susan Collins', role: 'Commissioner', phone: '01423 500 600', email: 's.collins@northyorks.gov.uk' },
@@ -756,6 +756,70 @@ export const MOCK_IVOLVE_STAFF: IvolveStaff[] = [
     { id: 'RL01', name: 'Rachel Lewis', role: 'Group Head of Growth & Development', email: 'r.lewis@ivolve.co.uk', phone: '07700900800', photoUrl: 'https://i.pravatar.cc/150?u=RL01', managerId: 'CC01', team: 'Business Development Team', tags: ['Function Lead'], relevance: 4 },
 ];
 
+const MOCK_APPLICANTS: Person[] = [
+    {
+        id: 'APP001', preferredFirstName: 'Sarah', legalFirstName: 'Sarah', surname: 'Jenkins', 
+        photoUrl: 'https://i.pravatar.cc/150?u=APP001', dob: '1995-08-20', status: PersonStatus.Applicant,
+        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        keyWorkerId: '', areaManagerId: '',
+        careNeeds: [{ id: 'cn-app1', category: 'Primary Need', detail: 'Autism Spectrum Disorder' }],
+        funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
+        timeline: [], documents: [], contacts: [], title: 'Miss', firstLanguage: 'English', isNonVerbal: false,
+        applicationStage: ApplicationStage.Referral,
+        referralDate: '2024-07-28',
+        referralSource: 'North Yorkshire Council',
+    },
+    {
+        id: 'APP002', preferredFirstName: 'Tom', legalFirstName: 'Thomas', surname: 'Baker', 
+        photoUrl: 'https://i.pravatar.cc/150?u=APP002', dob: '1988-03-15', status: PersonStatus.Applicant,
+        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        keyWorkerId: '', areaManagerId: '',
+        careNeeds: [{ id: 'cn-app2', category: 'Primary Need', detail: 'Complex Mental Health' }],
+        funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
+        timeline: [], documents: [], contacts: [], title: 'Mr', firstLanguage: 'English', isNonVerbal: false,
+        applicationStage: ApplicationStage.Application,
+        referralDate: '2024-07-25',
+        referralSource: 'Nottingham City Council',
+    },
+    {
+        id: 'APP003', preferredFirstName: 'Chloe', legalFirstName: 'Chloe', surname: 'Davies', 
+        photoUrl: 'https://i.pravatar.cc/150?u=APP003', dob: '2001-11-02', status: PersonStatus.Applicant,
+        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        keyWorkerId: '', areaManagerId: '',
+        careNeeds: [{ id: 'cn-app3', category: 'Primary Need', detail: 'Learning Disability' }],
+        funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
+        timeline: [], documents: [], contacts: [], title: 'Miss', firstLanguage: 'English', isNonVerbal: false,
+        applicationStage: ApplicationStage.Application,
+        referralDate: '2024-07-22',
+        referralSource: 'Self-referral',
+    },
+    {
+        id: 'APP004', preferredFirstName: 'Mike', legalFirstName: 'Michael', surname: 'Rodriguez', 
+        photoUrl: 'https://i.pravatar.cc/150?u=APP004', dob: '1992-01-30', status: PersonStatus.Applicant,
+        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        keyWorkerId: '', areaManagerId: '',
+        careNeeds: [{ id: 'cn-app4', category: 'Primary Need', detail: 'Physical Disability' }],
+        funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
+        timeline: [], documents: [], contacts: [], title: 'Mr', firstLanguage: 'English', isNonVerbal: false,
+        applicationStage: ApplicationStage.AwaitingProperty,
+        referralDate: '2024-06-15',
+        referralSource: 'Manchester City Council',
+    },
+    {
+        id: 'APP005', preferredFirstName: 'Aisha', legalFirstName: 'Aisha', surname: 'Khan', 
+        photoUrl: 'https://i.pravatar.cc/150?u=APP005', dob: '1999-09-09', status: PersonStatus.Applicant,
+        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        keyWorkerId: '', areaManagerId: '',
+        careNeeds: [{ id: 'cn-app5', category: 'Primary Need', detail: 'Learning Disability' }],
+        funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
+// FIX: Changed 'Ms' to 'Miss' to conform to the Person['title'] type.
+        timeline: [], documents: [], contacts: [], title: 'Miss', firstLanguage: 'English', isNonVerbal: false,
+        applicationStage: ApplicationStage.PropertyMatched,
+        referralDate: '2024-05-20',
+        referralSource: 'Leeds City Council',
+    },
+];
+
 export const MOCK_PEOPLE: Person[] = [
     // 1 Street, Harrogate
     {
@@ -914,6 +978,7 @@ export const MOCK_PEOPLE: Person[] = [
         timeline: [], documents: [], contacts: [], title: 'Mr', firstLanguage: 'English', isNonVerbal: false,
         ...p
     })) as Person[],
+    ...MOCK_APPLICANTS,
 ];
 
 export const MOCK_GROWTH_OPPORTUNITIES: GrowthOpportunity[] = [

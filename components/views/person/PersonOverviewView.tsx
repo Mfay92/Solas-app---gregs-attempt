@@ -1,8 +1,7 @@
-
-
 import React from 'react';
 import { Person } from '../../../types';
 import Card from '../../Card';
+import { useData } from '../../../contexts/DataContext';
 
 type PersonOverviewViewProps = {
   person: Person;
@@ -28,6 +27,8 @@ const calculateAge = (dob: string): number => {
 
 const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
     const age = calculateAge(person.dob);
+    const { properties } = useData();
+    const property = properties.find(p => p.id === person.propertyId);
 
     return (
         <div className="space-y-6">
@@ -49,6 +50,17 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                     <InfoItem label="Religion / Faith" value={person.religion} />
                 </div>
             </Card>
+            
+            {property && (
+                 <Card title="Current Housing Snapshot" titleClassName="bg-ivolve-dark-green text-white">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+                        <InfoItem label="Service Type" value={property.serviceType} />
+                        <InfoItem label="Region" value={property.region} />
+                        <InfoItem label="Country" value={property.address.country} />
+                        <InfoItem label="Legal Entity" value={property.legalEntity} />
+                    </div>
+                </Card>
+            )}
 
             <Card title="Communication" titleClassName="bg-ivolve-dark-green text-white">
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">

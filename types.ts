@@ -52,6 +52,15 @@ export enum PersonStatus {
   Applicant = 'Applicant',
 }
 
+export enum ApplicationStage {
+    Referral = '1. Referral Received',
+    Application = '2. Application in Progress',
+    AwaitingProperty = '3. Awaiting Property Match',
+    PropertyMatched = '4. Property Matched',
+    TenancyOffered = '5. Tenancy Offered',
+    Completed = '6. Completed',
+}
+
 export interface Flag {
   id: string;
   message: string;
@@ -450,6 +459,11 @@ export interface Person {
   hasSmiExemption?: boolean;
   managesOwnMoney?: boolean;
   isOnS117?: boolean;
+
+  // Application / Referral Tracking
+  applicationStage?: ApplicationStage;
+  referralDate?: string;
+  referralSource?: string; // e.g., 'North Yorkshire Council', 'Self-referral'
 }
 
 export interface AgreementDates {
