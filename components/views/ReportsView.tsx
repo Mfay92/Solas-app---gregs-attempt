@@ -116,7 +116,6 @@ const ReportsView: React.FC = () => {
     const [widgetTitle, setWidgetTitle] = useState('');
     
     const allMaintenanceJobs = useMemo(() => properties.flatMap(p => p.maintenanceJobs.map(j => ({ ...j, property: p }))), [properties]);
-    // FIX: Correctly construct allUnits to match PropertyUnitRow and include the nested property object.
     const allUnits = useMemo(() => properties.flatMap(prop => prop.units.map(unit => ({
         propertyId: prop.id,
         unitId: unit.id,
@@ -142,7 +141,6 @@ const ReportsView: React.FC = () => {
 
         const definition = await analyzeReportQuery(query);
         if (definition) {
-            // FIX: Removed 'as any' cast after correcting the type of 'allUnits'.
             const results = processReportData(definition, allUnits, allMaintenanceJobs);
             setReportData({ definition, results });
             setWidgetTitle(definition.title);

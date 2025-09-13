@@ -58,6 +58,13 @@
               'bg-tag-master-row': '#fef3c7',
               'tag-shared-living': '#1e3a8a',
               'tag-self-contained': '#5b21b6',
+              // Flag Colors
+              'flag-danger-bg': '#fef2f2',
+              'flag-danger-text': '#991b1b',
+              'flag-danger-border': '#fca5a5',
+              'flag-warning-bg': '#fffbeb',
+              'flag-warning-text': '#b45309',
+              'flag-warning-border': '#fde68a',
               // Entity Colors
               'entity-heathcotes-bg': '#dcfce7',
               'entity-heathcotes-text': '#166534',
@@ -113,6 +120,76 @@
         }
       }
     </script>
+    <style>
+      /* Custom scrollbar styles for the sidebar */
+      .sidebar-nav {
+        /* For Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+      }
+      .sidebar-nav:hover {
+        /* For Firefox on hover */
+        scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+      }
+      /* For Webkit browsers (Chrome, Safari, Edge) */
+      .sidebar-nav::-webkit-scrollbar {
+        width: 6px;
+      }
+      .sidebar-nav::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-nav::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 10px;
+      }
+      .sidebar-nav:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Split Text Animation */
+      .animated-heading .animated-char {
+        display: inline-block;
+        opacity: 0;
+        animation-name: slide-up;
+        animation-duration: 800ms;
+        animation-fill-mode: both;
+        animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+      }
+
+      @keyframes slide-up {
+        from {
+          transform: translateY(1em);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Person Profile Warning Flags */
+      .person-flag-banner.danger-pulse {
+        animation-name: pulse-danger;
+        animation-duration: 1.5s;
+        animation-iteration-count: 2; /* Pulse twice */
+        animation-timing-function: ease-in-out;
+      }
+
+      @keyframes pulse-danger {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.7);
+        }
+        70% {
+          transform: scale(1.01);
+          box-shadow: 0 0 10px 15px rgba(185, 28, 28, 0);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
+        }
+      }
+    </style>
   <script type="importmap">
 {
   "imports": {

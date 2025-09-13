@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo } from 'react';
 import { Property, ServiceType, UnitStatus } from '../../types';
 import { BuildingIcon, SearchIcon } from '../Icons';
@@ -6,6 +7,7 @@ import StatusChip from '../StatusChip';
 import ToggleSwitch from '../ToggleSwitch';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
+import SplitText from '../SplitText';
 
 
 type TableRow = {
@@ -110,7 +112,7 @@ const VoidManagementView: React.FC = () => {
             <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                     <BuildingIcon />
-                    <h1 className="text-3xl font-bold tracking-wider">VOID MANAGEMENT</h1>
+                    <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="VOID MANAGEMENT"><SplitText>VOID MANAGEMENT</SplitText></h1>
                 </div>
             </div>
              <div className="mt-4">

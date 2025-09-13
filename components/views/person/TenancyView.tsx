@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { TenancyDetails } from '../../../types';
 import Card from '../../Card';
@@ -22,6 +23,14 @@ const TenancyView: React.FC<TenancyViewProps> = ({ tenancy }) => {
                 <div>
                     <h4 className="font-semibold text-sm text-gray-700">Start Date</h4>
                     <p className="text-md text-gray-900">{new Date(tenancy.startDate).toLocaleDateString('en-GB')}</p>
+                </div>
+                 <div>
+                    <h4 className="font-semibold text-sm text-gray-700">End Date</h4>
+                    <p className="text-md text-gray-900">{tenancy.endDate ? new Date(tenancy.endDate).toLocaleDateString('en-GB') : 'N/A'}</p>
+                </div>
+                 <div>
+                    <h4 className="font-semibold text-sm text-gray-700">Notice Period</h4>
+                    <p className="text-md text-gray-900">{tenancy.noticePeriod || 'N/A'}</p>
                 </div>
             </div>
         </Card>

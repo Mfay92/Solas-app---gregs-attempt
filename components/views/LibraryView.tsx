@@ -3,6 +3,7 @@ import { LibraryIcon, BookOpenIcon, BeakerIcon, NewspaperIcon, QuestionMarkCircl
 import Card from '../Card';
 import Modal from '../Modal';
 import { GoogleGenAI } from '@google/genai';
+import SplitText from '../SplitText';
 
 const mockBooks = [
     { id: 1, title: 'Understanding Social Housing Finance' },
@@ -94,7 +95,7 @@ const LibraryView: React.FC = () => {
         <header className="bg-app-header text-app-header-text p-4 shadow-md z-10">
             <div className="flex items-center space-x-4">
                 <LibraryIcon />
-                <h1 className="text-3xl font-bold tracking-wider">THE LIBRARY</h1>
+                <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="THE LIBRARY"><SplitText>THE LIBRARY</SplitText></h1>
             </div>
         </header>
 

@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { 
     PropertiesIcon, PeopleIcon, ComplianceIcon, 
@@ -30,13 +32,13 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeView, onNavigate, onDevHu
 
   const navItems = [
     { name: 'My Space', viewId: 'Dashboard', icon: <MySpaceIcon /> },
-    { name: 'Frameworks', viewId: 'Frameworks', icon: <FileTextIcon /> },
-    { name: 'Growth and Development', viewId: 'Development', icon: <DevelopmentIcon />, disabled: true },
+    { name: 'Growth Hub', viewId: 'GrowthHub', icon: <FileTextIcon /> },
+    { name: 'Growth and Development', viewId: 'Development', icon: <DevelopmentIcon /> },
     { name: 'Properties', icon: <PropertiesIcon /> },
     { name: t('people_plural_capitalized'), viewId: 'People', icon: <PeopleIcon /> },
     { name: 'Stakeholder Hub', icon: <StakeholderHubIcon /> },
     { name: 'Contact Hub', icon: <ContactHubIcon /> },
-    { name: 'Applications & Referrals', viewId: 'Applications', icon: <ApplicationsIcon />, disabled: true },
+    { name: 'Applications & Referrals', viewId: 'Applications', icon: <ApplicationsIcon /> },
     { name: 'Void Management', icon: <VoidManagementIcon /> },
     { name: 'Compliance & PPM', icon: <ComplianceIcon /> },
     { name: 'Repairs Center', viewId: 'Maintenance', icon: <RepairsCenterIcon /> },
@@ -76,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeView, onNavigate, onDevHu
       <div className="p-4 border-b border-white/10 h-20 flex items-center">
         <img src={ivolveGroupLogo} alt="ivolve group logo" className="h-auto w-auto max-h-12" />
       </div>
-      <nav className="flex-1 p-2 space-y-1 mt-4 overflow-y-auto">
+      <nav className="sidebar-nav flex-1 p-2 space-y-1 mt-4 overflow-y-auto">
         {navItems.map((item) => {
           const viewName = item.viewId || item.name;
           const isActive = activeView === viewName;

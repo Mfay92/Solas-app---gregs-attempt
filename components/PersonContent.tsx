@@ -7,7 +7,9 @@ import FundingView from './views/person/FundingView';
 import TenancyView from './views/person/TenancyView';
 import TimelineView from './views/TimelineView';
 import DocumentsView from './views/DocumentsView';
-
+import HealthView from './views/person/HealthView';
+import CircleOfSupportView from './views/person/CircleOfSupportView';
+import FinanceView from './views/person/FinanceView';
 
 type PersonContentProps = {
   person: Person;
@@ -16,7 +18,7 @@ type PersonContentProps = {
 const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
   const { t } = usePersona();
   
-  const TABS = ['About me', `${t('care')} Needs`, 'Funding', t('tenancy'), 'Timeline', 'Documents'];
+  const TABS = ['About me', `Support & Care`, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Timeline', 'Documents'];
   const [activeTab, setActiveTab] = useState(TABS[0]);
 
 
@@ -24,12 +26,16 @@ const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
     switch (activeTab) {
       case 'About me':
         return <PersonOverviewView person={person} />;
-      case `${t('care')} Needs`:
+      case `Support & Care`:
         return <CareNeedsView careNeeds={person.careNeeds} />;
-      case 'Funding':
-        return <FundingView funding={person.funding} />;
-      case t('tenancy'):
+      case 'Health & Medication':
+        return <HealthView />;
+      case 'Circle of Support':
+        return <CircleOfSupportView contacts={person.contacts} />;
+      case `Housing & ${t('tenancy')}`:
         return <TenancyView tenancy={person.tenancy} />;
+      case 'Finance & Benefits':
+        return <FinanceView funding={person.funding} />;
       case 'Timeline':
         return <TimelineView events={person.timeline} moveInDate={person.moveInDate} moveOutDate={person.moveOutDate} />;
       case 'Documents':

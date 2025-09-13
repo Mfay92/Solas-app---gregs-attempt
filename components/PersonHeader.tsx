@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Person, Property, UnitStatus } from '../types';
-import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon } from './Icons';
+import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon } from './Icons';
 import { useUI } from '../contexts/UIContext';
 
 const PersonHeader: React.FC<{ 
@@ -17,6 +17,9 @@ const PersonHeader: React.FC<{
     : `${person.preferredFirstName} ${person.surname}`;
   
   const hasPreferredName = person.preferredFirstName !== person.legalFirstName;
+  
+  const dangerFlags = person.flags?.filter(f => f.level === 'danger');
+  const warningFlags = person.flags?.filter(f => f.level === 'warning');
 
   return (
     <header className="relative bg-ivolve-dark-green text-white p-6 shadow-md">
@@ -31,6 +34,30 @@ const PersonHeader: React.FC<{
               </svg>
           )}
       </button>
+
+        {/* Render danger flags first for prominence */}
+        {dangerFlags && dangerFlags.length > 0 && (
+            <div className="mb-4 p-4 rounded-md bg-flag-danger-bg text-flag-danger-text border border-flag-danger-border person-flag-banner danger-pulse">
+                {dangerFlags.map(flag => (
+                    <div key={flag.id} className="flex items-start space-x-2">
+                        <WarningIcon className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                        <p className="font-bold">{flag.message}</p>
+                    </div>
+                ))}
+            </div>
+        )}
+        {/* Then render warning flags */}
+        {warningFlags && warningFlags.length > 0 && (
+             <div className="mb-4 p-4 rounded-md bg-flag-warning-bg text-flag-warning-text border border-flag-warning-border">
+                {warningFlags.map(flag => (
+                    <div key={flag.id} className="flex items-start space-x-2">
+                        <WarningIcon className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                        <p className="font-bold">{flag.message}</p>
+                    </div>
+                ))}
+            </div>
+        )}
+        
       <div className="flex justify-between items-start space-x-6">
         {/* Left Side: Person Info */}
         <div className="flex items-start space-x-6 flex-1">

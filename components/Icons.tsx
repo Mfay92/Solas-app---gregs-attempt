@@ -179,8 +179,8 @@ export const ChartBarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" classN
 export const FilterIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m0-4v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m6-14v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m0-4v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4" /></svg>;
 export const AdjustmentsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V3m0 3v3m0-3h4m-4 0H8m4 6v-3m0 3v3m0-3h4m-4 0H8m4 6v-3m0 3v3m0-3h4m-4 0H8" /></svg>;
 
-export const WarningIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+export const WarningIcon: React.FC<{ className?: string }> = ({ className = "h-5 w-5" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
         <path fillRule="evenodd" d="M8.257 3.099c.636-1.1 2.148-1.1 2.784 0l5.478 9.576c.636 1.1-.114 2.475-1.392 2.475H4.171c-1.278 0-2.028-1.375-1.392-2.475L8.257 3.099zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
     </svg>
 );

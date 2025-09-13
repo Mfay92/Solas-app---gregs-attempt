@@ -64,7 +64,6 @@ const ReportWidget: React.FC<ReportWidgetProps> = ({ widget, isCollapsed, onTogg
         )
     , [properties]);
 
-    // FIX: Correctly construct allUnits to match the PropertyUnitRow type, including the nested property object.
     const allUnits = React.useMemo(() =>
         properties.flatMap(prop =>
             prop.units.map(unit => ({

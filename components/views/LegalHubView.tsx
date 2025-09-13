@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useCallback, useMemo } from 'react';
 import { GoogleGenAI, Type } from '@google/genai';
 import { LegalIcon, UploadIcon, ClipboardIcon, SparklesIcon, ChevronDownIcon, ChevronRightIcon, FileTextIcon, BuildReportIcon, FolderUploadIcon, LawCheckerIcon, BuildReportAltIcon, SearchIcon } from '../Icons';
@@ -9,6 +10,7 @@ import ToggleSwitch from '../ToggleSwitch';
 import StatusChip from '../StatusChip';
 import RpTag from '../RpTag';
 import { useUI } from '../../contexts/UIContext';
+import SplitText from '../SplitText';
 
 // --- GEMINI AI CONFIGURATION ---
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
@@ -474,7 +476,7 @@ const LegalHubView: React.FC = () => {
             <header className="bg-app-header text-app-header-text p-4 shadow-md z-10">
                 <div className="flex items-center space-x-4">
                     <LegalIcon />
-                    <h1 className="text-3xl font-bold tracking-wider">LEGAL HUB</h1>
+                    <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="LEGAL HUB"><SplitText>LEGAL HUB</SplitText></h1>
                 </div>
             </header>
             <main className="flex-grow bg-gray-50 overflow-y-auto">

@@ -4,6 +4,7 @@ import { AsbestosIcon, ChartBarIcon, ComplianceIcon, DatabaseIcon, EmergencyLigh
 import { useData } from '../../contexts/DataContext';
 import RpTag from '../RpTag';
 import { useUI } from '../../contexts/UIContext';
+import SplitText from '../SplitText';
 
 type ComplianceRow = ComplianceItem & {
     property: Property;
@@ -343,7 +344,7 @@ const CompliancePpmView: React.FC = () => {
         <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 flex items-center justify-center"><ComplianceIcon /></div>
-              <h1 className="text-4xl font-extrabold tracking-tight">COMPLIANCE HUB</h1>
+              <h1 className="text-4xl font-extrabold tracking-tight animated-heading" aria-label="COMPLIANCE HUB"><SplitText>COMPLIANCE HUB</SplitText></h1>
             </div>
             <div className="flex items-center bg-white/20 p-1 rounded-md">
                 <button

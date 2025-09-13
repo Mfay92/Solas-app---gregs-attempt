@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { CareNeed } from '../../../types';
 import Card from '../../Card';
@@ -18,6 +19,12 @@ const CareNeedsView: React.FC<CareNeedsViewProps> = ({ careNeeds }) => {
             <div key={need.id} className="p-4 bg-gray-50 border rounded-md">
               <h4 className="font-bold text-solas-dark">{need.category}</h4>
               <p className="text-sm text-solas-gray mt-1">{need.detail}</p>
+              {need.supportStrategies && (
+                <div className="mt-3 pt-3 border-t">
+                    <h5 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Support Strategies</h5>
+                    <p className="text-sm text-solas-gray mt-1 whitespace-pre-wrap">{need.supportStrategies}</p>
+                </div>
+              )}
             </div>
           ))}
         </div>

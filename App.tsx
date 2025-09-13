@@ -26,6 +26,8 @@ import DevHubModal from './components/DevHubModal';
 import LibraryView from './components/views/LibraryView';
 import ReportsView from './components/views/ReportsView';
 import FrameworksHubView from './components/views/FrameworksHubView';
+import DevelopmentJourneyHubView from './components/views/DevelopmentJourneyHubView';
+import ApplicationsView from './components/views/ApplicationsView';
 
 const CURRENT_USER_ID = 'MF01';
 
@@ -62,7 +64,7 @@ const ActiveViewRenderer: React.FC = () => {
     switch(activeMainView) {
       case 'Dashboard':
         return <DashboardView currentUserId={CURRENT_USER_ID} />;
-      case 'Frameworks':
+      case 'GrowthHub':
         return <FrameworksHubView />;
       case 'Properties':
         return <PropertiesView />;
@@ -95,7 +97,9 @@ const ActiveViewRenderer: React.FC = () => {
       case 'Settings':
         return <SettingsView />;
       case 'Development':
+        return <DevelopmentJourneyHubView />;
       case 'Applications':
+        return <ApplicationsView />;
       case 'Marketing':
         return (
             <div className="p-8">

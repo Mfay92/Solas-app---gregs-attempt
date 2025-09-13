@@ -10,6 +10,7 @@ import { usePersona } from '../../contexts/PersonaContext';
 import * as storage from '../../services/storage';
 import AddWidgetModal from '../AddWidgetModal';
 import ReportWidget from '../ReportWidget';
+import SplitText from '../SplitText';
 
 type DashboardViewProps = {
   currentUserId: string;
@@ -209,7 +210,9 @@ const DashboardView: React.FC<DashboardViewProps> = ({ currentUserId }) => {
         )}
       <div className="flex justify-between items-center">
         <div>
-            <h1 className="text-4xl font-bold text-app-text-dark">Welcome, {currentUser?.name.split(' ')[0]}</h1>
+            <h1 className="text-4xl font-bold text-app-text-dark animated-heading" aria-label={`Welcome, ${currentUser ? currentUser.name.split(' ')[0] : 'User'}`}>
+              <SplitText>{`Welcome, ${currentUser ? currentUser.name.split(' ')[0] : 'User'}`}</SplitText>
+            </h1>
             <p className="mt-2 text-lg text-app-text-gray">Your dashboard is ready. Here are your key contacts and updates.</p>
         </div>
         <button

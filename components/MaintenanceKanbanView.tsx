@@ -3,6 +3,7 @@ import { MaintenanceJob, MaintenanceStatus, Stakeholder, IvolveStaff } from '../
 import { MaintenanceIcon, SearchIcon } from './Icons';
 import MaintenanceJobCard from './MaintenanceJobCard';
 import MaintenanceDetailDrawer from './MaintenanceDetailDrawer';
+import SplitText from './SplitText';
 
 type MaintenanceKanbanViewProps = {
   jobs: MaintenanceJob[];
@@ -69,7 +70,7 @@ const MaintenanceKanbanView: React.FC<MaintenanceKanbanViewProps> = ({ jobs, con
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                         <MaintenanceIcon />
-                        <h1 className="text-3xl font-bold tracking-wider">MAINTENANCE HUB</h1>
+                        <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="MAINTENANCE HUB"><SplitText>MAINTENANCE HUB</SplitText></h1>
                     </div>
                      <button className="bg-ivolve-bright-green text-white font-bold py-2 px-4 rounded-md hover:opacity-90">
                         Log New Job

@@ -5,6 +5,7 @@ import { usePersona } from '../../contexts/PersonaContext';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
 import PanelPositionSelector from '../PanelPositionSelector';
+import SplitText from '../SplitText';
 
 const PeopleView: React.FC = () => {
     const { people, properties, ivolveStaff: staff } = useData();
@@ -52,7 +53,10 @@ const PeopleView: React.FC = () => {
       <header className="bg-app-header text-app-header-text p-4 shadow-md z-10">
         <div className="flex items-center space-x-4">
           <PeopleIcon />
-          <h1 className="text-3xl font-bold tracking-wider uppercase">{t('people_plural_capitalized')} DATABASE</h1>
+          <h1 className="text-3xl font-bold tracking-wider uppercase animated-heading" aria-label={`${t('people_plural_capitalized')} DATABASE`}>
+            {/* FIX: Pass a single string to the SplitText component by using a template literal to combine the parts. */}
+            <SplitText>{`${t('people_plural_capitalized')} DATABASE`}</SplitText>
+          </h1>
         </div>
         <div className="mt-4">
           <div className="relative">

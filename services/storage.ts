@@ -1,4 +1,4 @@
-import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, TagStyle, CustomWidget, Framework, Tender } from '../types';
+import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, TagStyle, CustomWidget, GrowthOpportunity } from '../types';
 
 const STORAGE_KEY = 'ivolveAppState';
 const VIEW_SETTINGS_KEY = 'ivolvePropertiesViewSettings';
@@ -15,8 +15,7 @@ export interface AppState {
     ivolveStaff: IvolveStaff[];
     ppmSchedules: PpmSchedule[];
     people: Person[];
-    frameworks: Framework[];
-    tenders: Tender[];
+    growthOpportunities: GrowthOpportunity[];
     pinnedContactIds: string[];
 }
 

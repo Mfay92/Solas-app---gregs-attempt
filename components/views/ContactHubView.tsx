@@ -6,6 +6,7 @@ import OrgChartModal from '../OrgChartModal';
 import StakeholderContactCard from '../StakeholderContactCard';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
+import SplitText from '../SplitText';
 
 type ContactHubViewProps = {
   currentUserId: string;
@@ -203,7 +204,7 @@ const ContactHubView: React.FC<ContactHubViewProps> = ({ currentUserId }) => {
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                         <ContactHubIcon />
-                        <h1 className="text-3xl font-bold tracking-wider">CONTACT HUB</h1>
+                        <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="CONTACT HUB"><SplitText>CONTACT HUB</SplitText></h1>
                     </div>
                     <button 
                         onClick={() => setIsOrgChartVisible(true)}

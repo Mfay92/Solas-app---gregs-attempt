@@ -5,6 +5,7 @@ import StakeholderCard from '../StakeholderCard';
 import ContractorsTableView from '../ContractorsTableView';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
+import SplitText from '../SplitText';
 
 type StakeholderHubViewProps = {};
 
@@ -64,7 +65,7 @@ const StakeholderHubView: React.FC<StakeholderHubViewProps> = () => {
             <header className="bg-app-header text-app-header-text p-4 shadow-md z-10">
                 <div className="flex items-center space-x-4">
                     <StakeholderHubIcon />
-                    <h1 className="text-3xl font-bold tracking-wider">STAKEHOLDER HUB</h1>
+                    <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="STAKEHOLDER HUB"><SplitText>STAKEHOLDER HUB</SplitText></h1>
                 </div>
                 <div className="mt-4">
                     <div className="relative">

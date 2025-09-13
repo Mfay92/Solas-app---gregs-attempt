@@ -48,12 +48,13 @@ export enum NominalCode {
 export enum PersonStatus {
   Current = 'Current',
   Former = 'Former',
+  Applicant = 'Applicant',
 }
 
 export interface Flag {
   id: string;
   message: string;
-  level: 'warning' | 'info';
+  level: 'warning' | 'info' | 'danger';
 }
 
 export interface Unit {
@@ -319,6 +320,7 @@ export interface CareNeed {
   id: string;
   category: string;
   detail: string;
+  supportStrategies?: string;
 }
 
 export interface FundingDetails {
@@ -330,7 +332,25 @@ export interface FundingDetails {
 export interface TenancyDetails {
   type: 'Licence Agreement' | 'Assured Shorthold Tenancy';
   startDate: string;
+  endDate?: string | null;
+  noticePeriod?: string;
   documents: Document[];
+}
+
+// New private contact type for a person's Circle of Support
+export interface PersonContact {
+  id: string;
+  name: string;
+  relationship: string; // e.g., 'Mother', 'Social Worker', 'GP Surgery'
+  isOrganisation: boolean;
+  organisationName?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  notes?: string;
+  isNextOfKin?: boolean;
+  isAppointee?: boolean;
+  isDeputy?: boolean;
 }
 
 export interface Person {
@@ -348,19 +368,27 @@ export interface Person {
   keyWorkerId: string;
   areaManagerId: string;
   careNeeds: CareNeed[];
-  funding: FundingDetails;
+  funding: FundingDetails[]; // Changed to array to support multiple funding sources
   tenancy: TenancyDetails;
   timeline: TimelineEvent[];
   documents: Document[];
-  // New "About Me" fields
+  flags?: Flag[];
+  contacts: PersonContact[]; // New private contacts
+  
+  // Expanded "About Me" fields
   title: 'Mr' | 'Miss' | 'Mrs' | '';
   firstLanguage: string;
   isNonVerbal: boolean;
   secondLanguage?: string;
+  preferredCommunicationMethod?: string;
+  religion?: string;
   maritalStatus?: 'Single' | 'Married' | 'Divorced' | 'Widowed';
   ethnicity?: string;
   nationality?: string;
   nationalInsuranceNumber?: string;
+  nhsNumber?: string;
+  myStory?: string;
+  importantToMe?: string[];
 }
 
 export interface AgreementDates {
@@ -507,39 +535,75 @@ export interface CustomWidget {
     query: string;
 }
 
-// --- Frameworks & Tenders ---
+// --- Growth Hub Types ---
 
+export enum OpportunityType {
+    Tender = 'Tender',
+    Framework = 'Framework',
+    SpotPurchase = 'Spot Purchase',
+    NewBuild = 'New Build Scheme',
+    Other = 'Other',
+}
+
+export enum BDStage {
+    Potential = '1. Potential Opportunity',
+    Feasibility = '2. Feasibility & Outline',
+    BidInProgress = '3. Bid / Proposal in Progress',
+    Submitted = '4. Submitted - Awaiting Decision',
+    Won = '5. Won / On Framework',
+    Lost = '6. Lost / Unsuccessful',
+    NotProgressed = '7. Not Progressed',
+}
+
+export enum DevelopmentStage {
+    Sourcing = '1. Sourcing & Origination',
+    Feasibility = '2. Feasibility & Due Diligence',
+    Approval = '3. CAPCOM Approval',
+    Acquisition = '4. Acquisition & Legals',
+    Development = '5. Development & Refurbishment',
+    PreHandover = '6. Pre-Handover',
+    Complete = '7. Complete & Handed Over',
+}
+
+// Fix: Add missing FrameworkStatus and TenderStatus enums
 export enum FrameworkStatus {
-  Live = 'Live',
-  ExpiringSoon = 'Expiring Soon',
-  Expired = 'Expired',
-  OnExtension = 'On Extension',
+    Live = 'Live',
+    ExpiringSoon = 'Expiring Soon',
+    Expired = 'Expired',
+    OnExtension = 'On Extension',
 }
 
 export enum TenderStatus {
-  Potential = 'Potential',
-  InProgress = 'In Progress',
-  Submitted = 'Submitted',
-  Won = 'Won',
-  Lost = 'Lost',
+    Potential = 'Potential',
+    InProgress = 'In Progress',
+    Submitted = 'Submitted',
+    Won = 'Won',
+    Lost = 'Lost',
 }
 
-export interface Framework {
-  id: string;
-  name: string;
-  type: ServiceType; 
-  status: FrameworkStatus;
-  laId: string;
-  renewalDate: string;
-  contractEndDate: string;
-  notes: string;
-}
+export interface GrowthOpportunity {
+    id: string;
+    name: string; 
+    opportunityType: OpportunityType;
+    laId: string; // from stakeholder.id where type is LA or NHS
+    bdLeadId: string; // from ivolveStaff.id
+    region: string;
+    serviceType: ServiceType; 
+    clientGroup: string;
+    beds?: number;
 
-export interface Tender {
-  id: string;
-  name: string;
-  laId: string;
-  status: TenderStatus;
-  dueDate: string;
-  leadUserId: string;
+    // For Tender/Framework
+    status?: BDStage;
+    
+    // For New Build
+    developmentStage?: DevelopmentStage;
+    
+    // Dates
+    dueDate?: string;
+    decisionDate?: string;
+    contractEndDate?: string;
+    
+    // Other info
+    contractValue?: number;
+    notes?: string;
 }

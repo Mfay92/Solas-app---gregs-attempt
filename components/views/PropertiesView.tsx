@@ -14,6 +14,7 @@ import QuickStatsModal from '../QuickStatsModal';
 import ViewSettingsModal from '../modals/ViewSettingsModal';
 import HelpModal from '../modals/HelpModal';
 import { GoogleGenAI, Type } from '@google/genai';
+import SplitText from '../SplitText';
 
 const CURRENT_USER_ID = 'MF01';
 
@@ -290,7 +291,7 @@ const PropertiesView: React.FC = () => {
             <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                     <span className="h-8 w-8"><PropertiesIcon /></span>
-                    <h1 className="text-4xl font-extrabold tracking-tight">PROPERTY DATABASE</h1>
+                    <h1 className="text-4xl font-extrabold tracking-tight animated-heading" aria-label="PROPERTY DATABASE"><SplitText>PROPERTY DATABASE</SplitText></h1>
                 </div>
                 <div className="flex-grow max-w-xl mx-4">
                     <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="relative w-full">
