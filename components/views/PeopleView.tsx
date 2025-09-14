@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Person, PersonStatus, ServiceType, Flag } from '../../types';
-import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, ChartBarIcon, CogIcon, KeyIcon, WarningIcon } from '../Icons';
+import { Person, PersonStatus, ServiceType, Flag, DrawerMode } from '../../types';
+import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, ChartBarIcon, CogIcon, KeyIcon, WarningIcon, ExternalLinkIcon } from '../Icons';
 import { usePersona } from '../../contexts/PersonaContext';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
-import PanelPositionSelector from '../PanelPositionSelector';
 import SplitText from '../SplitText';
 import StatusChip from '../StatusChip';
 import RpTag from '../RpTag';
@@ -53,12 +52,29 @@ const Dropdown: React.FC<{ buttonContent: React.ReactNode; children: React.React
     );
 };
 
+const PanelPositionSelector: React.FC<{
+    currentMode: DrawerMode;
+    onSelectMode: (mode: DrawerMode) => void;
+}> = ({ currentMode, onSelectMode }) => (
+    <div className="p-2 space-y-1">
+        <button onClick={() => onSelectMode('right')} className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center space-x-2 ${currentMode === 'right' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}>
+            <PanelRightIcon /> <span>Side Panel</span>
+        </button>
+        <button onClick={() => onSelectMode('bottom')} className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center space-x-2 ${currentMode === 'bottom' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}>
+            <PanelBottomIcon /> <span>Bottom Sheet</span>
+        </button>
+        <button onClick={() => onSelectMode('popup')} className={`w-full text-left px-3 py-2 text-sm rounded-md flex items-center space-x-2 ${currentMode === 'popup' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}>
+            <ExternalLinkIcon /> <span>Pop-up Window</span>
+        </button>
+    </div>
+);
+
+
 const PeopleView: React.FC = () => {
     const { people, properties, ivolveStaff: staff } = useData();
     const { selectPerson, drawerMode, setDrawerMode } = useUI();
     
     const [searchQuery, setSearchQuery] = useState('');
-    const [isPanelPositionSelectorOpen, setIsPanelPositionSelectorOpen] = useState(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const { t } = usePersona();
 
@@ -87,17 +103,6 @@ const PeopleView: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-       {isPanelPositionSelectorOpen && (
-            <PanelPositionSelector
-                isOpen={isPanelPositionSelectorOpen}
-                onClose={() => setIsPanelPositionSelectorOpen(false)}
-                currentMode={drawerMode}
-                onSelectMode={(mode) => {
-                    setDrawerMode(mode);
-                    setIsPanelPositionSelectorOpen(false);
-                }}
-            />
-        )}
         {isAddModalOpen && <AddPersonModal onClose={() => setIsAddModalOpen(false)} />}
       <header className="bg-app-header text-app-header-text p-4 shadow-md z-10 space-y-4">
         <div className="flex justify-between items-center">
@@ -146,16 +151,19 @@ const PeopleView: React.FC = () => {
                     <tr>
                         <th className="p-3 text-center text-sm font-semibold tracking-wider w-24">ID</th>
                         <th className="p-3 text-center text-sm font-semibold tracking-wider w-12">Icon</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Legal First Name</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Surname</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Preferred Name</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Status</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Unit</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Property</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Service Type</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">RP</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Region</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Move-in Date</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">First Name (legal)</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Surname</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Preferred Name</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Status</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Unit</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Property</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Service Type</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">RP</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Region</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Tenancy Start</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Move-in Date</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Tenancy End</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Move Out</th>
                     </tr>
                 </thead>
                 <tbody className="text-app-text-dark divide-y divide-gray-200">
@@ -167,28 +175,31 @@ const PeopleView: React.FC = () => {
                         >
                             <td className="p-3 whitespace-nowrap text-center font-medium text-black">{person.id}</td>
                             <td className="p-3 text-center"><PersonStatusIcon person={person} /></td>
-                            <td className="p-3 whitespace-nowrap text-sm font-medium">{person.legalFirstName}</td>
-                            <td className="p-3 whitespace-nowrap text-sm font-medium">{person.surname}</td>
-                            <td className="p-3 whitespace-nowrap text-sm text-gray-600 italic">
+                            <td className="p-3 whitespace-nowrap text-center text-sm font-medium">{person.legalFirstName}</td>
+                            <td className="p-3 whitespace-nowrap text-center text-sm font-medium">{person.surname}</td>
+                            <td className="p-3 whitespace-nowrap text-center text-sm text-gray-600 italic">
                                 {person.preferredFirstName !== person.legalFirstName ? person.preferredFirstName : ''}
                             </td>
-                            <td className="p-3 text-sm">
+                            <td className="p-3 text-center text-sm">
                                 <span className={`inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md ${person.status === PersonStatus.Current ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}`}>
                                     {person.status}
                                 </span>
                             </td>
-                            <td className="p-3 text-sm">{person.property?.units.find(u => u.id === person.unitId)?.name || 'N/A'}</td>
-                            <td className="p-3 text-sm">{person.property ? `${person.property.address.line1}, ${person.property.address.city}` : 'N/A'}</td>
-                            <td className="p-3 text-sm">{person.property ? <StatusChip status={person.property.serviceType as ServiceType} styleType="default" /> : 'N/A'}</td>
-                            <td className="p-3 text-sm">{person.property ? <RpTag name={person.property.tags.rp} styleType="outline" /> : 'N/A'}</td>
-                            <td className="p-3 text-sm">
+                            <td className="p-3 text-center text-sm">{person.property?.units.find(u => u.id === person.unitId)?.name || 'N/A'}</td>
+                            <td className="p-3 text-sm text-left">{person.property ? `${person.property.address.line1}, ${person.property.address.city}` : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.property ? <StatusChip status={person.property.serviceType as ServiceType} styleType="default" /> : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.property ? <RpTag name={person.property.tags.rp} styleType="outline" /> : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">
                                 {person.property?.region ? (
                                     <span className={`inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md ${getRegionTagStyle(person.property.region)}`}>
                                         {person.property.region}
                                     </span>
                                 ) : 'N/A'}
                             </td>
-                            <td className="p-3 text-sm">{person.moveInDate ? new Date(person.moveInDate).toLocaleDateString() : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.tenancy?.startDate ? new Date(person.tenancy.startDate).toLocaleDateString('en-GB') : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.moveInDate ? new Date(person.moveInDate).toLocaleDateString('en-GB') : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.tenancy?.endDate ? new Date(person.tenancy.endDate).toLocaleDateString('en-GB') : 'N/A'}</td>
+                            <td className="p-3 text-center text-sm">{person.moveOutDate ? new Date(person.moveOutDate).toLocaleDateString('en-GB') : 'N/A'}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -198,10 +209,18 @@ const PeopleView: React.FC = () => {
 
       <footer className="bg-app-header text-app-header-text p-3 flex justify-between items-center z-10 shadow-inner">
            <p className="text-sm font-bold">Showing {filteredPeople.length} of {people.length} {t('people_plural_lowercase')}</p>
-            <button onClick={() => setIsPanelPositionSelectorOpen(true)} className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 font-semibold py-2 px-4 rounded-md transition-colors">
-                {drawerMode === 'right' ? <PanelRightIcon /> : <PanelBottomIcon />}
-                <span>Change Panel Position</span>
-            </button>
+            <Dropdown
+                buttonContent={
+                    <>
+                        {drawerMode === 'right' && <PanelRightIcon />}
+                        {drawerMode === 'bottom' && <PanelBottomIcon />}
+                        {drawerMode === 'popup' && <ExternalLinkIcon />}
+                        <span className="ml-2">Panel Position</span>
+                    </>
+                }
+            >
+                <PanelPositionSelector currentMode={drawerMode} onSelectMode={setDrawerMode} />
+            </Dropdown>
         </footer>
     </div>
   );

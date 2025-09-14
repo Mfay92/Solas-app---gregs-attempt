@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Person, Property, UnitStatus } from '../types';
-import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon } from './Icons';
+import React, { useState, useMemo } from 'react';
+import { Person, Property, UnitStatus, PersonStatus } from '../types';
+import { EyeIcon, EyeOffIcon, ArrowLeftIcon, WarningIcon, ExternalLinkIcon } from './Icons';
 import { useUI } from '../contexts/UIContext';
 import StatusChip from './StatusChip';
 import RpTag from './RpTag';
@@ -26,6 +26,15 @@ const LivingTypeTag: React.FC<{ livingType: Property['livingType'] }> = ({ livin
     return <span className={`mt-2 px-3 py-1 text-sm font-medium rounded-md ${styles[livingType]}`}>{livingType}</span>
 };
 
+const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+};
+
 
 const PersonHeader: React.FC<{ 
     person: Person; 
@@ -35,6 +44,9 @@ const PersonHeader: React.FC<{
 }> = ({ person, property, onClose, isOverlay }) => {
   const [showLegalName, setShowLegalName] = useState(false);
   const { selectProperty } = useUI();
+  
+  const isFormer = person.status === PersonStatus.Former;
+  const headerBgClass = isFormer ? 'bg-solas-gray' : 'bg-ivolve-dark-green';
 
   const displayedName = showLegalName 
     ? `${person.legalFirstName} ${person.surname}` 
@@ -46,9 +58,23 @@ const PersonHeader: React.FC<{
   const warningFlags = person.flags?.filter(f => f.level === 'warning');
   
   const regionStyle = property ? getRegionTagStyle(property.region) : '';
+  
+  const fullAddress = useMemo(() => {
+    if (!property) return null;
+    const unit = property.units.find(u => u.id === person.unitId);
+    const parts = [
+        unit?.name,
+        property.address.propertyName,
+        property.address.line1,
+        property.address.city,
+        property.address.postcode,
+    ].filter(Boolean); // Filter out any null/undefined/empty parts
+    return parts.join(', ');
+  }, [property, person.unitId]);
+
 
   return (
-    <header className="relative bg-ivolve-dark-green text-white p-6 shadow-md">
+    <header className={`relative ${headerBgClass} text-white p-6 shadow-md`}>
        <button 
           onClick={onClose} 
           className="absolute top-2 right-2 p-2 rounded-full text-white/80 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
@@ -85,7 +111,7 @@ const PersonHeader: React.FC<{
         )}
         
       <div className="flex justify-between items-start space-x-6">
-        {/* Left Side: Person Info */}
+        {/* Main Info Area */}
         <div className="flex-1">
             <div className="flex items-center space-x-2">
               <h2 className="text-3xl font-bold">{displayedName}</h2>
@@ -100,7 +126,37 @@ const PersonHeader: React.FC<{
                 </button>
               )}
             </div>
-            <p className="text-lg text-gray-200">Move-in: {new Date(person.moveInDate).toLocaleDateString('en-GB')}</p>
+            
+            {property && fullAddress && (
+                <div className="flex items-center space-x-2 group mt-1">
+                    <p className="text-lg text-gray-100">
+                        {fullAddress}
+                    </p>
+                    <button 
+                        onClick={() => selectProperty(property.id, person.unitId, true)}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-white/20"
+                        title="View property profile"
+                    >
+                        <ExternalLinkIcon />
+                    </button>
+                </div>
+            )}
+
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-300">
+                {/* Column 1 */}
+                <div>
+                    <p><span className="font-semibold text-gray-100">Tenancy Start:</span> {formatDate(person.tenancy?.startDate)}</p>
+                    <p><span className="font-semibold text-gray-100">Move-in:</span> {formatDate(person.moveInDate)}</p>
+                </div>
+                {/* Column 2 (conditional) */}
+                {isFormer && (
+                    <div>
+                        <p><span className="font-semibold text-gray-100">Tenancy End:</span> {formatDate(person.tenancy?.endDate)}</p>
+                        <p><span className="font-semibold text-gray-100">Move-out:</span> {formatDate(person.moveOutDate)}</p>
+                    </div>
+                )}
+            </div>
+
             {property && (
                 <div className="mt-4 flex items-center space-x-2 flex-wrap">
                     <LivingTypeTag livingType={property.livingType} />
@@ -110,40 +166,6 @@ const PersonHeader: React.FC<{
                 </div>
             )}
         </div>
-
-        {/* Right Side: Property Info */}
-        {property && (
-            <button 
-                onClick={() => selectProperty(property.id, person.unitId, true)}
-                className="flex-shrink-0 text-left bg-white/10 p-3 rounded-lg hover:bg-white/20 transition-colors"
-            >
-                <div className="flex items-center space-x-2 font-bold text-sm border-b border-white/20 pb-1 mb-2">
-                    <MapPinIcon />
-                    <span>Current Property</span>
-                </div>
-                <div className="text-sm">
-                    {(() => {
-                        const unit = property.units.find(u => u.id === person.unitId);
-                        const unitName = unit?.name;
-                        const propertyName = property.address.propertyName;
-                        const street = property.address.line1;
-                        let parts: string[] = [];
-                        if (unitName && unit?.status !== UnitStatus.Master) parts.push(unitName);
-                        if (propertyName) parts.push(propertyName);
-                        parts.push(street);
-                        const addressLine1 = parts.join(', ');
-                        const addressLine2 = `${property.address.city}, ${property.address.postcode}`;
-                        return (
-                            <>
-                                <p className="font-semibold">{addressLine1}</p>
-                                <p className="text-xs opacity-80">{addressLine2}</p>
-                            </>
-                        )
-                    })()}
-                    <p className="text-xs font-bold text-ivolve-bright-green mt-1">View Property &rarr;</p>
-                </div>
-            </button>
-        )}
       </div>
     </header>
   );

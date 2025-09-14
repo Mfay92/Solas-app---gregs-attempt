@@ -28,6 +28,7 @@ import ReportsView from './components/views/ReportsView';
 import FrameworksHubView from './components/views/FrameworksHubView';
 import DevelopmentJourneyHubView from './components/views/DevelopmentJourneyHubView';
 import ApplicationsView from './components/views/ApplicationsView';
+import SmartFooter from './components/SmartFooter';
 
 const CURRENT_USER_ID = 'MF01';
 
@@ -169,6 +170,7 @@ const AppContent: React.FC = () => {
             </main>
       </div>
       <AppDrawers />
+      <SmartFooter />
       {isDevHubOpen && <DevHubModal onClose={() => setIsDevHubOpen(false)} />}
     </div>
   );

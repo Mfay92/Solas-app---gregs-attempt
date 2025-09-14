@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Person } from '../types';
+import { Person, PersonStatus, ServiceType } from '../types';
 import { usePersona } from '../contexts/PersonaContext';
 import PersonOverviewView from './views/person/PersonOverviewView';
 import CareNeedsView from './views/person/CareNeedsView';
-import FundingView from './views/person/FundingView';
 import TenancyView from './views/person/TenancyView';
-import TimelineView from './views/TimelineView';
 import DocumentsView from './views/DocumentsView';
 import HealthView from './views/person/HealthView';
 import CircleOfSupportView from './views/person/CircleOfSupportView';
 import FinanceView from './views/person/FinanceView';
+import { useData } from '../contexts/DataContext';
+import OverviewUpdatesView from './views/person/OverviewUpdatesView';
 
 type PersonContentProps = {
   person: Person;
@@ -17,15 +17,28 @@ type PersonContentProps = {
 
 const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
   const { t } = usePersona();
+  const { properties } = useData();
+
+  const property = properties.find(p => p.id === person.propertyId);
+  const serviceType = property?.serviceType;
+
+  const supportCareTabName = serviceType === ServiceType.SupportedLiving
+    ? "Support Details"
+    : "Care Details";
   
-  const TABS = ['About Me', `Support & Care`, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Timeline', 'Documents'];
+  const TABS = ['Overview & Updates', 'About Me', supportCareTabName, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Documents'];
   const [activeTab, setActiveTab] = useState(TABS[0]);
+  
+  const isFormer = person.status === PersonStatus.Former;
+  const navBgClass = isFormer ? 'bg-solas-gray' : 'bg-ivolve-dark-green';
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Overview & Updates':
+        return <OverviewUpdatesView person={person} />;
       case 'About Me':
         return <PersonOverviewView person={person} />;
-      case `Support & Care`:
+      case supportCareTabName:
         return <CareNeedsView person={person} />;
       case 'Health & Medication':
         return <HealthView person={person} />;
@@ -35,18 +48,16 @@ const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
         return <TenancyView person={person} />;
       case 'Finance & Benefits':
         return <FinanceView person={person} />;
-      case 'Timeline':
-        return <TimelineView events={person.timeline} moveInDate={person.moveInDate} moveOutDate={person.moveOutDate} />;
       case 'Documents':
-        return <DocumentsView documents={person.documents} />;
+        return <DocumentsView documents={person.documents} isFormer={person.status === PersonStatus.Former} />;
       default:
-        return <PersonOverviewView person={person} />;
+        return <OverviewUpdatesView person={person} />;
     }
   };
 
   return (
     <div>
-        <div className="bg-ivolve-dark-green px-6">
+        <div className={`${navBgClass} px-6`}>
             <nav className="flex space-x-2 overflow-x-auto" aria-label="Tabs">
                 {TABS.map(tab => (
                     <button

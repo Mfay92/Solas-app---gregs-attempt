@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import { Person, PersonContact } from '../../../types';
+import { Person, PersonContact, PersonStatus } from '../../../types';
 import Card from '../../Card';
 import { UserIcon, BuildingIcon, PhoneIcon, EmailIcon, AddIcon, EditIcon, TrashIcon } from '../../Icons';
 import { useData } from '../../../contexts/DataContext';
@@ -90,6 +90,9 @@ const CircleOfSupportView: React.FC<CircleOfSupportViewProps> = ({ person }) => 
     setIsModalOpen(false);
   };
 
+  const isFormer = person.status === PersonStatus.Former;
+  const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
   const cardTitle = (
       <div className="flex justify-between items-center">
           <h3 className="text-xl font-semibold">Circle of Support</h3>
@@ -112,7 +115,7 @@ const CircleOfSupportView: React.FC<CircleOfSupportViewProps> = ({ person }) => 
                 initialData={editingContact}
             />
         )}
-        <Card title={cardTitle} titleClassName="bg-ivolve-dark-green text-white">
+        <Card title={cardTitle} titleClassName={cardTitleClass}>
         <p className="text-sm text-solas-gray mb-4">
             This is a private contact list for this individual only. These contacts will not appear in the main Contact Hub.
         </p>

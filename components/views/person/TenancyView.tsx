@@ -1,8 +1,9 @@
 
 
 
+
 import React from 'react';
-import { Person } from '../../../types';
+import { Person, PersonStatus } from '../../../types';
 import Card from '../../Card';
 import { usePersona } from '../../../contexts/PersonaContext';
 import DocumentsView from '../DocumentsView';
@@ -34,10 +35,13 @@ const TenancyView: React.FC<TenancyViewProps> = ({ person }) => {
   const hoStakeholder = hoLink?.stakeholderId ? stakeholders.find(s => s.id === hoLink.stakeholderId) : null;
   const hoContact = hoStakeholder?.contacts.find(c => c.id === hoLink?.contactId);
 
+  const isFormer = person.status === PersonStatus.Former;
+  const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
   return (
     <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card title={`${t('tenancy')} Details`} titleClassName="bg-ivolve-dark-green text-white">
+            <Card title={`${t('tenancy')} Details`} titleClassName={cardTitleClass}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h4 className="font-bold text-sm text-ivolve-dark-green">Agreement Type</h4>
@@ -58,7 +62,7 @@ const TenancyView: React.FC<TenancyViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Housing Management" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Housing Management" titleClassName={cardTitleClass}>
                 <div className="space-y-4">
                     <div>
                         <h4 className="font-bold text-sm text-ivolve-dark-green flex items-center space-x-2"><BuildingIcon/> <span>Registered Provider</span></h4>
@@ -79,7 +83,7 @@ const TenancyView: React.FC<TenancyViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Tenancy Status & Background" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Tenancy Status & Background" titleClassName={cardTitleClass}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <InfoItem label="Capacity to Consent" value={typeof person.hasCapacityToConsent === 'boolean' ? (person.hasCapacityToConsent ? 'Yes' : 'No') : undefined} />
                     <InfoItem label="Under Section 117" value={typeof person.isOnS117 === 'boolean' ? (person.isOnS117 ? 'Yes' : 'No') : undefined} />
@@ -90,7 +94,7 @@ const TenancyView: React.FC<TenancyViewProps> = ({ person }) => {
         </div>
 
         {tenancy.documents.length > 0 && (
-            <DocumentsView documents={tenancy.documents} />
+            <DocumentsView documents={tenancy.documents} isFormer={isFormer} />
         )}
     </div>
   );

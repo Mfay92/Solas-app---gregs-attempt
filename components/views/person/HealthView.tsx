@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from '../../Card';
-import { Person, Medication } from '../../../types';
+import { Person, Medication, PersonStatus } from '../../../types';
 import { AddIcon, EditIcon, TrashIcon } from '../../Icons';
 import AddEditMedicationModal from '../../modals/AddEditMedicationModal';
 import { useData } from '../../../contexts/DataContext';
@@ -56,6 +56,9 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
         }
     };
 
+    const isFormer = person.status === PersonStatus.Former;
+    const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
 
   return (
     <div className="space-y-6">
@@ -82,7 +85,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                         <button onClick={() => setIsListModalOpen('conditions')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue text-white px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"><AddIcon /><span>Add</span></button>
                     </div>
                 } 
-                titleClassName="bg-ivolve-dark-green text-white"
+                titleClassName={cardTitleClass}
             >
                 <div className="flex flex-wrap gap-2">
                     {(person.medicalConditions && person.medicalConditions.length > 0) ? person.medicalConditions.map(item => (
@@ -100,7 +103,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                          <button onClick={() => setIsListModalOpen('allergies')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue text-white px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"><AddIcon /><span>Add</span></button>
                     </div>
                 } 
-                titleClassName="bg-ivolve-dark-green text-white"
+                titleClassName={cardTitleClass}
             >
                 <div className="flex flex-wrap gap-2">
                     {(person.allergies && person.allergies.length > 0) ? person.allergies.map(item => (
@@ -120,7 +123,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                     <button onClick={() => openMedModal(null)} className="flex items-center space-x-2 bg-ivolve-blue text-white text-xs font-bold px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"><AddIcon /><span>Add Medication</span></button>
                 </div>
             } 
-            titleClassName="bg-ivolve-dark-green text-white"
+            titleClassName={cardTitleClass}
         >
              <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -157,7 +160,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
             </div>
         </Card>
         
-        <Card title="Pets" titleClassName="bg-ivolve-dark-green text-white">
+        <Card title="Pets" titleClassName={cardTitleClass}>
             <p className="text-md text-gray-900">{person.pets || <span className="text-gray-400 italic">No pets recorded.</span>}</p>
         </Card>
     </div>

@@ -1,7 +1,8 @@
 
 
+
 import React, { useState } from 'react';
-import { CareNeed, Person } from '../../../types';
+import { CareNeed, Person, PersonStatus, ServiceType } from '../../../types';
 import Card from '../../Card';
 import { usePersona } from '../../../contexts/PersonaContext';
 import { AddIcon, EditIcon, TrashIcon } from '../../Icons';
@@ -14,9 +15,12 @@ type CareNeedsViewProps = {
 
 const CareNeedsView: React.FC<CareNeedsViewProps> = ({ person }) => {
   const { t } = usePersona();
-  const { handleUpdatePerson } = useData();
+  const { properties, handleUpdatePerson } = useData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingNeed, setEditingNeed] = useState<CareNeed | null>(null);
+
+  const property = properties.find(p => p.id === person.propertyId);
+  const serviceType = property?.serviceType;
 
   const openAddModal = () => {
     setEditingNeed(null);
@@ -47,10 +51,14 @@ const CareNeedsView: React.FC<CareNeedsViewProps> = ({ person }) => {
     setIsModalOpen(false);
   };
 
+  const isFormer = person.status === PersonStatus.Former;
+  const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
+  const cardTitleText = serviceType === ServiceType.SupportedLiving ? 'Support Needs' : 'Care Needs';
 
   const cardTitle = (
     <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold">{`${t('care')} Needs`}</h3>
+        <h3 className="text-xl font-semibold">{cardTitleText}</h3>
         <button 
             onClick={openAddModal}
             className="flex items-center space-x-2 bg-ivolve-blue text-white text-xs font-bold px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"
@@ -71,7 +79,7 @@ const CareNeedsView: React.FC<CareNeedsViewProps> = ({ person }) => {
             initialData={editingNeed}
         />
       )}
-      <Card title={cardTitle} titleClassName="bg-ivolve-dark-green text-white">
+      <Card title={cardTitle} titleClassName={cardTitleClass}>
         {person.careNeeds.length > 0 ? (
           <div className="space-y-4">
             {person.careNeeds.map((need) => (

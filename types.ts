@@ -24,6 +24,7 @@ export enum TimelineEventType {
   Notes = 'Notes',
   Care = 'Care',
   Tenancy = 'Tenancy',
+  System = 'System',
 }
 
 export enum MaintenanceStatus {
@@ -127,12 +128,17 @@ export interface IvolveStaff {
     isPinned?: boolean;
 }
 
+export type NoteCategory = 'General' | 'Safeguarding' | 'Incident' | 'Positive' | 'Health' | 'Finance' | 'Housing' | 'Family Contact';
+
 export interface TimelineEvent {
   id: string;
   date: string;
   type: TimelineEventType;
+  title?: string; // Added title for notes
   description: string;
   actor: string;
+  noteCategory?: NoteCategory; // For notes
+  isSensitive?: boolean; // For important/locked notes
 }
 
 export interface RentLine {
@@ -506,6 +512,8 @@ export enum LegalEntity {
 }
 
 export type TagStyle = 'default' | 'outline' | 'text';
+
+export type DrawerMode = 'right' | 'bottom' | 'popup';
 
 export interface Property {
   id: string;

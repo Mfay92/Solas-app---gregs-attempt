@@ -1,5 +1,5 @@
 import React from 'react';
-import { Person } from '../../../types';
+import { Person, PersonStatus } from '../../../types';
 import Card from '../../Card';
 import { useData } from '../../../contexts/DataContext';
 
@@ -14,45 +14,17 @@ const InfoItem: React.FC<{ label: string; value: React.ReactNode }> = ({ label, 
     </div>
 );
 
-const calculateAge = (dob: string): number => {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
-};
-
 const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
-    const age = calculateAge(person.dob);
     const { properties } = useData();
     const property = properties.find(p => p.id === person.propertyId);
 
+    const isFormer = person.status === PersonStatus.Former;
+    const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
     return (
         <div className="space-y-6">
-            <Card title="Personal Details" titleClassName="bg-ivolve-dark-green text-white">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-                    <InfoItem label="Legal First Name" value={person.legalFirstName} />
-                    <InfoItem label="Preferred First Name" value={person.preferredFirstName} />
-                    <InfoItem label="Surname" value={person.surname} />
-                    <InfoItem label="Title" value={person.title} />
-                     <InfoItem 
-                        label="Date of Birth" 
-                        value={`${new Date(person.dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} (Age ${age})`}
-                    />
-                    <InfoItem label="Email Address" value={person.email} />
-                    <InfoItem label="Phone Number" value={person.phone} />
-                    <InfoItem label="Marital Status" value={person.maritalStatus} />
-                    <InfoItem label="Ethnicity" value={person.ethnicity} />
-                    <InfoItem label="Nationality" value={person.nationality} />
-                    <InfoItem label="Religion / Faith" value={person.religion} />
-                </div>
-            </Card>
-            
             {property && (
-                 <Card title="Current Housing Snapshot" titleClassName="bg-ivolve-dark-green text-white">
+                 <Card title="Current Housing Snapshot" titleClassName={cardTitleClass}>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
                         <InfoItem label="Service Type" value={property.serviceType} />
                         <InfoItem label="Region" value={property.region} />
@@ -62,7 +34,7 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                 </Card>
             )}
 
-            <Card title="Communication" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Communication" titleClassName={cardTitleClass}>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
                      <InfoItem 
                         label="First Language" 
@@ -78,14 +50,14 @@ const PersonOverviewView: React.FC<PersonOverviewViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Official Information" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Official Information" titleClassName={cardTitleClass}>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
                     <InfoItem label="National Insurance No." value={person.nationalInsuranceNumber} />
                     <InfoItem label="NHS Number" value={person.nhsNumber} />
                 </div>
             </Card>
 
-             <Card title="My Story & Preferences" titleClassName="bg-ivolve-dark-green text-white">
+             <Card title="My Story & Preferences" titleClassName={cardTitleClass}>
                  <div className="space-y-6">
                     <div>
                         <h4 className="text-sm font-medium text-gray-500 mb-1">My Story</h4>

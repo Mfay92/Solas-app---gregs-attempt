@@ -846,7 +846,13 @@ export const MOCK_PEOPLE: Person[] = [
         funding: [{ id: 'fund-p1-1', source: 'North Yorkshire Council', weeklyAmount: 850.00, details: 'Personal Independence Payment (PIP) and Housing Benefit.' }],
         tenancy: { type: 'Licence Agreement', startDate: '2022-01-20', documents: [{ id: 'doc-p1-1', name: 'Alice J - Licence Agreement', type: 'PDF', date: '2022-01-20', year: 2022, url: '#'}] },
         timeline: [
-            { id: 'pt1-1', date: '2024-07-15', type: TimelineEventType.Care, description: 'Annual support plan review completed.', actor: 'Nora Hayes' },
+            { id: 'pt1-0', date: '2022-01-20T09:00:00Z', type: TimelineEventType.System, title: 'Profile Created', description: `Profile created for Alice Johnson.`, actor: 'System' },
+            { id: 'pt1-sys-1', date: '2022-01-20T11:30:00Z', type: TimelineEventType.System, title: 'Document Uploaded', description: `Document "Alice J - Licence Agreement" was uploaded by Nora Hayes.`, actor: 'System' },
+            { id: 'pt1-1', date: '2024-07-15', type: TimelineEventType.Care, title: 'Annual Review', description: 'Annual support plan review completed.', actor: 'Nora Hayes' },
+            { id: 'pt1-2', date: '2024-07-20', type: TimelineEventType.Notes, title: 'Family Day Out', description: 'Alice had a great day out with family. She seemed very happy and engaged.', actor: 'Nora Hayes', noteCategory: 'Positive' },
+            { id: 'pt1-3', date: '2024-07-18', type: TimelineEventType.Notes, title: 'Minor Fall', description: 'Minor fall in the garden. No injuries, but seemed a bit shaken. Monitored for 2 hours, no concerns.', actor: 'Support Staff', noteCategory: 'Incident', isSensitive: true },
+            { id: 'pt1-4', date: '2024-06-10', type: TimelineEventType.Notes, title: 'Holiday Plans', description: 'Discussion about upcoming holiday plans. Alice is excited about visiting the seaside.', actor: 'Nora Hayes', noteCategory: 'General' },
+            { id: 'pt1-sys-2', date: '2024-07-25T14:00:00Z', type: TimelineEventType.System, title: 'Profile Updated', description: `Contact phone number changed from '07712 345670' to '07712 345678' by Matt Fay.`, actor: 'System' },
         ],
         documents: [
              { id: 'doc-p1-1', name: 'Alice J - Licence Agreement', type: 'PDF', date: '2022-01-20', year: 2022, url: '#'},
@@ -906,7 +912,7 @@ export const MOCK_PEOPLE: Person[] = [
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
         funding: [{ id: 'fund-p4-1', source: 'Nottingham City Council', weeklyAmount: 750.00, details: '' }],
-        tenancy: { type: 'Assured Shorthold Tenancy', startDate: '2022-05-10', documents: [] },
+        tenancy: { type: 'Assured Shorthold Tenancy', startDate: '2022-05-10', endDate: '2024-06-15', documents: [] },
         timeline: [
             { id: 'pt4-1', date: '2024-06-15', type: TimelineEventType.Moves, description: 'Moved out to independent living property.', actor: 'Daniel Evans' },
         ],
@@ -933,7 +939,7 @@ export const MOCK_PEOPLE: Person[] = [
         keyWorkerId: 'NH01', areaManagerId: 'HD01', // Placeholder manager
         careNeeds: [], 
         funding: [{ id: 'fund-p6-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
-        tenancy: { type: 'Licence Agreement', startDate: '2022-03-15', documents: [] },
+        tenancy: { type: 'Licence Agreement', startDate: '2022-03-15', endDate: '2024-06-30', documents: [] },
         timeline: [], documents: [],
         contacts: [],
         title: 'Miss', firstLanguage: 'Welsh', secondLanguage: 'English', isNonVerbal: false
@@ -944,7 +950,7 @@ export const MOCK_PEOPLE: Person[] = [
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
         funding: [{ id: 'fund-p7-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
-        tenancy: { type: 'Licence Agreement', startDate: '2022-04-01', documents: [] },
+        tenancy: { type: 'Licence Agreement', startDate: '2022-04-01', endDate: '2024-06-30', documents: [] },
         timeline: [], documents: [],
         contacts: [],
         title: 'Mr', firstLanguage: 'English', isNonVerbal: false
@@ -955,7 +961,7 @@ export const MOCK_PEOPLE: Person[] = [
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
         funding: [{ id: 'fund-p8-1', source: 'Newport City Council', weeklyAmount: 1100.00, details: '' }],
-        tenancy: { type: 'Licence Agreement', startDate: '2023-01-20', documents: [] },
+        tenancy: { type: 'Licence Agreement', startDate: '2023-01-20', endDate: '2024-06-30', documents: [] },
         timeline: [], documents: [],
         contacts: [],
         title: 'Mr', firstLanguage: 'English', isNonVerbal: false

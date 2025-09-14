@@ -5,9 +5,10 @@ import { DocumentsIcon } from '../Icons';
 
 type DocumentsViewProps = {
   documents: Document[];
+  isFormer?: boolean;
 };
 
-const DocumentsView: React.FC<DocumentsViewProps> = ({ documents }) => {
+const DocumentsView: React.FC<DocumentsViewProps> = ({ documents, isFormer = false }) => {
   const groupedByYear = documents.reduce((acc, doc) => {
     (acc[doc.year] = acc[doc.year] || []).push(doc);
     return acc;
@@ -15,8 +16,10 @@ const DocumentsView: React.FC<DocumentsViewProps> = ({ documents }) => {
 
   const sortedYears = Object.keys(groupedByYear).map(Number).sort((a, b) => b - a);
 
+  const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
   return (
-    <Card title="Documents" titleClassName="bg-ivolve-dark-green text-white" className="hover:shadow-xl hover:-translate-y-0.5">
+    <Card title="Documents" titleClassName={cardTitleClass} className="hover:shadow-xl hover:-translate-y-0.5">
       <div className="space-y-6">
         {sortedYears.map(year => (
           <div key={year}>

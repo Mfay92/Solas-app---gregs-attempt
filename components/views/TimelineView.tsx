@@ -21,6 +21,8 @@ const eventTypeColors: Record<TimelineEventType, string> = {
   [TimelineEventType.Notes]: 'bg-gray-100 text-gray-800',
   [TimelineEventType.Care]: 'bg-pink-100 text-pink-800',
   [TimelineEventType.Tenancy]: 'bg-orange-100 text-orange-800',
+  // FIX: Added missing System event type color
+  [TimelineEventType.System]: 'bg-gray-100 text-gray-800',
 };
 
 const KeyDateItem: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => {
@@ -48,7 +50,8 @@ const TimelineView: React.FC<TimelineViewProps> = ({ events, handoverDate, handb
     : events;
     
   const cardHoverClass = "hover:shadow-xl hover:-translate-y-0.5";
-  const cardTitleClass = "bg-ivolve-dark-green text-white";
+  const isFormer = !!moveOutDate;
+  const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
 
   return (
     <div className="space-y-6">

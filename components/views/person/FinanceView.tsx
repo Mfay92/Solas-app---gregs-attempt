@@ -1,5 +1,5 @@
 import React from 'react';
-import { Person } from '../../../types';
+import { Person, PersonStatus } from '../../../types';
 import Card from '../../Card';
 import { useData } from '../../../contexts/DataContext';
 
@@ -31,10 +31,13 @@ const FinanceView: React.FC<FinanceViewProps> = ({ person }) => {
         : `£${Math.abs(difference).toFixed(2)} shortfall`;
     const differenceColor = difference >= 0 ? 'text-green-600' : 'text-red-600';
 
+    const isFormer = person.status === PersonStatus.Former;
+    const cardTitleClass = isFormer ? 'bg-solas-gray text-white' : 'bg-ivolve-dark-green text-white';
+
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card title="Housing Benefit" titleClassName="bg-ivolve-dark-green text-white">
+                <Card title="Housing Benefit" titleClassName={cardTitleClass}>
                     <div className="space-y-4">
                         <div>
                             <h4 className="font-bold text-sm text-ivolve-dark-green">Reference Number</h4>
@@ -57,7 +60,7 @@ const FinanceView: React.FC<FinanceViewProps> = ({ person }) => {
                     </div>
                 </Card>
 
-                <Card title="Rent Contribution" titleClassName="bg-ivolve-dark-green text-white">
+                <Card title="Rent Contribution" titleClassName={cardTitleClass}>
                     <div className="space-y-4">
                         <div>
                             <h4 className="font-bold text-sm text-ivolve-dark-green">Weekly Rent Liability</h4>
@@ -76,7 +79,7 @@ const FinanceView: React.FC<FinanceViewProps> = ({ person }) => {
                 </Card>
             </div>
             
-            <Card title="Personal Benefits" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Personal Benefits" titleClassName={cardTitleClass}>
                  <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
@@ -107,7 +110,7 @@ const FinanceView: React.FC<FinanceViewProps> = ({ person }) => {
                 </div>
             </Card>
 
-            <Card title="Other Financial Information" titleClassName="bg-ivolve-dark-green text-white">
+            <Card title="Other Financial Information" titleClassName={cardTitleClass}>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      <InfoItem label="Council Tax SMI Exemption" value={typeof person.hasSmiExemption === 'boolean' ? (person.hasSmiExemption ? 'Yes' : 'No') : undefined} />
                      <InfoItem label="Manages Own Money" value={typeof person.managesOwnMoney === 'boolean' ? (person.managesOwnMoney ? 'Yes' : 'No') : undefined} />
