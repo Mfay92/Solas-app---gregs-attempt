@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Card from '../Card';
 import ContactCard from '../ContactCard';
 import StakeholderContactCard from '../StakeholderContactCard';
-import { ComplianceIcon, ClipboardIcon, BuildingIcon, PeopleIcon, VoidManagementIcon, CalendarIcon, PlusIcon, StarIconSolid, SparklesIcon } from '../Icons';
+import { ComplianceIcon, ClipboardIcon, BuildingIcon, PeopleIcon, VoidManagementIcon, CalendarIcon, PlusIcon, StarIconSolid, SparklesIcon, UserIcon } from '../Icons';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
 import { MaintenanceJob, Property, MaintenanceStatus, UnitStatus, CustomWidget } from '../../types';
@@ -474,7 +474,9 @@ const DashboardView: React.FC<DashboardViewProps> = ({ currentUserId }) => {
                                     onClick={() => selectPerson(person.id)}
                                     className="w-full text-left p-2 flex items-center space-x-3 bg-gray-50 rounded-md border hover:bg-ivolve-blue/10 hover:border-ivolve-blue transition-colors"
                                 >
-                                    <img src={person.photoUrl} alt={person.preferredFirstName} className="w-10 h-10 rounded-full" />
+                                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+                                        <UserIcon />
+                                    </div>
                                     <div>
                                         <p className="font-semibold text-sm text-solas-dark">{person.preferredFirstName} {person.surname}</p>
                                         <p className="text-xs text-solas-gray">{property?.address.line1}</p>

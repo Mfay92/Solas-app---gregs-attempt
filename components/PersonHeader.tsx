@@ -1,7 +1,31 @@
 import React, { useState } from 'react';
 import { Person, Property, UnitStatus } from '../types';
-import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon } from './Icons';
+import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon, UserIcon } from './Icons';
 import { useUI } from '../contexts/UIContext';
+import StatusChip from './StatusChip';
+import RpTag from './RpTag';
+
+const getRegionTagStyle = (region: string): string => {
+    switch(region) {
+        case 'North': return 'bg-region-north text-white';
+        case 'Midlands': return 'bg-region-midlands text-white';
+        case 'South': return 'bg-region-south text-white';
+        case 'South West': return 'bg-region-south-west text-white';
+        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
+        default: return 'bg-gray-200 text-gray-700';
+    }
+}
+
+const LivingTypeTag: React.FC<{ livingType: Property['livingType'] }> = ({ livingType }) => {
+    const styles = {
+        'Self-contained': 'bg-tag-self-contained text-white',
+        'Shared Living': 'bg-tag-shared-living text-white',
+        'Mixed': 'bg-gray-500 text-white',
+    };
+    
+    return <span className={`mt-2 px-3 py-1 text-sm font-medium rounded-md ${styles[livingType]}`}>{livingType}</span>
+};
+
 
 const PersonHeader: React.FC<{ 
     person: Person; 
@@ -20,6 +44,8 @@ const PersonHeader: React.FC<{
   
   const dangerFlags = person.flags?.filter(f => f.level === 'danger');
   const warningFlags = person.flags?.filter(f => f.level === 'warning');
+  
+  const regionStyle = property ? getRegionTagStyle(property.region) : '';
 
   return (
     <header className="relative bg-ivolve-dark-green text-white p-6 shadow-md">
@@ -61,7 +87,9 @@ const PersonHeader: React.FC<{
       <div className="flex justify-between items-start space-x-6">
         {/* Left Side: Person Info */}
         <div className="flex items-start space-x-6 flex-1">
-          <img src={person.photoUrl} alt={displayedName} className="w-24 h-24 rounded-full border-4 border-gray-200 flex-shrink-0" />
+          <div className="w-24 h-24 rounded-full border-4 border-gray-200 flex-shrink-0 bg-gray-200 flex items-center justify-center text-gray-400">
+            <UserIcon />
+          </div>
           <div className="flex-1 pt-2">
             <div className="flex items-center space-x-2">
               <h2 className="text-3xl font-bold">{displayedName}</h2>
@@ -77,6 +105,14 @@ const PersonHeader: React.FC<{
               )}
             </div>
             <p className="text-lg text-gray-200">Move-in: {new Date(person.moveInDate).toLocaleDateString('en-GB')}</p>
+            {property && (
+                <div className="mt-4 flex items-center space-x-2 flex-wrap">
+                    <LivingTypeTag livingType={property.livingType} />
+                    <div className="mt-2 inline-block"><StatusChip status={property.serviceType} styleType="default" /></div>
+                    <span className={`mt-2 px-3 py-1 text-sm font-medium rounded-md ${regionStyle}`}>{property.region}</span>
+                    <div className="mt-2 inline-block"><RpTag name={property.tags.rp} /></div>
+                </div>
+            )}
           </div>
         </div>
 

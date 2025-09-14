@@ -58,13 +58,9 @@ const StakeholderContactCard: React.FC<StakeholderContactCardProps> = ({ contact
             </button>
         )}
 
-      {contact.photoUrl ? (
-        <img src={contact.photoUrl} alt={contact.name} className={`w-24 h-24 rounded-full border-4 shadow-md ${borderColor}`} />
-      ) : (
-        <div className={`w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0 border-4 ${borderColor}`}>
-          <UserIcon />
-        </div>
-      )}
+      <div className={`w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0 border-4 ${borderColor}`}>
+        <UserIcon />
+      </div>
       <div className="flex flex-col justify-center items-center mt-3 overflow-hidden">
         <p className={`font-bold truncate text-xl ${nameColor}`}>{contact.name}</p>
         <p className="text-sm text-solas-gray truncate px-2">{contact.role}</p>

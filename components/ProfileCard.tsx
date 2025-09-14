@@ -1,6 +1,6 @@
 import React from 'react';
 import { IvolveStaff } from '../types';
-import { EmailIcon, MessageIcon, ExternalLinkIcon, PhoneIcon, DECORATIVE_ICON_MAP, MaintenanceIcon } from './Icons';
+import { EmailIcon, MessageIcon, ExternalLinkIcon, PhoneIcon, DECORATIVE_ICON_MAP, MaintenanceIcon, UserIcon } from './Icons';
 import { getDepartmentStyles } from './ContactCard';
 import { IvolveCareAndSupportLogo } from './IvolveLogos';
 
@@ -12,7 +12,9 @@ type ProfileCardProps = {
 
 const MiniProfile: React.FC<{person: IvolveStaff}> = ({ person }) => (
     <div className="bg-gray-50 p-3 rounded-md border flex items-center space-x-3 hover:bg-gray-100 transition-colors">
-        <img src={person.photoUrl} alt={person.name} className="w-10 h-10 rounded-full" />
+        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+            <UserIcon />
+        </div>
         <div>
             <p className="font-medium text-sm text-solas-dark">{person.name}</p>
             <p className="text-xs text-solas-gray">{person.role}</p>
@@ -36,11 +38,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ person, manager, directReport
                     <IvolveCareAndSupportLogo />
                  </div>
                  <div className="relative mt-8">
-                    <img 
-                        src={person.photoUrl} 
-                        alt={person.name} 
-                        className={`w-32 h-32 rounded-full border-4 shadow-lg ring-4 ring-white ${departmentStyles.border}`}
-                    />
+                    <div 
+                        className={`w-32 h-32 rounded-full border-4 shadow-lg ring-4 ring-white ${departmentStyles.border} bg-gray-200 flex items-center justify-center text-gray-400`}
+                    >
+                        <UserIcon />
+                    </div>
                     {person.personalizationIcons && person.personalizationIcons.length > 0 && (
                         <div className="absolute -bottom-2 -right-2 flex space-x-1">
                             {person.personalizationIcons.slice(0, 3).map(icon => {

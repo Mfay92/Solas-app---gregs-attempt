@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Property, IvolveStaff, LinkedContact } from '../types';
 import Modal from './Modal';
-import { AddIcon, TrashIcon } from './Icons';
+import { AddIcon, TrashIcon, UserIcon } from './Icons';
 
 type ManageStaffLinksModalProps = {
     property: Property;
@@ -60,7 +60,9 @@ const ManageStaffLinksModal: React.FC<ManageStaffLinksModalProps> = ({ property,
                             return (
                                 <div key={link.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-md border">
                                     <div className="flex items-center space-x-3">
-                                        <img src={staffMember.photoUrl} alt={staffMember.name} className="w-10 h-10 rounded-full" />
+                                        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+                                            <UserIcon />
+                                        </div>
                                         <div>
                                             <p className="font-medium text-sm text-solas-dark">{staffMember.name}</p>
                                             <p className="text-xs text-solas-gray">{link.role}</p>

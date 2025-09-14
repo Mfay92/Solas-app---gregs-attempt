@@ -1,6 +1,6 @@
 import React from 'react';
 import { IvolveStaff, PersonalizationIcon } from '../types';
-import { BuildingIcon, DECORATIVE_ICON_MAP, TrashIcon } from './Icons';
+import { BuildingIcon, DECORATIVE_ICON_MAP, TrashIcon, UserIcon } from './Icons';
 import { IvolveCareAndSupportLogoTag } from './IvolveLogos';
 
 type ContactCardProps = {
@@ -132,7 +132,9 @@ const ContactCard: React.FC<ContactCardProps> = ({ person, onClick, isEditing = 
                     </div>
                 ) : (
                     <>
-                        <img src={person.photoUrl} alt={person.name} className="w-24 h-24 rounded-full border-4 border-white shadow-md" />
+                        <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-md flex items-center justify-center text-gray-400">
+                            <UserIcon />
+                        </div>
                         <p className={`mt-3 font-bold text-xl ${nameTextClass}`}>{person.name}</p>
                         <p className={`text-sm ${roleTextClass}`}>{person.role}</p>
                         <div className="mt-2 flex justify-center items-center space-x-2">

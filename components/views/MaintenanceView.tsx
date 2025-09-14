@@ -43,7 +43,7 @@ const MaintenanceView: React.FC<MaintenanceViewProps> = ({ jobs, contractors, on
           <thead className="bg-gray-50">
             <tr>
               {['Ref', 'Unit', 'Category', 'Type', 'Status', 'Reported', 'SLA Due', 'Assigned To'].map(header => (
-                <th key={header} scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{header}</th>
+                <th key={header} scope="col" className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">{header}</th>
               ))}
             </tr>
           </thead>

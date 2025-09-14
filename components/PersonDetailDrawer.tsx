@@ -38,9 +38,7 @@ const PersonDetailDrawer: React.FC = () => {
                     onClose={handleClose}
                     isOverlay={isOverlay} 
                 />
-                <div className="p-6">
-                    <PersonContent person={person} />
-                </div>
+                <PersonContent person={person} />
             </div>
         </div>
       </div>

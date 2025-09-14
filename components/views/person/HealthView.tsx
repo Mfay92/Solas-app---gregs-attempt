@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from 'react';
 import Card from '../../Card';
 import { Person, Medication } from '../../../types';
@@ -82,7 +79,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                 title={
                     <div className="flex justify-between items-center">
                         <h3 className="text-xl font-semibold">Medical Conditions</h3>
-                        <button onClick={() => setIsListModalOpen('conditions')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue/10 text-ivolve-blue px-2 py-1 rounded-md"><AddIcon /><span>Add</span></button>
+                        <button onClick={() => setIsListModalOpen('conditions')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue text-white px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"><AddIcon /><span>Add</span></button>
                     </div>
                 } 
                 titleClassName="bg-ivolve-dark-green text-white"
@@ -100,7 +97,7 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                 title={
                     <div className="flex justify-between items-center">
                         <h3 className="text-xl font-semibold">Allergies</h3>
-                         <button onClick={() => setIsListModalOpen('allergies')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue/10 text-ivolve-blue px-2 py-1 rounded-md"><AddIcon /><span>Add</span></button>
+                         <button onClick={() => setIsListModalOpen('allergies')} className="flex items-center space-x-1 text-xs font-bold bg-ivolve-blue text-white px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"><AddIcon /><span>Add</span></button>
                     </div>
                 } 
                 titleClassName="bg-ivolve-dark-green text-white"
@@ -129,11 +126,11 @@ const HealthView: React.FC<HealthViewProps> = ({ person }) => {
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dosage</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-                            <th className="relative px-4 py-2"><span className="sr-only">Actions</span></th>
+                            <th className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Name</th>
+                            <th className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Dosage</th>
+                            <th className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Frequency</th>
+                            <th className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Notes</th>
+                            <th className="relative px-4 py-3"><span className="sr-only">Actions</span></th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">

@@ -42,13 +42,9 @@ const StakeholderContactDetailDrawer: React.FC = () => {
 
           <main className="flex-grow overflow-y-auto p-6">
             <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col items-center text-center">
-              {contact.photoUrl ? (
-                <img src={contact.photoUrl} alt={contact.name} className="w-32 h-32 rounded-full border-4 border-white shadow-lg -mt-20" />
-              ) : (
-                <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 border-4 border-white shadow-lg -mt-20">
-                  <UserIcon />
-                </div>
-              )}
+              <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 border-4 border-white shadow-lg -mt-20">
+                <UserIcon />
+              </div>
               <h2 className="mt-4 text-2xl font-bold text-solas-dark">{contact.name}</h2>
               <p className="text-md text-solas-gray">{contact.role}</p>
             </div>

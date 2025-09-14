@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Person } from '../../../types';
 import Card from '../../Card';
@@ -83,10 +81,10 @@ const FinanceView: React.FC<FinanceViewProps> = ({ person }) => {
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                             <tr>
-                                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Benefit Type</th>
-                                <th scope="col" className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount (£)</th>
-                                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
-                                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                                <th scope="col" className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Benefit Type</th>
+                                <th scope="col" className="px-4 py-3 text-right text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Amount (£)</th>
+                                <th scope="col" className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Frequency</th>
+                                <th scope="col" className="px-4 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Start Date</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">

@@ -71,24 +71,24 @@ const PropertyContent: React.FC<PropertyContentProps> = ({ property, allStaff, a
 
   return (
     <div>
-        <div className="border-b border-gray-200">
-            <nav className="flex space-x-2 bg-gray-100 p-1.5 rounded-t-lg overflow-x-auto" aria-label="Tabs">
+        <div className="bg-ivolve-dark-green px-6">
+            <nav className="flex space-x-2 overflow-x-auto" aria-label="Tabs">
                 {TABS.map(tab => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`${
+                        className={`whitespace-nowrap py-3 px-4 text-sm font-medium transition-colors focus:outline-none rounded-t-lg ${
                             activeTab === tab
-                            ? 'bg-white text-ivolve-blue shadow-sm'
-                            : 'text-gray-500 hover:bg-gray-200 hover:text-gray-700'
-                        } whitespace-nowrap py-2 px-4 rounded-md font-medium text-sm transition-colors`}
+                            ? 'bg-ivolve-off-white text-ivolve-dark-green font-bold'
+                            : 'text-white/80 hover:bg-ivolve-mid-green hover:text-white'
+                        }`}
                     >
                         {tab}
                     </button>
                 ))}
             </nav>
         </div>
-        <div className="pt-6">{renderContent()}</div>
+        <div className="p-6">{renderContent()}</div>
     </div>
   );
 };

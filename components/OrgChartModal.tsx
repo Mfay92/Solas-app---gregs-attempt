@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { IvolveStaff } from '../types';
-import { ChevronDownIcon, EmailIcon, MessageIcon, ExternalLinkIcon, SitemapIcon } from './Icons';
+import { ChevronDownIcon, EmailIcon, MessageIcon, ExternalLinkIcon, SitemapIcon, UserIcon } from './Icons';
 
 type TreeNode = IvolveStaff & { children: TreeNode[] };
 
@@ -90,7 +90,9 @@ const Node: React.FC<{ node: TreeNode; onNodeClick: (node: IvolveStaff, element:
             <div ref={nodeRef} id={`node-${node.id}`} className={`${baseNodeClass} ${specialNodeClass}`} onClick={() => nodeRef.current && onNodeClick(node, nodeRef.current)}>
                 <div className="flex items-center">
                     {!node.isVacancy && !node.isJoiningSoon && (
-                         <img src={node.photoUrl} alt={node.name} className="w-10 h-10 rounded-full border-2 border-white/50" />
+                         <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white/50 flex items-center justify-center text-gray-400 flex-shrink-0">
+                            <UserIcon />
+                        </div>
                     )}
                     <div className="ml-3 flex-1">
                         <p className={`font-bold text-sm ${isSelected ? 'text-white' : 'text-solas-dark'}`}>{node.name}</p>
@@ -244,7 +246,9 @@ const OrgChartModal: React.FC<OrgChartModalProps> = ({ staff, currentUserId, onC
                  {/* Selected Node Details */}
                 {selectedNode && (
                      <footer className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border flex items-start space-x-4 transition-all duration-300">
-                        <img src={selectedNode.photoUrl} alt={selectedNode.name} className="w-20 h-20 rounded-full border-4 border-ivolve-blue" />
+                        <div className="w-20 h-20 rounded-full bg-gray-200 border-4 border-ivolve-blue flex items-center justify-center text-gray-400 flex-shrink-0">
+                            <UserIcon />
+                        </div>
                         <div className="flex-grow">
                             <h3 className="text-xl font-bold text-solas-dark">{selectedNode.name}</h3>
                             <p className="text-md text-solas-gray">{selectedNode.role}</p>

@@ -115,7 +115,7 @@ export interface IvolveStaff {
     role: string;
     email: string;
     phone:string;
-    photoUrl: string;
+    photoUrl?: string;
     managerId: string | null;
     team: string;
     tags: string[];
@@ -403,7 +403,7 @@ export interface Person {
   preferredFirstName: string;
   legalFirstName: string;
   surname: string;
-  photoUrl: string;
+  photoUrl?: string;
   dob: string;
   status: PersonStatus;
   propertyId: string;

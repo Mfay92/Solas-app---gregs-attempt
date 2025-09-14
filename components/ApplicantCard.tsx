@@ -3,6 +3,7 @@ import { Person } from '../types';
 import { useUI } from '../contexts/UIContext';
 import StatusChip from './StatusChip';
 import RpTag from './RpTag';
+import { UserIcon } from './Icons';
 
 type ApplicantCardProps = {
   person: Person;
@@ -48,7 +49,9 @@ const ApplicantCard: React.FC<ApplicantCardProps> = ({ person }) => {
             
             {/* Main Info */}
             <div className="flex-grow flex items-center space-x-3">
-                <img src={person.photoUrl} alt={person.preferredFirstName} className="w-10 h-10 rounded-full" />
+                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+                    <UserIcon />
+                </div>
                 <div>
                     <p className="font-bold text-sm text-solas-dark leading-tight">{person.preferredFirstName} {person.surname}</p>
                     <p className="text-xs text-ivolve-blue font-semibold">{primaryNeed}</p>

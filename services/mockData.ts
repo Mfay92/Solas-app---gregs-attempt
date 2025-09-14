@@ -596,17 +596,17 @@ export const MOCK_STAKEHOLDERS: Stakeholder[] = [
         branding: { heroBg: 'bg-white', heroText: 'text-black', cardBg: 'bg-status-red', cardText: 'text-white', cardBorder: 'border-gray-400' },
         contacts: [ 
             // Tier 1: General
-            { id: 'c-ih-gen1', name: 'General Enquiries', role: 'Main Office', phone: '01904 675207', email: 'info@inclusionhousing.org.uk', tier: ContactTier.General, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-gen1' },
-            { id: 'c-ih-gen2', name: 'Repairs Hotline', role: 'Facilities Desk', phone: '01904 675208', email: 'repairs@inclusionhousing.org.uk', tier: ContactTier.General, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-gen2' },
+            { id: 'c-ih-gen1', name: 'General Enquiries', role: 'Main Office', phone: '01904 675207', email: 'info@inclusionhousing.org.uk', tier: ContactTier.General },
+            { id: 'c-ih-gen2', name: 'Repairs Hotline', role: 'Facilities Desk', phone: '01904 675208', email: 'repairs@inclusionhousing.org.uk', tier: ContactTier.General },
             // Tier 2: Executive
-            { id: 'c-ih-exec1', name: 'Michelle Dodgson', role: 'Chief Executive Officer', phone: '01904 675207', email: 'm.dodgson@inclusionhousing.org.uk', tier: ContactTier.Executive, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-exec1', isPinned: true },
-            { id: 'c-ih-exec2', name: 'Neil Brown', role: 'Chair of the Board', phone: '01904 675207', email: 'n.brown@inclusionhousing.org.uk', tier: ContactTier.Executive, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-exec2' },
+            { id: 'c-ih-exec1', name: 'Michelle Dodgson', role: 'Chief Executive Officer', phone: '01904 675207', email: 'm.dodgson@inclusionhousing.org.uk', tier: ContactTier.Executive, isPinned: true },
+            { id: 'c-ih-exec2', name: 'Neil Brown', role: 'Chair of the Board', phone: '01904 675207', email: 'n.brown@inclusionhousing.org.uk', tier: ContactTier.Executive },
             // Tier 3: Senior Management
-            { id: 'c-ih-sm1', name: 'Sarah Thompson', role: 'Head of Housing', phone: '01904 675210', email: 's.thompson@inclusionhousing.org.uk', tier: ContactTier.SeniorManagement, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-sm1' },
+            { id: 'c-ih-sm1', name: 'Sarah Thompson', role: 'Head of Housing', phone: '01904 675210', email: 's.thompson@inclusionhousing.org.uk', tier: ContactTier.SeniorManagement },
             // Tier 4: Housing Officers
-            { id: 'c-ih-ho1', name: 'David Miller', role: 'Housing Officer (North)', phone: '07711 223344', email: 'd.miller@inclusionhousing.org.uk', tier: ContactTier.Operations, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-ho1' },
+            { id: 'c-ih-ho1', name: 'David Miller', role: 'Housing Officer (North)', phone: '07711 223344', email: 'd.miller@inclusionhousing.org.uk', tier: ContactTier.Operations },
             // Tier 5: Finance
-            { id: 'c-ih-fin1', name: 'Finance Team', role: 'Accounts Payable', phone: '01904 675220', email: 'finance@inclusionhousing.org.uk', tier: ContactTier.Finance, photoUrl: 'https://i.pravatar.cc/150?u=c-ih-fin1' },
+            { id: 'c-ih-fin1', name: 'Finance Team', role: 'Accounts Payable', phone: '01904 675220', email: 'finance@inclusionhousing.org.uk', tier: ContactTier.Finance },
         ]
     },
     {
@@ -620,9 +620,9 @@ export const MOCK_STAKEHOLDERS: Stakeholder[] = [
         keyInfo: [{ label: 'Status', value: 'Community Interest Company' }],
         branding: { heroBg: 'bg-rp-harbour-bg', heroText: 'text-rp-harbour-text', cardBg: 'bg-rp-harbour-text', cardText: 'text-white', cardBorder: 'border-rp-harbour-text' },
         contacts: [
-            {id: 'c-hl-gen1', name: 'Main Office', role: 'Enquiries', phone: '0114 278 7575', email: 'info@harbourlight.org.uk', tier: ContactTier.General, photoUrl: 'https://i.pravatar.cc/150?u=c-hl-1'},
-            {id: 'c-hl-exec1', name: 'Peter George', role: 'Managing Director', phone: '0114 278 7575', email: 'p.george@harbourlight.org.uk', tier: ContactTier.Executive, photoUrl: 'https://i.pravatar.cc/150?u=c-hl-exec1'},
-            {id: 'c-hl-ops1', name: 'Angelarinsic', role: 'Housing Manager', phone: '07812 345678', email: 'a.angela@harbourlight.org.uk', tier: ContactTier.Operations, photoUrl: 'https://i.pravatar.cc/150?u=c-hl-ops1'}
+            {id: 'c-hl-gen1', name: 'Main Office', role: 'Enquiries', phone: '0114 278 7575', email: 'info@harbourlight.org.uk', tier: ContactTier.General},
+            {id: 'c-hl-exec1', name: 'Peter George', role: 'Managing Director', phone: '0114 278 7575', email: 'p.george@harbourlight.org.uk', tier: ContactTier.Executive},
+            {id: 'c-hl-ops1', name: 'Angelarinsic', role: 'Housing Manager', phone: '07812 345678', email: 'a.angela@harbourlight.org.uk', tier: ContactTier.Operations}
         ]
     },
     {
@@ -640,9 +640,9 @@ export const MOCK_STAKEHOLDERS: Stakeholder[] = [
         ],
         branding: { heroBg: 'bg-best-purple', heroText: 'text-white', cardBg: 'bg-best-green', cardText: 'text-best-purple', cardBorder: 'border-best-purple' },
         contacts: [
-             {id: 'c-best-gen1', name: 'Main Office', role: 'Enquiries', phone: '0121 445 4648', email: 'info@bestha.co.uk', tier: ContactTier.General, photoUrl: 'https://i.pravatar.cc/150?u=c-best-1'},
-             {id: 'c-best-exec1', name: 'Paul de Savary', role: 'Chief Executive', phone: '0121 445 4648', email: 'p.desavary@bestha.co.uk', tier: ContactTier.Executive, photoUrl: 'https://i.pravatar.cc/150?u=c-best-exec1'},
-             {id: 'c-best-ops1', name: 'Gail Corden', role: 'Housing Manager', phone: '07701 987654', email: 'g.corden@bestha.co.uk', tier: ContactTier.Operations, photoUrl: 'https://i.pravatar.cc/150?u=c-best-ops1'}
+             {id: 'c-best-gen1', name: 'Main Office', role: 'Enquiries', phone: '0121 445 4648', email: 'info@bestha.co.uk', tier: ContactTier.General},
+             {id: 'c-best-exec1', name: 'Paul de Savary', role: 'Chief Executive', phone: '0121 445 4648', email: 'p.desavary@bestha.co.uk', tier: ContactTier.Executive},
+             {id: 'c-best-ops1', name: 'Gail Corden', role: 'Housing Manager', phone: '07701 987654', email: 'g.corden@bestha.co.uk', tier: ContactTier.Operations}
         ]
     },
     {
@@ -705,61 +705,61 @@ export const MOCK_STAKEHOLDERS: Stakeholder[] = [
 
 export const MOCK_IVOLVE_STAFF: IvolveStaff[] = [
     // Board
-    { id: 'IM01', name: 'Ian McKay', role: 'Chairman', email: 'i.mckay@ivolve.co.uk', phone: '07700900001', photoUrl: 'https://i.pravatar.cc/150?u=IM01', managerId: null, team: 'Board of Directors', tags: ['Board'], relevance: 1 },
+    { id: 'IM01', name: 'Ian McKay', role: 'Chairman', email: 'i.mckay@ivolve.co.uk', phone: '07700900001', managerId: null, team: 'Board of Directors', tags: ['Board'], relevance: 1 },
     
     // Executive Team
-    { id: 'TD01', name: 'Leo Vance', role: 'Group Chief Executive Officer', email: 'l.vance@ivolve.co.uk', phone: '07700900100', photoUrl: 'https://i.pravatar.cc/150?u=TD01', managerId: 'IM01', team: 'Executive Team', tags: ['Executive', 'Director'], relevance: 5, isPinned: true },
-    { id: 'NR01', name: 'Olivia Chen', role: 'Chief Financial Officer', email: 'o.chen@ivolve.co.uk', phone: '07700900101', photoUrl: 'https://i.pravatar.cc/150?u=NR01', managerId: 'TD01', team: 'Finance Team', tags: ['Executive', 'Director'], relevance: 5 },
-    { id: 'KG01', name: 'Ben Carter', role: 'Chief People Officer', email: 'b.carter@ivolve.co.uk', phone: '07700900102', photoUrl: 'https://i.pravatar.cc/150?u=KG01', managerId: 'TD01', team: 'People Team', tags: ['Executive', 'Director'], relevance: 5 },
-    { id: 'LH01', name: 'Sophia Wells', role: 'Managing Director, England', email: 's.wells@ivolve.co.uk', phone: '07700900103', photoUrl: 'https://i.pravatar.cc/150?u=LH01', managerId: 'TD01', team: 'Operational Team', tags: ['Executive', 'Director', 'England'], relevance: 5 },
-    { id: 'GFH01', name: 'Graham Foster', role: 'Chief Quality Officer', email: 'g.foster@ivolve.co.uk', phone: '07700900104', photoUrl: 'https://i.pravatar.cc/150?u=GFH01', managerId: 'TD01', team: 'Quality Team', tags: ['Executive', 'Director'], relevance: 5 },
-    { id: 'CC01', name: 'Chloe Anderson', role: 'Commercial Director', email: 'c.anderson@ivolve.co.uk', phone: '07700900105', photoUrl: 'https://i.pravatar.cc/150?u=CC01', managerId: 'TD01', team: 'Commercial Team', tags: ['Executive', 'Director'], relevance: 5 },
+    { id: 'TD01', name: 'Leo Vance', role: 'Group Chief Executive Officer', email: 'l.vance@ivolve.co.uk', phone: '07700900100', managerId: 'IM01', team: 'Executive Team', tags: ['Executive', 'Director'], relevance: 5, isPinned: true },
+    { id: 'NR01', name: 'Olivia Chen', role: 'Chief Financial Officer', email: 'o.chen@ivolve.co.uk', phone: '07700900101', managerId: 'TD01', team: 'Finance Team', tags: ['Executive', 'Director'], relevance: 5 },
+    { id: 'KG01', name: 'Ben Carter', role: 'Chief People Officer', email: 'b.carter@ivolve.co.uk', phone: '07700900102', managerId: 'TD01', team: 'People Team', tags: ['Executive', 'Director'], relevance: 5 },
+    { id: 'LH01', name: 'Sophia Wells', role: 'Managing Director, England', email: 's.wells@ivolve.co.uk', phone: '07700900103', managerId: 'TD01', team: 'Operational Team', tags: ['Executive', 'Director', 'England'], relevance: 5 },
+    { id: 'GFH01', name: 'Graham Foster', role: 'Chief Quality Officer', email: 'g.foster@ivolve.co.uk', phone: '07700900104', managerId: 'TD01', team: 'Quality Team', tags: ['Executive', 'Director'], relevance: 5 },
+    { id: 'CC01', name: 'Chloe Anderson', role: 'Commercial Director', email: 'c.anderson@ivolve.co.uk', phone: '07700900105', managerId: 'TD01', team: 'Commercial Team', tags: ['Executive', 'Director'], relevance: 5 },
 
     // Property Team
-    { id: 'CG01', name: 'Craig Morgan', role: 'Group Director of Property', email: 'c.morgan@ivolve.co.uk', phone: '07700900200', photoUrl: 'https://i.pravatar.cc/150?u=CG01', managerId: 'TD01', team: 'Property Team', tags: ['Central Functions', 'Director'], relevance: 10, isPinned: true },
-    { id: 'MF01', name: 'Matt Fay', role: 'Housing Partnerships and Operations Manager', email: 'm.fay@ivolve.co.uk', phone: '07700900201', photoUrl: 'https://i.pravatar.cc/150?u=MF01', managerId: 'CG01', team: 'Property Team', tags: ['Central Functions', 'BeST', 'Inclusion', 'Harbour Light', 'Property Team', 'Function Lead'], relevance: 100, 
+    { id: 'CG01', name: 'Craig Morgan', role: 'Group Director of Property', email: 'c.morgan@ivolve.co.uk', phone: '07700900200', managerId: 'TD01', team: 'Property Team', tags: ['Central Functions', 'Director'], relevance: 10, isPinned: true },
+    { id: 'MF01', name: 'Matt Fay', role: 'Housing Partnerships and Operations Manager', email: 'm.fay@ivolve.co.uk', phone: '07700900201', managerId: 'CG01', team: 'Property Team', tags: ['Central Functions', 'BeST', 'Inclusion', 'Harbour Light', 'Property Team', 'Function Lead'], relevance: 100, 
       personalizationIcons: [
         { id: '1', name: 'dog', color: '#f97316' },
         { id: '2', name: 'piano', color: '#8b5cf6' },
       ], 
       cardTemplate: 'white' 
     },
-    { id: 'AS01', name: 'Aaron Banks', role: 'Group Head of Facilities and Services', email: 'a.banks@ivolve.co.uk', phone: '07700900202', photoUrl: 'https://i.pravatar.cc/150?u=AS01', managerId: 'CG01', team: 'Property Team', tags: ['Facilities', 'Services', 'Function Lead'], relevance: 8 },
-    { id: 'MP01', name: 'Megan Parker', role: 'Property Hub Manager', email: 'm.parker@ivolve.co.uk', phone: '07700900203', photoUrl: 'https://i.pravatar.cc/150?u=MP01', managerId: 'AS01', team: 'Property Team', tags: ['Property Hub', 'Manager'], relevance: 8 },
-    { id: 'VM01', name: 'Vacancy', role: 'Facilities Manager - Wales', email: '', phone: '', photoUrl: '', managerId: 'CG01', team: 'Property Team', tags: ['Wales', 'Facilities', 'Manager'], isVacancy: true, relevance: 1 },
-    { id: 'JS01', name: 'Jenna Peters', role: 'Housing Officer', email: 'j.peters@ivolve.co.uk', phone: '07700900205', photoUrl: 'https://i.pravatar.cc/150?u=JS01', managerId: 'MF01', team: 'Property Team', tags: ['Housing', 'North'], relevance: 9 },
-    { id: 'DA01', name: 'Daniel Evans', role: 'Housing Officer', email: 'd.evans@ivolve.co.uk', phone: '07700900206', photoUrl: 'https://i.pravatar.cc/150?u=DA01', managerId: 'MF01', team: 'Property Team', tags: ['Housing', 'Midlands'], relevance: 9 },
+    { id: 'AS01', name: 'Aaron Banks', role: 'Group Head of Facilities and Services', email: 'a.banks@ivolve.co.uk', phone: '07700900202', managerId: 'CG01', team: 'Property Team', tags: ['Facilities', 'Services', 'Function Lead'], relevance: 8 },
+    { id: 'MP01', name: 'Megan Parker', role: 'Property Hub Manager', email: 'm.parker@ivolve.co.uk', phone: '07700900203', managerId: 'AS01', team: 'Property Team', tags: ['Property Hub', 'Manager'], relevance: 8 },
+    { id: 'VM01', name: 'Vacancy', role: 'Facilities Manager - Wales', email: '', phone: '', managerId: 'CG01', team: 'Property Team', tags: ['Wales', 'Facilities', 'Manager'], isVacancy: true, relevance: 1 },
+    { id: 'JS01', name: 'Jenna Peters', role: 'Housing Officer', email: 'j.peters@ivolve.co.uk', phone: '07700900205', managerId: 'MF01', team: 'Property Team', tags: ['Housing', 'North'], relevance: 9 },
+    { id: 'DA01', name: 'Daniel Evans', role: 'Housing Officer', email: 'd.evans@ivolve.co.uk', phone: '07700900206', managerId: 'MF01', team: 'Property Team', tags: ['Housing', 'Midlands'], relevance: 9 },
 
     // Finance Team
-    { id: 'KD01', name: 'Karen Dunn', role: 'Group Finance Director', email: 'k.dunn@ivolve.co.uk', phone: '07700900300', photoUrl: 'https://i.pravatar.cc/150?u=KD01', managerId: 'NR01', team: 'Finance Team', tags: ['Director'], relevance: 4 },
-    { id: 'SW01', name: 'Sam Wallace', role: 'Group FP & A Manager', email: 's.wallace@ivolve.co.uk', phone: '07700900301', photoUrl: 'https://i.pravatar.cc/150?u=SW01', managerId: 'KD01', team: 'Finance Team', tags: ['Manager'], relevance: 3 },
-    { id: 'AT01', name: 'Alice Thompson', role: 'Commercial Finance Lead', email: 'a.thompson@ivolve.co.uk', phone: '07700900302', photoUrl: 'https://i.pravatar.cc/150?u=AT01', managerId: 'KD01', team: 'Finance Team', tags: ['Function Lead'], relevance: 3 },
-    { id: 'JS02', name: 'Joining Soon', role: 'Management Accountant', email: '', phone: '', photoUrl: '', managerId: 'SW01', team: 'Finance Team', tags: [], isJoiningSoon: true, relevance: 1 },
+    { id: 'KD01', name: 'Karen Dunn', role: 'Group Finance Director', email: 'k.dunn@ivolve.co.uk', phone: '07700900300', managerId: 'NR01', team: 'Finance Team', tags: ['Director'], relevance: 4 },
+    { id: 'SW01', name: 'Sam Wallace', role: 'Group FP & A Manager', email: 's.wallace@ivolve.co.uk', phone: '07700900301', managerId: 'KD01', team: 'Finance Team', tags: ['Manager'], relevance: 3 },
+    { id: 'AT01', name: 'Alice Thompson', role: 'Commercial Finance Lead', email: 'a.thompson@ivolve.co.uk', phone: '07700900302', managerId: 'KD01', team: 'Finance Team', tags: ['Function Lead'], relevance: 3 },
+    { id: 'JS02', name: 'Joining Soon', role: 'Management Accountant', email: '', phone: '', managerId: 'SW01', team: 'Finance Team', tags: [], isJoiningSoon: true, relevance: 1 },
 
     // Operations
-    { id: 'GH01', name: 'Grace Hill', role: 'Operations Director, Region 1 North', email: 'g.hill@ivolve.co.uk', phone: '07700900400', photoUrl: 'https://i.pravatar.cc/150?u=GH01', managerId: 'LH01', team: 'Operational Team', tags: ['North', 'Region 1', 'Director'], relevance: 4 },
-    { id: 'HD01', name: 'Harry Doyle', role: 'Operations Director, Region 1 Midlands', email: 'h.doyle@ivolve.co.uk', phone: '07700900401', photoUrl: 'https://i.pravatar.cc/150?u=HD01', managerId: 'LH01', team: 'Operational Team', tags: ['Midlands', 'Region 1', 'Director'], relevance: 4 },
-    { id: 'JM01', name: 'Jack Murphy', role: 'Area Manager - Notts & Newark', email: 'j.murphy@ivolve.co.uk', phone: '07700900402', photoUrl: 'https://i.pravatar.cc/150?u=JM01', managerId: 'HD01', team: 'Operational Team', tags: ['Nottinghamshire', 'Newark', 'Area Manager'], relevance: 2 },
-    { id: 'CB01', name: 'Clara Bell', role: 'Area Manager - East Coast & Leeds', email: 'c.bell@ivolve.co.uk', phone: '07700900403', photoUrl: 'https://i.pravatar.cc/150?u=CB01', managerId: 'GH01', team: 'Operational Team', tags: ['East Coast', 'Leeds', 'Area Manager'], relevance: 2 },
-    { id: 'NH01', name: 'Nora Hayes', role: 'Team Leader - Notts & Lincoln', email: 'n.hayes@ivolve.co.uk', phone: '07700900404', photoUrl: 'https://i.pravatar.cc/150?u=NH01', managerId: 'JM01', team: 'Operational Team', tags: ['STRE00_PROP', 'Team Leader'], relevance: 3 },
+    { id: 'GH01', name: 'Grace Hill', role: 'Operations Director, Region 1 North', email: 'g.hill@ivolve.co.uk', phone: '07700900400', managerId: 'LH01', team: 'Operational Team', tags: ['North', 'Region 1', 'Director'], relevance: 4 },
+    { id: 'HD01', name: 'Harry Doyle', role: 'Operations Director, Region 1 Midlands', email: 'h.doyle@ivolve.co.uk', phone: '07700900401', managerId: 'LH01', team: 'Operational Team', tags: ['Midlands', 'Region 1', 'Director'], relevance: 4 },
+    { id: 'JM01', name: 'Jack Murphy', role: 'Area Manager - Notts & Newark', email: 'j.murphy@ivolve.co.uk', phone: '07700900402', managerId: 'HD01', team: 'Operational Team', tags: ['Nottinghamshire', 'Newark', 'Area Manager'], relevance: 2 },
+    { id: 'CB01', name: 'Clara Bell', role: 'Area Manager - East Coast & Leeds', email: 'c.bell@ivolve.co.uk', phone: '07700900403', managerId: 'GH01', team: 'Operational Team', tags: ['East Coast', 'Leeds', 'Area Manager'], relevance: 2 },
+    { id: 'NH01', name: 'Nora Hayes', role: 'Team Leader - Notts & Lincoln', email: 'n.hayes@ivolve.co.uk', phone: '07700900404', managerId: 'JM01', team: 'Operational Team', tags: ['STRE00_PROP', 'Team Leader'], relevance: 3 },
     
     // People Team
-    { id: 'TM01', name: 'Tara Mason', role: 'Group Head of People', email: 't.mason@ivolve.co.uk', phone: '07700900500', photoUrl: 'https://i.pravatar.cc/150?u=TM01', managerId: 'KG01', team: 'People Team', tags: ['Function Lead'], relevance: 4 },
+    { id: 'TM01', name: 'Tara Mason', role: 'Group Head of People', email: 't.mason@ivolve.co.uk', phone: '07700900500', managerId: 'KG01', team: 'People Team', tags: ['Function Lead'], relevance: 4 },
 
     // IT Team
-    { id: 'KH01', name: 'Kevin Hall', role: 'Group IT Director', email: 'k.hall@ivolve.co.uk', phone: '07700900600', photoUrl: 'https://i.pravatar.cc/150?u=KH01', managerId: 'TD01', team: 'IT Team', tags: ['Director'], relevance: 4 },
+    { id: 'KH01', name: 'Kevin Hall', role: 'Group IT Director', email: 'k.hall@ivolve.co.uk', phone: '07700900600', managerId: 'TD01', team: 'IT Team', tags: ['Director'], relevance: 4 },
 
     // Learning and Development
-    { id: 'JW01', name: 'Julia Wright', role: 'Group Head of L&D', email: 'j.wright@ivolve.co.uk', phone: '07700900700', photoUrl: 'https://i.pravatar.cc/150?u=JW01', managerId: 'KG01', team: 'Learning and Development Team', tags: ['Function Lead'], relevance: 4 },
+    { id: 'JW01', name: 'Julia Wright', role: 'Group Head of L&D', email: 'j.wright@ivolve.co.uk', phone: '07700900700', managerId: 'KG01', team: 'Learning and Development Team', tags: ['Function Lead'], relevance: 4 },
     
     // Business Development
-    { id: 'RL01', name: 'Rachel Lewis', role: 'Group Head of Growth & Development', email: 'r.lewis@ivolve.co.uk', phone: '07700900800', photoUrl: 'https://i.pravatar.cc/150?u=RL01', managerId: 'CC01', team: 'Business Development Team', tags: ['Function Lead'], relevance: 4 },
+    { id: 'RL01', name: 'Rachel Lewis', role: 'Group Head of Growth & Development', email: 'r.lewis@ivolve.co.uk', phone: '07700900800', managerId: 'CC01', team: 'Business Development Team', tags: ['Function Lead'], relevance: 4 },
 ];
 
 const MOCK_APPLICANTS: Person[] = [
     {
         id: 'APP001', preferredFirstName: 'Sarah', legalFirstName: 'Sarah', surname: 'Jenkins', 
-        photoUrl: 'https://i.pravatar.cc/150?u=APP001', dob: '1995-08-20', status: PersonStatus.Applicant,
+        dob: '1995-08-20', status: PersonStatus.Applicant,
         propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app1', category: 'Primary Need', detail: 'Autism Spectrum Disorder' }],
@@ -774,7 +774,7 @@ const MOCK_APPLICANTS: Person[] = [
     },
     {
         id: 'APP002', preferredFirstName: 'Tom', legalFirstName: 'Thomas', surname: 'Baker', 
-        photoUrl: 'https://i.pravatar.cc/150?u=APP002', dob: '1988-03-15', status: PersonStatus.Applicant,
+        dob: '1988-03-15', status: PersonStatus.Applicant,
         propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app2', category: 'Primary Need', detail: 'Complex Mental Health' }],
@@ -789,7 +789,7 @@ const MOCK_APPLICANTS: Person[] = [
     },
     {
         id: 'APP003', preferredFirstName: 'Chloe', legalFirstName: 'Chloe', surname: 'Davies', 
-        photoUrl: 'https://i.pravatar.cc/150?u=APP003', dob: '2001-11-02', status: PersonStatus.Applicant,
+        dob: '2001-11-02', status: PersonStatus.Applicant,
         propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app3', category: 'Primary Need', detail: 'Learning Disability' }],
@@ -804,7 +804,7 @@ const MOCK_APPLICANTS: Person[] = [
     },
     {
         id: 'APP004', preferredFirstName: 'Mike', legalFirstName: 'Michael', surname: 'Rodriguez', 
-        photoUrl: 'https://i.pravatar.cc/150?u=APP004', dob: '1992-01-30', status: PersonStatus.Applicant,
+        dob: '1992-01-30', status: PersonStatus.Applicant,
         propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app4', category: 'Primary Need', detail: 'Physical Disability' }],
@@ -818,7 +818,7 @@ const MOCK_APPLICANTS: Person[] = [
     },
     {
         id: 'APP005', preferredFirstName: 'Aisha', legalFirstName: 'Aisha', surname: 'Khan', 
-        photoUrl: 'https://i.pravatar.cc/150?u=APP005', dob: '1999-09-09', status: PersonStatus.Applicant,
+        dob: '1999-09-09', status: PersonStatus.Applicant,
         propertyId: 'APPLE00_PROP', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app5', category: 'Primary Need', detail: 'Learning Disability' }],
@@ -836,7 +836,7 @@ const MOCK_APPLICANTS: Person[] = [
 export const MOCK_PEOPLE: Person[] = [
     // 1 Street, Harrogate
     {
-        id: 'P001', preferredFirstName: 'Alice', legalFirstName: 'Alice', surname: 'Johnson', photoUrl: 'https://i.pravatar.cc/150?u=P001', dob: '1992-05-15', status: PersonStatus.Current,
+        id: 'P001', preferredFirstName: 'Alice', legalFirstName: 'Alice', surname: 'Johnson', dob: '1992-05-15', status: PersonStatus.Current,
         propertyId: 'STRE00_PROP', unitId: 'STRE01', moveInDate: '2022-01-20', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'CB01',
         careNeeds: [
@@ -877,7 +877,7 @@ export const MOCK_PEOPLE: Person[] = [
         savingsInfo: 'Has a savings account with approximately £2,500. No other significant assets.',
     },
     {
-        id: 'P002', preferredFirstName: 'Ben', legalFirstName: 'Benjamin', surname: 'Williams', photoUrl: 'https://i.pravatar.cc/150?u=P002', dob: '1988-11-30', status: PersonStatus.Current,
+        id: 'P002', preferredFirstName: 'Ben', legalFirstName: 'Benjamin', surname: 'Williams', dob: '1988-11-30', status: PersonStatus.Current,
         propertyId: 'STRE00_PROP', unitId: 'STRE02', moveInDate: '2021-09-01', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'CB01',
         careNeeds: [{ id: 'cn3', category: 'Social Engagement', detail: 'Support to attend weekly community group.' }],
@@ -890,7 +890,7 @@ export const MOCK_PEOPLE: Person[] = [
     },
     // 123 Example Street, Nottingham
     {
-        id: 'P003', preferredFirstName: 'Chloe', legalFirstName: 'Chloe', surname: 'Davis', photoUrl: 'https://i.pravatar.cc/150?u=P003', dob: '2001-02-10', status: PersonStatus.Current,
+        id: 'P003', preferredFirstName: 'Chloe', legalFirstName: 'Chloe', surname: 'Davis', dob: '2001-02-10', status: PersonStatus.Current,
         propertyId: 'EXAM00_PROP', unitId: 'EXAM01', moveInDate: '2023-08-01', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
@@ -901,7 +901,7 @@ export const MOCK_PEOPLE: Person[] = [
         title: '', firstLanguage: 'English', isNonVerbal: false
     },
     {
-        id: 'P004', preferredFirstName: 'Daniel', legalFirstName: 'Daniel', surname: 'Miller', photoUrl: 'https://i.pravatar.cc/150?u=P004', dob: '1995-07-22', status: PersonStatus.Former,
+        id: 'P004', preferredFirstName: 'Daniel', legalFirstName: 'Daniel', surname: 'Miller', dob: '1995-07-22', status: PersonStatus.Former,
         propertyId: 'EXAM00_PROP', unitId: 'EXAM02', moveInDate: '2022-05-10', moveOutDate: '2024-06-15',
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
@@ -915,7 +915,7 @@ export const MOCK_PEOPLE: Person[] = [
         title: 'Mr', firstLanguage: 'English', isNonVerbal: false
     },
     {
-        id: 'P005', preferredFirstName: 'Emily', legalFirstName: 'Emily', surname: 'Brown', photoUrl: 'https://i.pravatar.cc/150?u=P005', dob: '1999-01-05', status: PersonStatus.Current,
+        id: 'P005', preferredFirstName: 'Emily', legalFirstName: 'Emily', surname: 'Brown', dob: '1999-01-05', status: PersonStatus.Current,
         propertyId: 'EXAM00_PROP', unitId: 'EXAM03', moveInDate: '2024-03-12', moveOutDate: null,
         keyWorkerId: 'NH01', areaManagerId: 'JM01',
         careNeeds: [], 
@@ -928,7 +928,7 @@ export const MOCK_PEOPLE: Person[] = [
     },
      // 1 Welsh Road, Newport
     {
-        id: 'P006', preferredFirstName: 'Ffion', legalFirstName: 'Ffion', surname: 'Morgan', photoUrl: 'https://i.pravatar.cc/150?u=P006', dob: '1985-03-01', status: PersonStatus.Former,
+        id: 'P006', preferredFirstName: 'Ffion', legalFirstName: 'Ffion', surname: 'Morgan', dob: '1985-03-01', status: PersonStatus.Former,
         propertyId: 'WALE01_PROP', unitId: 'WALE01-1', moveInDate: '2022-03-15', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01', // Placeholder manager
         careNeeds: [], 
@@ -939,7 +939,7 @@ export const MOCK_PEOPLE: Person[] = [
         title: 'Miss', firstLanguage: 'Welsh', secondLanguage: 'English', isNonVerbal: false
     },
     {
-        id: 'P007', preferredFirstName: 'Gareth', legalFirstName: 'Gareth', surname: 'Price', photoUrl: 'https://i.pravatar.cc/150?u=P007', dob: '1990-09-18', status: PersonStatus.Former,
+        id: 'P007', preferredFirstName: 'Gareth', legalFirstName: 'Gareth', surname: 'Price', dob: '1990-09-18', status: PersonStatus.Former,
         propertyId: 'WALE01_PROP', unitId: 'WALE01-2', moveInDate: '2022-04-01', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
@@ -950,7 +950,7 @@ export const MOCK_PEOPLE: Person[] = [
         title: 'Mr', firstLanguage: 'English', isNonVerbal: false
     },
     {
-        id: 'P008', preferredFirstName: 'Harri', legalFirstName: 'Harri', surname: 'Jenkins', photoUrl: 'https://i.pravatar.cc/150?u=P008', dob: '1998-12-07', status: PersonStatus.Former,
+        id: 'P008', preferredFirstName: 'Harri', legalFirstName: 'Harri', surname: 'Jenkins', dob: '1998-12-07', status: PersonStatus.Former,
         propertyId: 'WALE01_PROP', unitId: 'WALE01-4', moveInDate: '2023-01-20', moveOutDate: '2024-06-30',
         keyWorkerId: 'NH01', areaManagerId: 'HD01',
         careNeeds: [], 
@@ -983,7 +983,7 @@ export const MOCK_PEOPLE: Person[] = [
         { id: 'P026', unitId: 'LIVP02', firstName: 'Zoe', lastName: 'Wright', dob: '1993-02-14' },
     ].map((p, index) => ({
         id: p.id, preferredFirstName: p.firstName, legalFirstName: p.firstName, surname: p.lastName,
-        photoUrl: `https://i.pravatar.cc/150?u=${p.id}`, dob: p.dob, status: PersonStatus.Current,
+        dob: p.dob, status: PersonStatus.Current,
         propertyId: MOCK_PROPERTIES.find(prop => prop.units.some(u => u.id === p.unitId))?.id || '',
         unitId: p.unitId, moveInDate: '2023-01-01', moveOutDate: null, keyWorkerId: 'NH01', areaManagerId: 'CB01',
         careNeeds: [], funding: [{ id: `fund-p${index+9}-1`, source: 'Local Authority', weeklyAmount: 800.00, details: '' }],

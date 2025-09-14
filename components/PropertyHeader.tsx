@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Property, UnitStatus, Person, PersonStatus, Unit } from '../types';
 import StatusChip from './StatusChip';
@@ -34,7 +35,7 @@ const OccupantInfo: React.FC<OccupantInfoProps> = ({ property, people, selectedU
                 ) : unitToDisplay?.status === UnitStatus.Occupied ? (
                     occupant ? (
                          <button onClick={() => selectPerson(occupant.id, true)} className="w-full text-left flex items-center space-x-2 p-1.5 rounded-md hover:bg-white/20 transition-colors">
-                            <img src={occupant.photoUrl} alt={occupant.preferredFirstName} className="w-8 h-8 rounded-full" />
+                            <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center"><UserIcon/></div>
                             <div>
                                 <p className="text-sm font-semibold leading-tight">{occupant.preferredFirstName} {occupant.surname}</p>
                                 <p className="text-xs opacity-80 leading-tight">{unitToDisplay.name}</p>

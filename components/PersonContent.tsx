@@ -21,7 +21,6 @@ const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
   const TABS = ['About Me', `Support & Care`, 'Health & Medication', 'Circle of Support', `Housing & ${t('tenancy')}`, 'Finance & Benefits', 'Timeline', 'Documents'];
   const [activeTab, setActiveTab] = useState(TABS[0]);
 
-
   const renderContent = () => {
     switch (activeTab) {
       case 'About Me':
@@ -47,24 +46,24 @@ const PersonContent: React.FC<PersonContentProps> = ({ person }) => {
 
   return (
     <div>
-        <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-6 px-6 overflow-x-auto" aria-label="Tabs">
+        <div className="bg-ivolve-dark-green px-6">
+            <nav className="flex space-x-2 overflow-x-auto" aria-label="Tabs">
                 {TABS.map(tab => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`${
+                        className={`whitespace-nowrap py-3 px-4 text-sm font-medium transition-colors focus:outline-none rounded-t-lg ${
                             activeTab === tab
-                            ? 'border-ivolve-blue text-ivolve-dark-green'
-                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                        } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+                            ? 'bg-ivolve-off-white text-ivolve-dark-green font-bold'
+                            : 'text-white/80 hover:bg-ivolve-mid-green hover:text-white'
+                        }`}
                     >
                         {tab}
                     </button>
                 ))}
             </nav>
         </div>
-        <div className="pt-6">{renderContent()}</div>
+        <div className="p-6">{renderContent()}</div>
     </div>
   );
 };

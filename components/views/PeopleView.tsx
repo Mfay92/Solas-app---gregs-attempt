@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { PersonStatus } from '../../types';
-import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon } from '../Icons';
+import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, UserIcon } from '../Icons';
 import { usePersona } from '../../contexts/PersonaContext';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
@@ -95,7 +95,9 @@ const PeopleView: React.FC = () => {
                         >
                             <td className="p-3 whitespace-nowrap">
                                 <div className="flex items-center">
-                                    <img className="h-10 w-10 rounded-full" src={person.photoUrl} alt={person.name} />
+                                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+                                        <UserIcon />
+                                    </div>
                                     <div className="ml-4">
                                         <div className="text-sm font-medium text-gray-900">{person.name}</div>
                                         <div className="text-sm text-gray-500">ID: {person.id}</div>

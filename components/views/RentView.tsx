@@ -16,10 +16,10 @@ const RentView: React.FC<RentViewProps> = ({ rentData }) => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount (£)</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                  <th scope="col" className="px-6 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Category</th>
+                  <th scope="col" className="px-6 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Description</th>
+                  <th scope="col" className="px-6 py-3 text-right text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Amount (£)</th>
+                  <th scope="col" className="px-6 py-3 text-left text-sm font-bold text-ivolve-dark-green uppercase tracking-wider">Period</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">

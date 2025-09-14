@@ -43,16 +43,14 @@ const PropertyDetailDrawer: React.FC = () => {
                     onClose={handleClose}
                     isOverlay={isOverlay}
                 />
-                <div className="p-6">
-                    <PropertyContent 
-                        property={property} 
-                        allStaff={ivolveStaff}
-                        allStakeholders={stakeholders}
-                        onUpdateJob={handleUpdateJob}
-                        onCompleteComplianceJob={handleCompleteComplianceJob}
-                        onManageStaffLinks={() => setIsManageLinksModalOpen(true)}
-                    />
-                </div>
+                <PropertyContent 
+                    property={property} 
+                    allStaff={ivolveStaff}
+                    allStakeholders={stakeholders}
+                    onUpdateJob={handleUpdateJob}
+                    onCompleteComplianceJob={handleCompleteComplianceJob}
+                    onManageStaffLinks={() => setIsManageLinksModalOpen(true)}
+                />
             </div>
         </div>
       </div>

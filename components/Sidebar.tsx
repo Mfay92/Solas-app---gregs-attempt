@@ -132,7 +132,9 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeView, onNavigate, onDevHu
                 className="w-full flex items-center p-2 rounded-md hover:bg-white/10 text-left"
             >
               <div className="relative w-10 h-10 flex-shrink-0">
-                  <img src={user.photoUrl} alt="User avatar" className={`w-10 h-10 rounded-full border-2 ${departmentStyles ? departmentStyles.border : 'border-ivolve-bright-green'}`} />
+                  <div className={`w-10 h-10 rounded-full border-2 ${departmentStyles ? departmentStyles.border : 'border-ivolve-bright-green'} bg-gray-200 flex items-center justify-center text-gray-400`}>
+                      <UserCircleIcon />
+                  </div>
                   <DevHubButton onClick={onDevHubClick} />
               </div>
               <div className="ml-3 flex-1">
