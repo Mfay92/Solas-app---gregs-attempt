@@ -13,14 +13,14 @@ const unitStatusStyles: Record<UnitStatus, { default: string; outline: string; t
 const UnitStatusTag: React.FC<{ status: UnitStatus, styleType: TagStyle }> = ({ status, styleType }) => {
     const styles = unitStatusStyles[status];
     if (!styles) { 
-        return <span className="inline-block w-full text-center px-2 py-0.5 text-xs font-medium rounded-md border bg-gray-200 text-gray-800">{status}</span>;
+        return <span className="inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md border bg-gray-200 text-gray-800">{status}</span>;
     }
 
     if (styleType === 'text') {
         return <span className={`font-medium text-xs ${styles.text}`}>{status}</span>;
     }
     
-    const baseClasses = 'inline-block w-full text-center px-2 py-0.5 text-xs font-medium rounded-md border';
+    const baseClasses = 'inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md border';
     const typeClasses = styleType === 'outline' ? styles.outline : styles.default;
 
     return <span className={`${baseClasses} ${typeClasses}`}>{status}</span>;

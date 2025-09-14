@@ -43,7 +43,7 @@ type RpTagProps = {
 export const getRpBrandingMap = () => RP_BRANDING_MAP;
 
 const RpTag: React.FC<RpTagProps> = ({ name, styleType = 'default' }) => {
-  const baseClasses = "inline-block w-full text-center px-2 py-0.5 text-xs font-medium rounded-md border";
+  const baseClasses = "inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md border";
 
   if (styleType === 'text') {
     return <span className="text-xs font-medium text-black">{name}</span>;

@@ -403,7 +403,6 @@ export interface Person {
   preferredFirstName: string;
   legalFirstName: string;
   surname: string;
-  photoUrl?: string;
   dob: string;
   status: PersonStatus;
   propertyId: string;

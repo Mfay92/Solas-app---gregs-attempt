@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Person, Property, UnitStatus } from '../types';
-import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon, UserIcon } from './Icons';
+import { EyeIcon, EyeOffIcon, MapPinIcon, ArrowLeftIcon, WarningIcon } from './Icons';
 import { useUI } from '../contexts/UIContext';
 import StatusChip from './StatusChip';
 import RpTag from './RpTag';
@@ -86,11 +86,7 @@ const PersonHeader: React.FC<{
         
       <div className="flex justify-between items-start space-x-6">
         {/* Left Side: Person Info */}
-        <div className="flex items-start space-x-6 flex-1">
-          <div className="w-24 h-24 rounded-full border-4 border-gray-200 flex-shrink-0 bg-gray-200 flex items-center justify-center text-gray-400">
-            <UserIcon />
-          </div>
-          <div className="flex-1 pt-2">
+        <div className="flex-1">
             <div className="flex items-center space-x-2">
               <h2 className="text-3xl font-bold">{displayedName}</h2>
                {hasPreferredName && (
@@ -113,7 +109,6 @@ const PersonHeader: React.FC<{
                     <div className="mt-2 inline-block"><RpTag name={property.tags.rp} /></div>
                 </div>
             )}
-          </div>
         </div>
 
         {/* Right Side: Property Info */}

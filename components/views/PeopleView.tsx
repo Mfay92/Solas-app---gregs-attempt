@@ -1,11 +1,57 @@
-import React, { useState, useMemo } from 'react';
-import { PersonStatus } from '../../types';
-import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, UserIcon } from '../Icons';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { Person, PersonStatus, ServiceType, Flag } from '../../types';
+import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, ChartBarIcon, CogIcon, KeyIcon, WarningIcon } from '../Icons';
 import { usePersona } from '../../contexts/PersonaContext';
 import { useData } from '../../contexts/DataContext';
 import { useUI } from '../../contexts/UIContext';
 import PanelPositionSelector from '../PanelPositionSelector';
 import SplitText from '../SplitText';
+import StatusChip from '../StatusChip';
+import RpTag from '../RpTag';
+import AddPersonModal from '../AddPersonModal';
+
+const PersonStatusIcon: React.FC<{ person: { flags?: Flag[] } }> = ({ person }) => {
+    const highPriorityFlag = person.flags?.find(f => f.level === 'danger') || person.flags?.find(f => f.level === 'warning');
+    if (highPriorityFlag) {
+        const color = highPriorityFlag.level === 'danger' ? 'text-status-red' : 'text-status-orange';
+        return <span className={color} title={highPriorityFlag.message}><WarningIcon /></span>;
+    }
+    return null;
+};
+
+// Helper function for region tag styling, to match Property view
+const getRegionTagStyle = (region: string): string => {
+    switch(region) {
+        case 'North': return 'bg-region-north text-white';
+        case 'Midlands': return 'bg-region-midlands text-white';
+        case 'South': return 'bg-region-south text-white';
+        case 'South West': return 'bg-region-south-west text-white';
+        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
+        default: return 'bg-gray-200 text-gray-700';
+    }
+}
+
+const Dropdown: React.FC<{ buttonContent: React.ReactNode; children: React.ReactNode; }> = ({ buttonContent, children }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) setIsOpen(false);
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+    return (
+        <div ref={dropdownRef} className="relative">
+            <button onClick={() => setIsOpen(!isOpen)} className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 font-semibold py-2 px-4 rounded-md transition-colors">{buttonContent}</button>
+            {isOpen && (
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-20 border text-solas-dark">
+                    {children}
+                </div>
+            )}
+        </div>
+    );
+};
 
 const PeopleView: React.FC = () => {
     const { people, properties, ivolveStaff: staff } = useData();
@@ -13,6 +59,7 @@ const PeopleView: React.FC = () => {
     
     const [searchQuery, setSearchQuery] = useState('');
     const [isPanelPositionSelectorOpen, setIsPanelPositionSelectorOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const { t } = usePersona();
 
     const propertyMap = useMemo(() => new Map(properties.map(p => [p.id, p])), [properties]);
@@ -21,7 +68,6 @@ const PeopleView: React.FC = () => {
     const enhancedPeople = useMemo(() => {
         return people.map(person => ({
             ...person,
-            name: `${person.preferredFirstName} ${person.surname}`,
             property: propertyMap.get(person.propertyId),
             keyWorker: staffMap.get(person.keyWorkerId),
         }));
@@ -31,7 +77,9 @@ const PeopleView: React.FC = () => {
         const lowercasedQuery = searchQuery.toLowerCase();
         if (!lowercasedQuery) return enhancedPeople;
         return enhancedPeople.filter(p => 
-            p.name.toLowerCase().includes(lowercasedQuery) ||
+            `${p.preferredFirstName} ${p.surname}`.toLowerCase().includes(lowercasedQuery) ||
+            `${p.legalFirstName} ${p.surname}`.toLowerCase().includes(lowercasedQuery) ||
+            p.id.toLowerCase().includes(lowercasedQuery) ||
             p.property?.address.line1.toLowerCase().includes(lowercasedQuery) ||
             p.keyWorker?.name.toLowerCase().includes(lowercasedQuery)
         );
@@ -50,25 +98,42 @@ const PeopleView: React.FC = () => {
                 }}
             />
         )}
-      <header className="bg-app-header text-app-header-text p-4 shadow-md z-10">
-        <div className="flex items-center space-x-4">
-          <PeopleIcon />
-          <h1 className="text-3xl font-bold tracking-wider uppercase animated-heading" aria-label={`${t('people_plural_capitalized')} DATABASE`}>
-            {/* FIX: Pass a single string to the SplitText component by using a template literal to combine the parts. */}
-            <SplitText>{`${t('people_plural_capitalized')} DATABASE`}</SplitText>
-          </h1>
+        {isAddModalOpen && <AddPersonModal onClose={() => setIsAddModalOpen(false)} />}
+      <header className="bg-app-header text-app-header-text p-4 shadow-md z-10 space-y-4">
+        <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+            <PeopleIcon />
+            <h1 className="text-3xl font-bold tracking-wider uppercase animated-heading" aria-label={`${t('people_plural_capitalized')} DATABASE`}>
+                <SplitText>{`${t('people_plural_capitalized')} DATABASE`}</SplitText>
+            </h1>
+            </div>
+             <div className="flex items-center space-x-2">
+                <button disabled title="Coming soon" className="flex items-center space-x-2 bg-white/20 font-semibold py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <ChartBarIcon />
+                    <span>Quick Info</span>
+                </button>
+                <button disabled title="Coming soon" className="flex items-center space-x-2 bg-white/20 font-semibold py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <CogIcon />
+                    <span>View Settings</span>
+                </button>
+                <Dropdown buttonContent={<><KeyIcon /><span>Admin Tools</span></>}>
+                    <div className="p-2 space-y-1">
+                        <button onClick={() => setIsAddModalOpen(true)} className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-gray-100">Add New {t('person')}</button>
+                    </div>
+                </Dropdown>
+            </div>
         </div>
-        <div className="mt-4">
+        <div>
           <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <SearchIcon />
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-ivolve-dark-green/70">
+              <SearchIcon className="text-current" />
             </span>
             <input
               type="search"
-              placeholder={`Search by name, property, or key worker...`}
+              placeholder={`Search by name, ID, property...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-md bg-white/20 text-white placeholder-white/70 focus:outline-none focus:bg-white/30"
+              className="w-full pl-10 pr-4 py-2 rounded-md bg-ivolve-off-white text-ivolve-dark-green placeholder-ivolve-dark-green/70 focus:outline-none focus:ring-2 focus:ring-ivolve-blue"
             />
           </div>
         </div>
@@ -79,10 +144,17 @@ const PeopleView: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-solas-dark text-white">
                     <tr>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Name</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-24">ID</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-12">Icon</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Legal First Name</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Surname</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Preferred Name</th>
                         <th className="p-3 text-left text-sm font-semibold tracking-wider">Status</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Unit</th>
                         <th className="p-3 text-left text-sm font-semibold tracking-wider">Property</th>
-                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Key Worker</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Service Type</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">RP</th>
+                        <th className="p-3 text-left text-sm font-semibold tracking-wider">Region</th>
                         <th className="p-3 text-left text-sm font-semibold tracking-wider">Move-in Date</th>
                     </tr>
                 </thead>
@@ -91,27 +163,32 @@ const PeopleView: React.FC = () => {
                         <tr 
                             key={person.id} 
                             onClick={() => selectPerson(person.id)}
-                            className="hover:bg-ivolve-blue/10 cursor-pointer transition-colors"
+                            className={`cursor-pointer transition-colors ${person.status === PersonStatus.Former ? 'bg-gray-100 text-gray-600 hover:bg-gray-200' : 'hover:bg-ivolve-blue/10'}`}
                         >
-                            <td className="p-3 whitespace-nowrap">
-                                <div className="flex items-center">
-                                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
-                                        <UserIcon />
-                                    </div>
-                                    <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                                        <div className="text-sm text-gray-500">ID: {person.id}</div>
-                                    </div>
-                                </div>
+                            <td className="p-3 whitespace-nowrap text-center font-medium text-black">{person.id}</td>
+                            <td className="p-3 text-center"><PersonStatusIcon person={person} /></td>
+                            <td className="p-3 whitespace-nowrap text-sm font-medium">{person.legalFirstName}</td>
+                            <td className="p-3 whitespace-nowrap text-sm font-medium">{person.surname}</td>
+                            <td className="p-3 whitespace-nowrap text-sm text-gray-600 italic">
+                                {person.preferredFirstName !== person.legalFirstName ? person.preferredFirstName : ''}
                             </td>
                             <td className="p-3 text-sm">
-                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${person.status === PersonStatus.Current ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                                <span className={`inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md ${person.status === PersonStatus.Current ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}`}>
                                     {person.status}
                                 </span>
                             </td>
-                            <td className="p-3 text-sm text-gray-900">{person.property ? `${person.property.address.line1}, ${person.property.address.city}` : 'N/A'}</td>
-                            <td className="p-3 text-sm text-gray-900">{person.keyWorker?.name || 'Unassigned'}</td>
-                            <td className="p-3 text-sm text-gray-500">{new Date(person.moveInDate).toLocaleDateString()}</td>
+                            <td className="p-3 text-sm">{person.property?.units.find(u => u.id === person.unitId)?.name || 'N/A'}</td>
+                            <td className="p-3 text-sm">{person.property ? `${person.property.address.line1}, ${person.property.address.city}` : 'N/A'}</td>
+                            <td className="p-3 text-sm">{person.property ? <StatusChip status={person.property.serviceType as ServiceType} styleType="default" /> : 'N/A'}</td>
+                            <td className="p-3 text-sm">{person.property ? <RpTag name={person.property.tags.rp} styleType="outline" /> : 'N/A'}</td>
+                            <td className="p-3 text-sm">
+                                {person.property?.region ? (
+                                    <span className={`inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md ${getRegionTagStyle(person.property.region)}`}>
+                                        {person.property.region}
+                                    </span>
+                                ) : 'N/A'}
+                            </td>
+                            <td className="p-3 text-sm">{person.moveInDate ? new Date(person.moveInDate).toLocaleDateString() : 'N/A'}</td>
                         </tr>
                     ))}
                 </tbody>

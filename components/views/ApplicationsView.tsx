@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { ApplicationsIcon, AddIcon } from '../Icons';
+import { ApplicationsIcon } from '../Icons';
 import { usePersona } from '../../contexts/PersonaContext';
-import AddPersonModal from '../AddPersonModal';
 import SplitText from '../SplitText';
 import { useData } from '../../contexts/DataContext';
 import { ApplicationStage, Person, PersonStatus } from '../../types';
@@ -28,7 +27,6 @@ const stageColors: Record<ApplicationStage, { bg: string, text: string, border: 
 const ApplicationsView: React.FC = () => {
     const { t } = usePersona();
     const { people } = useData();
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const applicants = useMemo(() =>
         people.filter(p => p.status === PersonStatus.Applicant),
@@ -47,21 +45,12 @@ const ApplicationsView: React.FC = () => {
 
     return (
         <div className="h-full flex flex-col bg-gray-50">
-            {isAddModalOpen && <AddPersonModal onClose={() => setIsAddModalOpen(false)} />}
-
             <header className="flex-shrink-0 bg-app-header text-app-header-text p-4 shadow-md z-10">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                         <ApplicationsIcon />
                         <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="APPLICATIONS & REFERRALS"><SplitText>{`APPLICATIONS & REFERRALS`}</SplitText></h1>
                     </div>
-                    <button
-                        onClick={() => setIsAddModalOpen(true)}
-                        className="flex items-center space-x-2 bg-ivolve-bright-green text-ivolve-dark-green font-bold py-2 px-4 rounded-lg hover:opacity-90 transition-opacity"
-                    >
-                        <AddIcon />
-                        <span>Add New Person</span>
-                    </button>
                 </div>
             </header>
 

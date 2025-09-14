@@ -20,7 +20,7 @@ const StatusChip: React.FC<StatusChipProps> = ({ status, styleType = 'default' }
     return <span className={`text-xs font-medium ${style.color}`}>{status}</span>;
   }
   
-  const baseClasses = 'inline-block w-full text-center px-2 py-0.5 text-xs font-medium rounded-md border';
+  const baseClasses = 'inline-block w-full text-center px-2 py-1 text-xs font-semibold rounded-md border';
   
   const typeClasses = styleType === 'outline'
     ? `${style.color} ${style.border} bg-transparent`
