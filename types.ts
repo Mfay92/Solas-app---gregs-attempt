@@ -464,6 +464,9 @@ export interface Person {
   applicationStage?: ApplicationStage;
   referralDate?: string;
   referralSource?: string; // e.g., 'North Yorkshire Council', 'Self-referral'
+  preferredServiceType?: ServiceType;
+  preferredRegion?: string;
+  potentialRp?: string;
 }
 
 export interface AgreementDates {

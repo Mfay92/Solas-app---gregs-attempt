@@ -768,6 +768,9 @@ const MOCK_APPLICANTS: Person[] = [
         applicationStage: ApplicationStage.Referral,
         referralDate: '2024-07-28',
         referralSource: 'North Yorkshire Council',
+        preferredServiceType: ServiceType.SupportedLiving,
+        preferredRegion: 'North',
+        potentialRp: 'Inclusion Housing',
     },
     {
         id: 'APP002', preferredFirstName: 'Tom', legalFirstName: 'Thomas', surname: 'Baker', 
@@ -780,6 +783,9 @@ const MOCK_APPLICANTS: Person[] = [
         applicationStage: ApplicationStage.Application,
         referralDate: '2024-07-25',
         referralSource: 'Nottingham City Council',
+        preferredServiceType: ServiceType.Residential,
+        preferredRegion: 'Midlands',
+        potentialRp: 'Harbour Light',
     },
     {
         id: 'APP003', preferredFirstName: 'Chloe', legalFirstName: 'Chloe', surname: 'Davies', 
@@ -792,6 +798,9 @@ const MOCK_APPLICANTS: Person[] = [
         applicationStage: ApplicationStage.Application,
         referralDate: '2024-07-22',
         referralSource: 'Self-referral',
+        preferredServiceType: ServiceType.SupportedLiving,
+        preferredRegion: 'Wales',
+        potentialRp: 'Bespoke Supportive Tenancies',
     },
     {
         id: 'APP004', preferredFirstName: 'Mike', legalFirstName: 'Michael', surname: 'Rodriguez', 
@@ -804,19 +813,23 @@ const MOCK_APPLICANTS: Person[] = [
         applicationStage: ApplicationStage.AwaitingProperty,
         referralDate: '2024-06-15',
         referralSource: 'Manchester City Council',
+        preferredServiceType: ServiceType.SupportedLiving,
+        preferredRegion: 'North',
     },
     {
         id: 'APP005', preferredFirstName: 'Aisha', legalFirstName: 'Aisha', surname: 'Khan', 
         photoUrl: 'https://i.pravatar.cc/150?u=APP005', dob: '1999-09-09', status: PersonStatus.Applicant,
-        propertyId: '', unitId: '', moveInDate: '', moveOutDate: null,
+        propertyId: 'APPLE00_PROP', unitId: '', moveInDate: '', moveOutDate: null,
         keyWorkerId: '', areaManagerId: '',
         careNeeds: [{ id: 'cn-app5', category: 'Primary Need', detail: 'Learning Disability' }],
         funding: [], tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
-// FIX: Changed 'Ms' to 'Miss' to conform to the Person['title'] type.
         timeline: [], documents: [], contacts: [], title: 'Miss', firstLanguage: 'English', isNonVerbal: false,
         applicationStage: ApplicationStage.PropertyMatched,
         referralDate: '2024-05-20',
         referralSource: 'Leeds City Council',
+        preferredServiceType: ServiceType.SupportedLiving,
+        preferredRegion: 'North',
+        potentialRp: 'Inclusion Housing',
     },
 ];
 
