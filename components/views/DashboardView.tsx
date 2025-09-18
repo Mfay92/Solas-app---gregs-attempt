@@ -1,4 +1,5 @@
 
+
 import React, { useMemo, useState, useEffect } from 'react';
 import Card from '../Card';
 import ContactCard from '../ContactCard';
@@ -194,315 +195,162 @@ const DashboardView: React.FC<DashboardViewProps> = ({ currentUserId }) => {
                 }
             }
         });
-        return dates.sort((a, b) => a.date.getTime() - b.date.getTime()).slice(0, 5);
+        return dates.sort((a,b) => a.date.getTime() - b.date.getTime());
     }, [properties]);
-    
-    const visibleCustomWidgets = customWidgets.filter(w => visibleWidgetIds.includes(w.id));
-    
-  return (
-    <div className="p-8">
-        {isAddWidgetModalOpen && (
+
+
+    const renderWidget = (widgetId: string) => {
+        switch (widgetId) {
+             case 'openActions': return (
+                <Card title="My Open Actions" isCollapsible isCollapsed={collapsedWidgets.openActions} onToggleCollapse={() => toggleWidget('openActions')} onRemove={() => handleRemoveWidget('openActions')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                    {myOpenActions.length > 0 ? (
+                        <ul className="space-y-3">
+                            {myOpenActions.slice(0, 5).map(job => (
+                                <li key={job.id} className="text-sm p-2 bg-gray-50 rounded-md border">
+                                    <p><span className="font-bold text-ivolve-blue">{job.ref}</span>: {job.category} at {job.property.address.line1}</p>
+                                    <p className="text-xs text-gray-500">Due: {new Date(job.slaDueDate).toLocaleDateString()}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : <p className="text-sm text-gray-500">You have no open actions.</p>}
+                </Card>
+            );
+            case 'myProperties': return (
+                 <Card title="My Properties" isCollapsible isCollapsed={collapsedWidgets.myProperties} onToggleCollapse={() => toggleWidget('myProperties')} onRemove={() => handleRemoveWidget('myProperties')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                    {myProperties.length > 0 ? (
+                         <ul className="space-y-2">
+                            {myProperties.map(p => (
+                                <li key={p.id} onClick={() => selectProperty(p.id, p.units.find(u=>u.status === UnitStatus.Master)?.id || p.units[0].id)} className="text-sm p-2 bg-gray-50 rounded-md border cursor-pointer hover:bg-ivolve-blue/10">
+                                    <p className="font-semibold">{p.address.line1}</p>
+                                    <p className="text-xs text-gray-500">{p.address.city}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : <p className="text-sm text-gray-500">No properties are specifically assigned to you.</p>}
+                </Card>
+            );
+            case 'voids': return (
+                 <Card title="Voids at a Glance" isCollapsible isCollapsed={collapsedWidgets.voids} onToggleCollapse={() => toggleWidget('voids')} onRemove={() => handleRemoveWidget('voids')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                     {allVoids.length > 0 ? (
+                        <ul className="space-y-2">
+                            {allVoids.map(v => (
+                                <li key={v.id} onClick={() => selectProperty(v.property.id, v.id)} className="text-sm p-2 bg-gray-50 rounded-md border cursor-pointer hover:bg-ivolve-blue/10">
+                                    <p className="font-semibold">{v.property.address.line1} ({v.name})</p>
+                                </li>
+                            ))}
+                        </ul>
+                     ) : <p className="text-sm text-gray-500">There are currently no void properties.</p>}
+                </Card>
+            );
+            case 'pinnedContacts': return (
+                <Card title="Pinned Contacts" isCollapsible isCollapsed={collapsedWidgets.pinnedContacts} onToggleCollapse={() => toggleWidget('pinnedContacts')} onRemove={() => handleRemoveWidget('pinnedContacts')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                    {hasPinnedContacts ? (
+                        <div className="space-y-3">
+                            {pinnedIvolveStaff.map(s => <ContactCard key={s.id} person={s} onClick={() => selectIvolveContact(s.id)} isPinned={true} onTogglePin={() => handleTogglePin(s.id)} />)}
+                            {pinnedStakeholderContacts.map(c => <StakeholderContactCard key={c.id} contact={c} stakeholder={c.stakeholder} onClick={() => selectStakeholderContact(c.stakeholder.id, c.id)} isPinned={true} onTogglePin={() => handleTogglePin(c.id)} />)}
+                        </div>
+                    ) : <p className="text-sm text-gray-500">You haven't pinned any contacts yet. Pin contacts from the <a href="#" onClick={(e)=>{e.preventDefault(); setActiveMainView('Contact Hub')}} className="text-ivolve-blue underline">Contact Hub</a>.</p>}
+                </Card>
+            );
+            case 'dates': return (
+                <Card title="Upcoming Dates (Next 90 Days)" isCollapsible isCollapsed={collapsedWidgets.dates} onToggleCollapse={() => toggleWidget('dates')} onRemove={() => handleRemoveWidget('dates')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                    {upcomingDates.length > 0 ? (
+                        <ul className="space-y-2">
+                           {upcomingDates.map((item, index) => (
+                               <li key={index} onClick={() => selectProperty(item.property.id, item.unitId || '')} className="text-sm p-2 bg-gray-50 rounded-md border cursor-pointer hover:bg-ivolve-blue/10">
+                                   <p><span className="font-bold">{item.date.toLocaleDateString('en-GB', {day: '2-digit', month: 'short'})}:</span> {item.text}</p>
+                                   <p className="text-xs text-gray-500">{item.property.address.line1}</p>
+                               </li>
+                           ))}
+                        </ul>
+                    ) : <p className="text-sm text-gray-500">No key dates in the next 90 days.</p>}
+                </Card>
+            )
+            case 'compliance': return (
+                <Card title="Compliance Summary" isCollapsible isCollapsed={collapsedWidgets.compliance} onToggleCollapse={() => toggleWidget('compliance')} onRemove={() => handleRemoveWidget('compliance')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                    <div className="text-center">
+                        <p className="text-5xl font-bold text-ivolve-mid-green">{complianceStats.complianceRate}%</p>
+                        <p className="text-sm font-semibold text-gray-600">Portfolio Compliant</p>
+                    </div>
+                    <div className="mt-4 grid grid-cols-2 gap-4 text-center text-sm">
+                        <div className="p-2 bg-yellow-100 rounded-md"><p className="font-bold text-yellow-800">{complianceStats.dueSoon}</p><p>Due Soon</p></div>
+                        <div className="p-2 bg-red-100 rounded-md"><p className="font-bold text-red-800">{complianceStats.expired}</p><p>Expired</p></div>
+                    </div>
+                </Card>
+            );
+            case 'myPeople': return (
+                <Card title={`My ${t('people_plural_capitalized')}`} isCollapsible isCollapsed={collapsedWidgets.myPeople} onToggleCollapse={() => toggleWidget('myPeople')} onRemove={() => handleRemoveWidget('myPeople')} className="border-2 border-brand-dark-green" titleClassName="bg-brand-dark-green text-white">
+                     {myPeople.length > 0 ? (
+                        <ul className="space-y-2">
+                            {myPeople.map(p => (
+                                <li key={p.id} onClick={() => selectPerson(p.id)} className="text-sm p-2 bg-gray-50 rounded-md border cursor-pointer hover:bg-ivolve-blue/10 flex items-center space-x-3">
+                                    <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-500"><UserIcon /></div>
+                                    <p className="font-semibold">{p.preferredFirstName} {p.surname}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : <p className="text-sm text-gray-500">You are not assigned as a key worker to anyone.</p>}
+                </Card>
+            );
+            default:
+                const customWidget = customWidgets.find(w => w.id === widgetId);
+                if (customWidget) {
+                    return (
+                        <ReportWidget
+                            widget={customWidget}
+                            isCollapsed={!!collapsedWidgets[widgetId]}
+                            onToggleCollapse={() => toggleWidget(widgetId)}
+                            onRemove={() => handleRemoveWidget(widgetId)}
+                        />
+                    );
+                }
+                return null;
+        }
+    };
+
+    const columns = [1, 2, 3];
+    const allAvailableWidgets = [...ALL_WIDGETS, ...customWidgets.map(w => ({ id: w.id, title: w.title, icon: <SparklesIcon />, column: 2 }))];
+
+    return (
+        <div className="h-full flex flex-col">
             <AddWidgetModal
                 isOpen={isAddWidgetModalOpen}
                 onClose={() => setIsAddWidgetModalOpen(false)}
                 visibleWidgetIds={visibleWidgetIds}
                 onSave={setVisibleWidgetIds}
             />
-        )}
-      <div className="flex justify-between items-center">
-        <div>
-            <h1 className="text-4xl font-bold text-app-text-dark animated-heading" aria-label={`Welcome, ${currentUser ? currentUser.name.split(' ')[0] : 'User'}`}>
-              <SplitText>{`Welcome, ${currentUser ? currentUser.name.split(' ')[0] : 'User'}`}</SplitText>
-            </h1>
-            <p className="mt-2 text-lg text-app-text-gray">Your dashboard is ready. Here are your key contacts and updates.</p>
-        </div>
-        <button
-            onClick={() => setIsAddWidgetModalOpen(true)}
-            className="flex items-center space-x-2 bg-ivolve-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors"
-        >
-            <PlusIcon />
-            <span>Add Widget</span>
-        </button>
-      </div>
-
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            
-            {/* COLUMN 1 */}
-            <div className="space-y-8">
-                {visibleWidgetIds.includes('openActions') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><ClipboardIcon /></span>
-                            <h3 className="text-xl font-semibold">My Open Actions</h3>
+            <div className="flex-grow overflow-y-auto p-8">
+                 <div className="bg-brand-mid-green text-white p-6 rounded-lg shadow-lg mb-8">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-4xl font-extrabold tracking-tight animated-heading" aria-label={`Welcome, ${currentUser?.name || 'User'}`}>
+                                {/* FIX: Combine children into a single string for the SplitText component */}
+                                <SplitText>{`Welcome, ${currentUser?.name || 'User'}`}</SplitText>
+                            </h1>
+                            <p className="text-lg opacity-80">Here's what's happening today.</p>
                         </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.openActions}
-                    onToggleCollapse={() => toggleWidget('openActions')}
-                    onRemove={() => handleRemoveWidget('openActions')}
-                    bodyClassName="max-h-96 overflow-y-auto"
-                >
-                    {myOpenActions.length > 0 ? (
-                        <div className="space-y-3">
-                            {myOpenActions.map(job => {
-                                const isOverdue = new Date(job.slaDueDate) < new Date();
-                                return (
-                                <button 
-                                    key={job.id} 
-                                    onClick={() => selectProperty(job.property.id, job.unit)}
-                                    className="w-full text-left p-3 bg-gray-50 rounded-md border hover:bg-ivolve-blue/10 hover:border-ivolve-blue transition-colors"
-                                >
-                                    <div className="flex justify-between items-start">
-                                        <p className="font-bold text-sm text-ivolve-blue">{job.ref}</p>
-                                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isOverdue ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-700'}`}>
-                                            Due: {new Date(job.slaDueDate).toLocaleDateString('en-GB')}
-                                        </span>
-                                    </div>
-                                    <p className="text-sm font-medium text-solas-dark mt-1">{job.category}</p>
-                                    <p className="text-xs text-solas-gray">{job.property.address.line1}</p>
-                                </button>
-                            )})}
-                        </div>
-                    ) : (
-                        <p className="text-app-text-gray text-sm">You have no open maintenance actions assigned to you.</p>
-                    )}
-                </Card>}
-
-                {visibleWidgetIds.includes('myProperties') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><BuildingIcon /></span>
-                            <h3 className="text-xl font-semibold">My Properties</h3>
-                        </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.myProperties}
-                    onToggleCollapse={() => toggleWidget('myProperties')}
-                    onRemove={() => handleRemoveWidget('myProperties')}
-                    bodyClassName="max-h-80 overflow-y-auto"
-                 >
-                    {myProperties.length > 0 ? (
-                        <ul className="space-y-2">
-                            {myProperties.map(prop => {
-                                const masterUnitId = prop.units.find(u => u.status === UnitStatus.Master)?.id || prop.units[0].id;
-                                return (
-                                <li key={prop.id}>
-                                    <button 
-                                        onClick={() => selectProperty(prop.id, masterUnitId)}
-                                        className="w-full text-left text-sm text-ivolve-blue hover:underline p-1 rounded"
-                                    >
-                                        {prop.address.line1}, {prop.address.city}
-                                    </button>
-                                </li>
-                            )})}
-                        </ul>
-                    ) : (
-                         <p className="text-app-text-gray text-sm">You are not linked as a key contact to any properties yet.</p>
-                    )}
-                </Card>}
-
-                {visibleWidgetIds.includes('voids') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><VoidManagementIcon /></span>
-                            <h3 className="text-xl font-semibold">Voids at a Glance</h3>
-                        </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.voids}
-                    onToggleCollapse={() => toggleWidget('voids')}
-                    onRemove={() => handleRemoveWidget('voids')}
-                    bodyClassName="max-h-80 overflow-y-auto"
-                >
-                    {allVoids.length > 0 ? (
-                        <div className="space-y-3">
-                            <div className="flex justify-between items-baseline pb-2 border-b">
-                                <p className="font-bold text-solas-dark">Total Voids: {allVoids.length}</p>
-                                <button onClick={() => setActiveMainView('Void Management')} className="text-sm text-ivolve-blue hover:underline">View all &rarr;</button>
-                            </div>
-                            {allVoids.slice(0, 5).map(unit => (
-                                <button 
-                                    key={unit.id}
-                                    onClick={() => selectProperty(unit.property.id, unit.id)}
-                                    className="w-full text-left p-2 bg-gray-50 rounded-md border hover:bg-ivolve-blue/10 hover:border-ivolve-blue transition-colors"
-                                >
-                                    <p className="font-bold text-sm text-ivolve-blue">{unit.id}</p>
-                                    <p className="text-xs text-solas-gray">{unit.property.address.line1}</p>
-                                </button>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-app-text-gray text-sm">There are currently no void units.</p>
-                    )}
-                </Card>}
-            </div>
-
-            {/* COLUMN 2 */}
-            <div className="space-y-8">
-                 {visibleWidgetIds.includes('pinnedContacts') && <Card 
-                    title="My Pinned Contacts" 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.pinnedContacts}
-                    onToggleCollapse={() => toggleWidget('pinnedContacts')}
-                    onRemove={() => handleRemoveWidget('pinnedContacts')}
-                >
-                    {!hasPinnedContacts ? (
-                         <p className="text-app-text-gray">You haven't pinned any contacts yet. Click the star icon on a contact card in the Contact Hub to add them here for quick access.</p>
-                    ) : (
-                        <div className="space-y-6">
-                            {pinnedIvolveStaff.map(person => (
-                                <ContactCard 
-                                    key={person.id} 
-                                    person={person} 
-                                    onClick={() => selectIvolveContact(person.id)}
-                                    isPinned={true}
-                                    onTogglePin={person.id !== currentUserId ? () => handleTogglePin(person.id) : undefined}
-                                />
-                            ))}
-                             {pinnedStakeholderContacts.map(contact => (
-                                <StakeholderContactCard
-                                    key={contact.id}
-                                    contact={contact}
-                                    stakeholder={contact.stakeholder}
-                                    onClick={() => selectStakeholderContact(contact.stakeholder.id, contact.id)}
-                                    isPinned={true}
-                                    onTogglePin={() => handleTogglePin(contact.id)}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </Card>}
-                 {visibleWidgetIds.includes('dates') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><CalendarIcon /></span>
-                            <h3 className="text-xl font-semibold">Upcoming Dates (90d)</h3>
-                        </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.dates}
-                    onToggleCollapse={() => toggleWidget('dates')}
-                    onRemove={() => handleRemoveWidget('dates')}
-                    bodyClassName="max-h-80 overflow-y-auto"
-                >
-                    {upcomingDates.length > 0 ? (
-                        <div className="space-y-3">
-                            {upcomingDates.map((item, index) => (
-                                <button 
-                                    key={index}
-                                    onClick={() => item.unitId && selectProperty(item.property.id, item.unitId)}
-                                    className="w-full text-left p-3 bg-gray-50 rounded-md border hover:bg-ivolve-blue/10 hover:border-ivolve-blue transition-colors"
-                                >
-                                    <div className="flex justify-between items-start">
-                                        <p className="font-bold text-sm text-ivolve-blue">{item.text}</p>
-                                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
-                                            {item.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}
-                                        </span>
-                                    </div>
-                                    <p className="text-xs text-solas-gray mt-1">{item.property.address.line1}</p>
-                                </button>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-app-text-gray text-sm">No key dates in the next 90 days.</p>
-                    )}
-                </Card>}
-            </div>
-
-             {/* COLUMN 3 */}
-            <div className="space-y-8">
-                {visibleWidgetIds.includes('compliance') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><ComplianceIcon /></span>
-                            <h3 className="text-xl font-semibold">Compliance Summary</h3>
-                        </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.compliance}
-                    onToggleCollapse={() => toggleWidget('compliance')}
-                    onRemove={() => handleRemoveWidget('compliance')}
-                >
-                    <div className="text-center">
-                        <p className="text-6xl font-bold text-ivolve-mid-green">{complianceStats.complianceRate}%</p>
-                        <p className="text-sm text-solas-gray font-semibold">Portfolio Compliant</p>
+                        <button
+                            onClick={() => setIsAddWidgetModalOpen(true)}
+                            className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 font-semibold py-2 px-4 rounded-md transition-colors"
+                        >
+                            <PlusIcon />
+                            <span>Add Widget</span>
+                        </button>
                     </div>
-                    <div className="mt-6 space-y-3">
-                        <div className="flex justify-between items-center p-3 bg-yellow-100 rounded-md">
-                            <span className="font-semibold text-ivolve-yellow">Due Soon (30d)</span>
-                            <span className="font-bold text-lg text-ivolve-yellow">{complianceStats.dueSoon}</span>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {columns.map(colNum => (
+                        <div key={colNum} className="space-y-8">
+                            {allAvailableWidgets
+                                .filter(w => w.column === colNum && visibleWidgetIds.includes(w.id))
+                                .map(w => renderWidget(w.id))
+                            }
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-red-100 rounded-md">
-                            <span className="font-semibold text-status-red">Expired / Overdue</span>
-                            <span className="font-bold text-lg text-status-red">{complianceStats.expired}</span>
-                        </div>
-                    </div>
-                    <button 
-                        onClick={() => setActiveMainView('Compliance & PPM')}
-                        className="mt-6 w-full bg-ivolve-blue text-white font-bold py-2 px-4 rounded-md hover:bg-opacity-90"
-                    >
-                        View Full Report
-                    </button>
-                 </Card>}
-
-                {visibleWidgetIds.includes('myPeople') && <Card 
-                    title={
-                        <div className="flex items-center space-x-2">
-                            <span className="text-ivolve-blue"><PeopleIcon /></span>
-                            <h3 className="text-xl font-semibold">My {t('people_plural_capitalized')}</h3>
-                        </div>
-                    } 
-                    titleClassName="text-solas-dark"
-                    isCollapsible
-                    isCollapsed={collapsedWidgets.myPeople}
-                    onToggleCollapse={() => toggleWidget('myPeople')}
-                    onRemove={() => handleRemoveWidget('myPeople')}
-                    bodyClassName="max-h-80 overflow-y-auto"
-                >
-                     {myPeople.length > 0 ? (
-                        <div className="space-y-3">
-                            {myPeople.map(person => {
-                                const property = properties.find(p => p.id === person.propertyId);
-                                return (
-                                <button 
-                                    key={person.id} 
-                                    onClick={() => selectPerson(person.id)}
-                                    className="w-full text-left p-2 flex items-center space-x-3 bg-gray-50 rounded-md border hover:bg-ivolve-blue/10 hover:border-ivolve-blue transition-colors"
-                                >
-                                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
-                                        <UserIcon />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold text-sm text-solas-dark">{person.preferredFirstName} {person.surname}</p>
-                                        <p className="text-xs text-solas-gray">{property?.address.line1}</p>
-                                    </div>
-                                </button>
-                            )})}
-                        </div>
-                    ) : (
-                         <p className="text-app-text-gray text-sm">You are not assigned as a Key Worker to any {t('people_plural_lowercase')}.</p>
-                    )}
-                 </Card>}
-                 {/* Custom Report Widgets */}
-                 {visibleCustomWidgets.map(widget => (
-                    <ReportWidget
-                        key={widget.id}
-                        widget={widget}
-                        isCollapsed={!!collapsedWidgets[widget.id]}
-                        onToggleCollapse={() => toggleWidget(widget.id)}
-                        onRemove={() => handleRemoveWidget(widget.id)}
-                    />
-                 ))}
+                    ))}
+                </div>
             </div>
         </div>
-    </div>
-  );
+    );
 };
 
 export default DashboardView;

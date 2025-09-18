@@ -79,12 +79,12 @@ const DevelopmentJourneyHubView: React.FC = () => {
     
     return (
         <div className="h-full flex flex-col bg-gray-50">
-            <header className="flex-shrink-0 bg-app-header text-app-header-text p-4 shadow-md z-10">
-                <div className="flex items-center space-x-4">
+            <header className="flex-shrink-0 text-app-header-text z-10">
+                <div className="bg-app-header px-4 py-3 flex items-center space-x-4">
                     <DevelopmentIcon />
                     <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="GROWTH & DEVELOPMENT JOURNEY HUB"><SplitText>{`GROWTH & DEVELOPMENT JOURNEY HUB`}</SplitText></h1>
                 </div>
-                 <div className="mt-4">
+                <div className="bg-brand-mid-green-light px-4 py-2">
                      <input
                         type="search"
                         placeholder="Search projects..."

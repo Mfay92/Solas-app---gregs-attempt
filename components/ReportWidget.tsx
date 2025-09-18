@@ -130,7 +130,8 @@ const ReportWidget: React.FC<ReportWidgetProps> = ({ widget, isCollapsed, onTogg
             isCollapsed={isCollapsed}
             onToggleCollapse={onToggleCollapse}
             onRemove={onRemove}
-            titleClassName="text-solas-dark"
+            className="border-2 border-brand-dark-green"
+            titleClassName="bg-brand-dark-green text-white"
         >
             {isLoading && <p className="text-sm text-gray-500">Loading report...</p>}
             {error && <p className="text-sm text-red-600">{error}</p>}
