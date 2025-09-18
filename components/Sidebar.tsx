@@ -8,7 +8,7 @@ import {
     LegalIcon, UserCircleIcon, CogIcon, LogoutIcon, DevelopmentIcon, 
     VoidManagementIcon, MySpaceIcon, ApplicationsIcon, RepairsCenterIcon,
     ReportsCenterIcon, MarketingSuiteIcon, LibraryIcon, StakeholderHubIcon, ContactHubIcon,
-    FileTextIcon
+    FileTextIcon, ClipboardIcon
 } from './Icons';
 import { ivolveGroupLogo } from '../services/generatedAssets';
 import { IvolveStaff } from '../types';
@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeView, onNavigate, onDevHu
 
   const navItems = [
     { name: 'My Space', viewId: 'Dashboard', icon: <MySpaceIcon /> },
-    { name: 'Growth Hub', viewId: 'GrowthHub', icon: <FileTextIcon /> },
+    { name: 'Growth Hub', viewId: 'GrowthHub', icon: <ClipboardIcon /> },
     { name: 'Growth and Development', viewId: 'Development', icon: <DevelopmentIcon /> },
     { name: 'Properties', icon: <PropertiesIcon /> },
     { name: t('people_plural_capitalized'), viewId: 'People', icon: <PeopleIcon /> },

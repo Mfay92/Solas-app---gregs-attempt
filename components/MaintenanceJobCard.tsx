@@ -27,9 +27,10 @@ const MaintenanceJobCard: React.FC<MaintenanceJobCardProps> = ({ job, onSelect, 
     }
 
     return (
-        <div 
+        <button
+            type="button" 
             onClick={onSelect}
-            className="bg-white rounded-md shadow border border-gray-200 cursor-pointer hover:border-ivolve-blue transition-all duration-200"
+            className="w-full text-left bg-white rounded-md shadow border border-gray-200 cursor-pointer hover:border-ivolve-blue transition-all duration-200"
         >
             <div className={`h-1.5 w-full rounded-t-md ${priorityStyles[job.priority]}`}></div>
             <div className="p-3">
@@ -54,7 +55,7 @@ const MaintenanceJobCard: React.FC<MaintenanceJobCardProps> = ({ job, onSelect, 
                     )}
                 </div>
             </div>
-        </div>
+        </button>
     );
 };
 

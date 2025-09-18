@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TagStyle } from '../types';
 
 interface RpBranding {
@@ -14,7 +14,7 @@ const RP_BRANDING_MAP: Record<string, RpBranding> = {
         component: () => (
             <div className="flex items-center justify-center font-bold">
                 <span className="text-black tracking-wide">INCLUSION</span>
-                <span className="text-status-red ml-1 tracking-wide">HOUSING</span>
+                <span className="text-status-danger ml-1 tracking-wide">HOUSING</span>
             </div>
         ),
     },
@@ -68,4 +68,4 @@ const RpTag: React.FC<RpTagProps> = ({ name, styleType = 'default' }) => {
   return <span className={`${baseClasses} ${brandingClasses}`}>{nameToRender}</span>;
 };
 
-export default RpTag;
+export default memo(RpTag);

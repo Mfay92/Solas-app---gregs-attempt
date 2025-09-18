@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleGenAI, Type } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 import Card from './Card';
 import ReportRenderer from './ReportRenderer';
-import { useData } from '../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 import { processReportData } from './views/ReportsView';
-import { AiReportDefinition, ReportData, CustomWidget, Property, MaintenanceJob, Person, PropertyUnitRow } from '../types';
+import { AiReportDefinition, ReportData, CustomWidget, Property, MaintenanceJob, Person, PropertyUnitRow } from '../../types';
 import { SparklesIcon } from './Icons';
 import { reportResponseSchema } from './views/ReportsView';
 
@@ -18,33 +18,35 @@ type ReportWidgetProps = {
 // Memoized analysis function to avoid re-running the same AI query unnecessarily
 const memoizedAnalyze = (() => {
     const cache = new Map<string, Promise<AiReportDefinition | null>>();
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
-
+    
     return (query: string): Promise<AiReportDefinition | null> => {
         if (cache.has(query)) {
             return cache.get(query)!;
         }
 
-        const promise = ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: [{ parts: [{ text: `Generate a report definition for the query: "${query}"` }] }],
-            config: {
-                systemInstruction: "You are a data analyst for a social housing database. Your task is to interpret a user's natural language query and convert it into a structured JSON object that defines a report. This JSON must conform to the provided schema. The report title and summary should be professional and accurately reflect the query.",
-                responseMimeType: "application/json",
-                responseSchema: reportResponseSchema,
-            }
-        }).then(response => {
+        const promise = (async () => {
             try {
+                const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+                const response = await ai.models.generateContent({
+                    model: 'gemini-2.5-flash',
+                    contents: [{ parts: [{ text: `Generate a report definition for the query: "${query}"` }] }],
+                    config: {
+                        systemInstruction: "You are a data analyst for a social housing database. Your task is to interpret a user's natural language query and convert it into a structured JSON object that defines a report. This JSON must conform to the provided schema. The report title and summary should be professional and accurately reflect the query.",
+                        responseMimeType: "application/json",
+                        responseSchema: reportResponseSchema,
+                    }
+                });
                 return JSON.parse(response.text) as AiReportDefinition;
             } catch (e) {
                 console.error("Failed to parse AI response for widget:", e);
                 cache.delete(query);
-                return Promise.reject("AI response was not valid JSON.");
+                throw new Error("AI response was not valid JSON.");
             }
-        }).catch(err => {
+        })();
+        
+        promise.catch(err => {
             console.error("AI analysis failed for widget:", err);
             cache.delete(query);
-            return Promise.reject(err);
         });
 
         cache.set(query, promise);

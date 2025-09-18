@@ -13,7 +13,7 @@ const StakeholderCard: React.FC<StakeholderCardProps> = ({ stakeholder, onClick 
   const cardClasses = `
     h-48 rounded-lg shadow-md border 
     flex flex-col justify-center items-center 
-    p-4 text-center cursor-pointer 
+    p-4 text-center cursor-pointer w-full
     transition-transform transform hover:scale-105
     ${stakeholder.branding.cardBg}
     ${stakeholder.branding.cardText}
@@ -21,7 +21,7 @@ const StakeholderCard: React.FC<StakeholderCardProps> = ({ stakeholder, onClick 
   `;
 
   return (
-    <div className={cardClasses} onClick={onClick}>
+    <button type="button" className={cardClasses} onClick={onClick}>
       {Logo ? (
         <Logo />
       ) : (
@@ -30,7 +30,7 @@ const StakeholderCard: React.FC<StakeholderCardProps> = ({ stakeholder, onClick 
             {stakeholder.subName && <p className="text-sm opacity-80">{stakeholder.subName}</p>}
         </>
       )}
-    </div>
+    </button>
   );
 };
 

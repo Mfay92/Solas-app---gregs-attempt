@@ -134,14 +134,14 @@ const VoidManagementView: React.FC = () => {
         {/* Table Content */}
         <div className="flex-grow overflow-y-auto p-4">
             <table className="min-w-full border-collapse shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-solas-dark text-white">
+                <thead className="bg-brand-dark-green text-white">
                     <tr>
-                        <th className="p-3 text-center text-sm font-semibold border-r border-gray-600 tracking-wider">Property ID</th>
-                        <th className="p-3 text-center text-sm font-semibold border-r border-gray-600 tracking-wider">Unit</th>
-                        <th className="p-3 text-left text-sm font-semibold border-r border-gray-600 tracking-wider">Full Address</th>
-                        <th className="p-3 text-center text-sm font-semibold border-r border-gray-600 tracking-wider">RP</th>
-                        <th className="p-3 text-center text-sm font-semibold border-r border-gray-600 tracking-wider">Service Type</th>
-                        <th className="p-3 text-center text-sm font-semibold border-r border-gray-600 tracking-wider">Status</th>
+                        <th className="p-3 text-center text-sm font-semibold border-r border-white/20 tracking-wider">Property ID</th>
+                        <th className="p-3 text-center text-sm font-semibold border-r border-white/20 tracking-wider">Unit</th>
+                        <th className="p-3 text-left text-sm font-semibold border-r border-white/20 tracking-wider">Full Address</th>
+                        <th className="p-3 text-center text-sm font-semibold border-r border-white/20 tracking-wider">RP</th>
+                        <th className="p-3 text-center text-sm font-semibold border-r border-white/20 tracking-wider">Service Type</th>
+                        <th className="p-3 text-center text-sm font-semibold border-r border-white/20 tracking-wider">Status</th>
                         <th className="p-3 text-center text-sm font-semibold tracking-wider">Handover Date</th>
                     </tr>
                 </thead>

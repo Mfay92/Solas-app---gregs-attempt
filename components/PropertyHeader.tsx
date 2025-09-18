@@ -6,6 +6,7 @@ import StatusChip from './StatusChip';
 import RpTag from './RpTag';
 import { useUI } from '../contexts/UIContext';
 import { UserIcon, ArrowLeftIcon } from './Icons';
+import { getRegionTagStyle } from '../../utils/theme';
 
 type OccupantInfoProps = {
     property: Property;
@@ -65,19 +66,8 @@ const OccupantInfo: React.FC<OccupantInfoProps> = ({ property, people, selectedU
 
 
 const PropertyIdTag: React.FC<{ id: string }> = ({ id }) => (
-    <span className="mt-2 px-3 py-1 text-sm font-medium rounded-md bg-ivolve-mid-green text-white">{id}</span>
+    <span className="mt-2 px-3 py-1 text-sm font-medium rounded-md bg-brand-mid-green text-white">{id}</span>
 );
-
-const getRegionTagStyle = (region: string): string => {
-    switch(region) {
-        case 'North': return 'bg-region-north text-white';
-        case 'Midlands': return 'bg-region-midlands text-white';
-        case 'South': return 'bg-region-south text-white';
-        case 'South West': return 'bg-region-south-west text-white';
-        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
-        default: return 'bg-gray-200 text-gray-700';
-    }
-}
 
 const LivingTypeTag: React.FC<{ livingType: Property['livingType']; unitType?: 'flat' | 'room' | 'mixed' }> = ({ livingType, unitType }) => {
     let effectiveType: 'Self-contained' | 'Shared Living' | 'Mixed' = livingType;
@@ -134,7 +124,7 @@ const PropertyHeader: React.FC<{
                    'mixed';
 
   return (
-    <header className="relative bg-ivolve-dark-green text-white p-6 shadow-md">
+    <header className="relative bg-brand-dark-green text-white p-6 shadow-md">
       <button 
           onClick={onClose} 
           className="absolute top-2 right-2 p-2 rounded-full text-white/80 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
@@ -148,7 +138,7 @@ const PropertyHeader: React.FC<{
       </button>
 
       {property.flags.map(flag => (
-        <div key={flag.id} className="mb-4 p-4 rounded-md bg-orange-100 text-status-orange border border-status-orange">
+        <div key={flag.id} className="mb-4 p-4 rounded-md bg-orange-100 text-status-warning border border-status-warning">
           <p className="font-bold">{flag.message}</p>
         </div>
       ))}

@@ -55,7 +55,7 @@ const LibraryView: React.FC = () => {
     
     const searchGuideText = `
     What is Smart Search? The Smart Search bar at the top of every page is powered by Google's Gemini AI. It allows you to find properties using natural, conversational language instead of manually applying filters.
-    How it Works: Simply type what you're looking for into the search bar and press Enter or click "Smart Search". The AI will analyze your request and automatically apply the relevant filters to the Property Database. For example, if you type "show me void supported living properties in the north", the AI will select "Void", "Supported Living", and "North" in the filter options for you.
+    How it Works: Simply type what you're for into the search bar and press Enter or click "Smart Search". The AI will analyze your request and automatically apply the relevant filters to the Property Database. For example, if you type "show me void supported living properties in the north", the AI will select "Void", "Supported Living", and "North" in the filter options for you.
     Example Queries: "All my void units in Wales", "Show residential services run by Harbour Light", "Find me occupied properties in the Midlands", "STRE01" (it still handles direct ID searches too!).
   `;
 

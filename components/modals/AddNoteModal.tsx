@@ -1,31 +1,53 @@
 import React, { useState } from 'react';
 import { NoteCategory } from '../../types';
 import Modal from '../Modal';
+import { NOTE_CATEGORIES_DATA } from '../../services/noteCategories';
 
 type AddNoteModalProps = {
     onClose: () => void;
     onSave: (noteData: {
         title: string;
         category: NoteCategory;
+        subCategory: string;
         description: string;
         isSensitive: boolean;
     }) => void;
 };
 
-const NOTE_CATEGORIES: NoteCategory[] = ['General', 'Safeguarding', 'Incident', 'Positive', 'Health', 'Finance', 'Housing', 'Family Contact'];
-
 const AddNoteModal: React.FC<AddNoteModalProps> = ({ onClose, onSave }) => {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState<NoteCategory>('General');
+    const [subCategory, setSubCategory] = useState<string>(NOTE_CATEGORIES_DATA[0].subCategories[0].name);
+    const [customSubCategory, setCustomSubCategory] = useState('');
     const [description, setDescription] = useState('');
     const [isSensitive, setIsSensitive] = useState(false);
 
-    const isSaveDisabled = !title.trim() || !description.trim();
+    const subCategoryOptions = NOTE_CATEGORIES_DATA.find(c => c.name === category)?.subCategories || [];
+    const finalSubCategory = subCategory === 'Other' ? customSubCategory : subCategory;
+
+    const isSaveDisabled = !title.trim() || !description.trim() || !finalSubCategory.trim();
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newCategory = e.target.value as NoteCategory;
+        setCategory(newCategory);
+        // Reset subcategory when main category changes
+        const defaultSub = NOTE_CATEGORIES_DATA.find(c => c.name === newCategory)?.subCategories[0]?.name || '';
+        setSubCategory(defaultSub);
+        setCustomSubCategory('');
+    };
+
+    const handleSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setSubCategory(value);
+        if (value !== 'Other') {
+            setCustomSubCategory('');
+        }
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isSaveDisabled) return;
-        onSave({ title, category, description, isSensitive });
+        onSave({ title, category, subCategory: finalSubCategory, description, isSensitive });
     };
 
     return (
@@ -43,17 +65,45 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ onClose, onSave }) => {
                         autoFocus
                     />
                 </div>
-                <div>
-                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category *</label>
-                    <select
-                        id="category"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value as NoteCategory)}
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-ivolve-blue focus:border-ivolve-blue sm:text-sm rounded-md"
-                    >
-                        {NOTE_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                    </select>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category *</label>
+                        <select
+                            id="category"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-ivolve-blue focus:border-ivolve-blue sm:text-sm rounded-md"
+                        >
+                            {NOTE_CATEGORIES_DATA.map(cat => <option key={cat.name} value={cat.name}>{cat.name}</option>)}
+                        </select>
+                    </div>
+                     <div>
+                        <label htmlFor="sub-category" className="block text-sm font-medium text-gray-700">Sub-Category *</label>
+                        <select
+                            id="sub-category"
+                            value={subCategory}
+                            onChange={handleSubCategoryChange}
+                            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-ivolve-blue focus:border-ivolve-blue sm:text-sm rounded-md"
+                        >
+                            {subCategoryOptions.map(sub => <option key={sub.name} value={sub.name}>{sub.name}</option>)}
+                            <option value="Other">Other (custom)...</option>
+                        </select>
+                    </div>
                 </div>
+                 {subCategory === 'Other' && (
+                    <div>
+                        <label htmlFor="customSubCategory" className="block text-sm font-medium text-gray-700">Custom Sub-Category *</label>
+                        <input
+                            type="text"
+                            id="customSubCategory"
+                            value={customSubCategory}
+                            onChange={e => setCustomSubCategory(e.target.value)}
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-ivolve-blue focus:border-ivolve-blue"
+                            placeholder="Type custom tags, comma separated"
+                            required
+                        />
+                    </div>
+                )}
                 <div>
                     <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description *</label>
                     <textarea

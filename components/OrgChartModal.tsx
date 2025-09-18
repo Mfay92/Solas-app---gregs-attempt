@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { IvolveStaff } from '../types';
-import { ChevronDownIcon, EmailIcon, MessageIcon, ExternalLinkIcon, SitemapIcon, UserIcon } from './Icons';
+import { ChevronDownIcon, EmailIcon, MessageIcon, ExternalLinkIcon, SitemapIcon, UserIcon, XMarkIcon } from './Icons';
 
 type TreeNode = IvolveStaff & { children: TreeNode[] };
 
@@ -220,7 +220,9 @@ const OrgChartModal: React.FC<OrgChartModalProps> = ({ staff, currentUserId, onC
                         >
                             {teams.map(team => <option key={team} value={team}>{team}</option>)}
                         </select>
-                        <button onClick={onClose} className="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                        <button onClick={onClose} className="text-gray-500 hover:text-gray-800" aria-label="Close organization chart">
+                            <XMarkIcon />
+                        </button>
                     </div>
                 </header>
 
@@ -260,9 +262,9 @@ const OrgChartModal: React.FC<OrgChartModalProps> = ({ staff, currentUserId, onC
                         </div>
                         <div className="flex flex-col space-y-2 items-end">
                              <div className="flex space-x-2">
-                                <a href={`mailto:${selectedNode.email}`} className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors"><EmailIcon /></a>
-                                <a href={`msteams:/l/chat/0/0?users=${selectedNode.email}`} className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors"><MessageIcon /></a>
-                                <button className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors" disabled><ExternalLinkIcon /></button>
+                                <a href={`mailto:${selectedNode.email}`} title="Send Email" className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors"><EmailIcon /></a>
+                                <a href={`msteams:/l/chat/0/0?users=${selectedNode.email}`} title="Message on Teams" className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors"><MessageIcon /></a>
+                                <button title="Open Connect Profile (coming soon)" className="p-2 bg-gray-200 rounded-full hover:bg-ivolve-blue hover:text-white transition-colors" disabled><ExternalLinkIcon /></button>
                              </div>
                              <button onClick={() => setSelectedNode(null)} className="text-sm text-gray-500 hover:underline">Clear selection</button>
                         </div>

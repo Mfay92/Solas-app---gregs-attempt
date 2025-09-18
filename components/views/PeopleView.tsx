@@ -1,3 +1,5 @@
+
+
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Person, PersonStatus, ServiceType, Flag, DrawerMode } from '../../types';
 import { PeopleIcon, SearchIcon, PanelRightIcon, PanelBottomIcon, ChartBarIcon, CogIcon, KeyIcon, WarningIcon, ExternalLinkIcon } from '../Icons';
@@ -7,28 +9,16 @@ import { useUI } from '../../contexts/UIContext';
 import SplitText from '../SplitText';
 import StatusChip from '../StatusChip';
 import RpTag from '../RpTag';
-import AddPersonModal from '../AddPersonModal';
+import { getRegionTagStyle } from '../../utils/theme';
 
 const PersonStatusIcon: React.FC<{ person: { flags?: Flag[] } }> = ({ person }) => {
     const highPriorityFlag = person.flags?.find(f => f.level === 'danger') || person.flags?.find(f => f.level === 'warning');
     if (highPriorityFlag) {
-        const color = highPriorityFlag.level === 'danger' ? 'text-status-red' : 'text-status-orange';
+        const color = highPriorityFlag.level === 'danger' ? 'text-status-danger' : 'text-status-warning';
         return <span className={color} title={highPriorityFlag.message}><WarningIcon /></span>;
     }
     return null;
 };
-
-// Helper function for region tag styling, to match Property view
-const getRegionTagStyle = (region: string): string => {
-    switch(region) {
-        case 'North': return 'bg-region-north text-white';
-        case 'Midlands': return 'bg-region-midlands text-white';
-        case 'South': return 'bg-region-south text-white';
-        case 'South West': return 'bg-region-south-west text-white';
-        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
-        default: return 'bg-gray-200 text-gray-700';
-    }
-}
 
 const Dropdown: React.FC<{ buttonContent: React.ReactNode; children: React.ReactNode; }> = ({ buttonContent, children }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +65,6 @@ const PeopleView: React.FC = () => {
     const { selectPerson, drawerMode, setDrawerMode } = useUI();
     
     const [searchQuery, setSearchQuery] = useState('');
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const { t } = usePersona();
 
     const propertyMap = useMemo(() => new Map(properties.map(p => [p.id, p])), [properties]);
@@ -103,7 +92,6 @@ const PeopleView: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-        {isAddModalOpen && <AddPersonModal onClose={() => setIsAddModalOpen(false)} />}
       <header className="bg-app-header text-app-header-text p-4 shadow-md z-10 space-y-4">
         <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -121,11 +109,6 @@ const PeopleView: React.FC = () => {
                     <CogIcon />
                     <span>View Settings</span>
                 </button>
-                <Dropdown buttonContent={<><KeyIcon /><span>Admin Tools</span></>}>
-                    <div className="p-2 space-y-1">
-                        <button onClick={() => setIsAddModalOpen(true)} className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-gray-100">Add New {t('person')}</button>
-                    </div>
-                </Dropdown>
             </div>
         </div>
         <div>
@@ -147,22 +130,22 @@ const PeopleView: React.FC = () => {
       <main className="flex-grow overflow-y-auto p-4">
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-solas-dark text-white">
+                <thead className="bg-brand-dark-green text-white">
                     <tr>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-24">ID</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-12">Icon</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">First Name (legal)</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Surname</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Preferred Name</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Status</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Unit</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Property</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Service Type</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">RP</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Region</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Tenancy Start</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Move-in Date</th>
-                        <th className="p-3 text-center text-sm font-semibold tracking-wider">Tenancy End</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-24 border-r border-white/20">ID</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider w-12 border-r border-white/20">Icon</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">First Name (legal)</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Surname</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Preferred Name</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Status</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Unit</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Property</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Service Type</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">RP</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Region</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Tenancy Start</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Move-in Date</th>
+                        <th className="p-3 text-center text-sm font-semibold tracking-wider border-r border-white/20">Tenancy End</th>
                         <th className="p-3 text-center text-sm font-semibold tracking-wider">Move Out</th>
                     </tr>
                 </thead>

@@ -1,3 +1,5 @@
+
+
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { ServiceType, UnitStatus, LegalEntity, TagStyle, PropertyUnitRow, PropertyFilters } from '../../types';
 import { PropertiesIcon, WarningIcon, StarIconSolid, BinocularsIcon, NoSymbolIcon, ChartBarIcon, KeyIcon, CogIcon, SparklesIcon, InformationCircleIcon, BookOpenIcon, SearchIcon } from '../Icons';
@@ -13,8 +15,9 @@ import AddNewUnitModal from '../AddNewUnitModal';
 import QuickStatsModal from '../QuickStatsModal';
 import ViewSettingsModal from '../modals/ViewSettingsModal';
 import HelpModal from '../modals/HelpModal';
-import { GoogleGenAI, Type } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 import SplitText from '../SplitText';
+import HelpButton from '../HelpButton';
 
 const CURRENT_USER_ID = 'MF01';
 
@@ -29,29 +32,28 @@ const entityStyles: Record<LegalEntity, string> = {
 };
 
 // --- AI CONFIGURATION ---
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 const filterSchema = {
-    type: Type.OBJECT,
+    type: 'OBJECT',
     properties: {
-        searchText: { type: Type.STRING, description: 'General text to search for in address, RP, ID, etc. Can include property IDs like STRE01.' },
+        searchText: { type: 'STRING', description: 'General text to search for in address, RP, ID, etc. Can include property IDs like STRE01.' },
         serviceTypes: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING, enum: ['Supported Living', 'Residential', 'Nursing Care'] },
+            type: 'ARRAY',
+            items: { type: 'STRING', enum: ['Supported Living', 'Residential', 'Nursing Care'] },
             description: 'The types of services provided at the property.'
         },
         unitStatuses: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING, enum: ['Occupied', 'Void', 'Master', 'Unavailable', 'Out of Management', 'Staff Space'] },
+            type: 'ARRAY',
+            items: { type: 'STRING', enum: ['Occupied', 'Void', 'Master', 'Unavailable', 'Out of Management', 'Staff Space'] },
             description: 'The current status of the units.'
         },
         regions: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING, enum: ['North', 'Midlands', 'South', 'South West', 'Wales'] },
+            type: 'ARRAY',
+            items: { type: 'STRING', enum: ['North', 'Midlands', 'South', 'South West', 'Wales'] },
             description: 'The geographical region of the property.'
         },
         rp: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING },
+            type: 'ARRAY',
+            items: { type: 'STRING' },
             description: 'The registered provider (RP) associated with the property.'
         }
     },
@@ -60,6 +62,7 @@ const filterSchema = {
 const analyzeSearchQuery = async (query: string): Promise<PropertyFilters | null> => {
     if (!query.trim()) return null;
     try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: [{ parts: [{ text: `Analyze this property database query and extract the filters: "${query}"` }] }],
@@ -285,7 +288,7 @@ const PropertiesView: React.FC = () => {
         {activeModal === 'addProperty' && <Modal title="Add New Property" onClose={() => setActiveModal(null)}><p>This feature is coming soon.</p></Modal>}
         {activeModal === 'stats' && <QuickStatsModal properties={properties} people={people} onClose={() => setActiveModal(null)} />}
         {activeModal === 'viewSettings' && <ViewSettingsModal onClose={() => setActiveModal(null)} settings={{ toggles, highlightToggles, visibleColumns, columnOrder, tagStyle, viewMode, drawerMode, rememberSettings }} setSettings={{ setToggles, setHighlightToggles, setVisibleColumns, setColumnOrder, setTagStyle, setViewMode, setDrawerMode, setRememberSettings }} initialColumnConfig={initialColumnConfig} />}
-        {activeModal === 'help' && <HelpModal onClose={() => setActiveModal(null)} />}
+        {activeModal === 'help' && <HelpModal topic="propertyDatabase" onClose={() => setActiveModal(null)} />}
 
         <header className="bg-app-header text-app-header-text p-4 shadow-md z-10 space-y-4">
             <div className="flex justify-between items-center">
@@ -317,7 +320,7 @@ const PropertiesView: React.FC = () => {
                     {searchError && <p className="text-red-300 text-xs mt-1">{searchError}</p>}
                 </div>
                 <div className="flex items-center space-x-2">
-                    <button onClick={() => setActiveModal('help')} className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 font-semibold py-2 px-4 rounded-md transition-colors"><InformationCircleIcon /><span>Help & Guidance</span></button>
+                    <HelpButton onClick={() => setActiveModal('help')} />
                     <Dropdown buttonContent={<><ChartBarIcon /><span>Quick Info</span></>}>
                         <div className="p-3 space-y-2">
                             <h4 className="font-bold text-sm border-b pb-2">Personal Stats</h4>
@@ -342,8 +345,8 @@ const PropertiesView: React.FC = () => {
         <div className="flex-grow overflow-y-auto p-4">
            {viewMode === 'deck' ? <PropertyCardDeckView rows={filteredData} /> : (
             <table className="min-w-full border-collapse shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-ivolve-dark-green text-white">
-                    <tr>{orderedColumnConfig.map(col => visibleColumns[col.id] && <th key={col.id} className="p-3 text-base font-semibold border-r border-gray-600 tracking-wider first:text-center last:border-r-0">{col.label}</th>)}</tr>
+                <thead className="bg-brand-dark-green text-white">
+                    <tr>{orderedColumnConfig.map(col => visibleColumns[col.id] && <th key={col.id} className="p-3 text-base font-semibold border-r border-white/20 tracking-wider first:text-center last:border-r-0">{col.label}</th>)}</tr>
                 </thead>
                 <tbody className="text-app-text-dark">
                     {filteredData.map((row) => (

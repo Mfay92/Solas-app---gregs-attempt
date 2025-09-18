@@ -1,9 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode, useMemo, useEffect } from 'react';
 import * as storage from '../services/storage';
-// FIX: Import DrawerMode from types.ts to include 'popup' option
 import { PropertyFilters, DrawerMode } from '../types';
-
-// FIX: Removed local DrawerMode type which was incomplete
 
 interface UIState {
   activeMainView: string;
@@ -16,7 +13,6 @@ interface UIState {
   drawerMode: DrawerMode;
   activeDrawer: 'property' | 'person' | null;
   propertyFilters: PropertyFilters | null;
-  // FIX: Add state for popup window position and status
   popupPosition: { x: number; y: number };
   isPopupMinimized: boolean;
 }
@@ -34,7 +30,6 @@ interface UIContextActions {
   unselectProperty: () => void;
   applyPropertyFilters: (filters: PropertyFilters) => void;
   clearPropertyFilters: () => void;
-  // FIX: Add actions for popup window
   setPopupPosition: (position: { x: number; y: number }) => void;
   setPopupMinimized: (minimized: boolean) => void;
 }
@@ -57,7 +52,6 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       drawerMode: savedSettings ? savedSettings.drawerMode : 'right', // Load initial state here
       activeDrawer: null,
       propertyFilters: null,
-      // FIX: Initialize popup state
       popupPosition: { x: window.innerWidth / 4, y: 50 },
       isPopupMinimized: false,
     };
@@ -78,7 +72,6 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         selectedStakeholderContact: null,
         selectedPersonId: null,
         activeDrawer: null,
-        // FIX: Reset popup minimized state on close
         isPopupMinimized: false,
     });
     
@@ -97,7 +90,6 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           ...(overlay ? s : { ...s, ...clearDrawers() }),
           selectedPersonId: id,
           activeDrawer: 'person',
-          // FIX: Ensure popup is not minimized when a person is selected
           isPopupMinimized: false,
       })),
       closeAllDrawers: () => setState(s => ({ ...s, ...clearDrawers() })),
@@ -111,7 +103,6 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           activeMainView: 'Properties',
       })),
       clearPropertyFilters: () => setState(s => ({ ...s, propertyFilters: null })),
-      // FIX: Add setters for popup state
       setPopupPosition: (position: { x: number; y: number }) => setState(s => ({ ...s, popupPosition: position })),
       setPopupMinimized: (minimized: boolean) => setState(s => ({ ...s, isPopupMinimized: minimized })),
     }

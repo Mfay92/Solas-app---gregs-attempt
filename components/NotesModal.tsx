@@ -1,7 +1,11 @@
+
+
 import React, { useState, useMemo } from 'react';
 import { Person, TimelineEvent, TimelineEventType } from '../types';
 import Modal from './Modal';
 import { WarningIcon, AddIcon, ArrowLeftIcon } from './Icons';
+import HelpButton from './HelpButton';
+import HelpModal from './modals/HelpModal';
 
 type NotesModalProps = {
     person: Person;
@@ -13,6 +17,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ person, onClose, onAddNote }) =
     const [categoryFilter, setCategoryFilter] = useState('All');
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
     const [detailViewNote, setDetailViewNote] = useState<TimelineEvent | null>(null);
+    const [isHelpOpen, setIsHelpOpen] = useState(false);
 
     const notes = useMemo(() => {
         let filtered = person.timeline.filter(e => e.type === TimelineEventType.Notes || e.type === TimelineEventType.System);
@@ -30,7 +35,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ person, onClose, onAddNote }) =
         return filtered;
     }, [person.timeline, categoryFilter, sortOrder]);
 
-    const categories = ['All', 'General', 'Safeguarding', 'Incident', 'Positive', 'Health', 'Finance', 'Housing', 'Family Contact'];
+    const categories = ['All', 'General', 'Safeguarding', 'Incident', 'Positive', 'Health', 'Finance', 'Housing', 'Family Contact', 'Tenancy & Rent', 'RP/Landlord'];
 
     const renderListView = () => (
         <div className="h-full flex flex-col">
@@ -67,6 +72,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ person, onClose, onAddNote }) =
                             <div className="flex items-center space-x-2">
                                 {note.isSensitive && <span className="flex items-center font-bold text-status-orange"><WarningIcon className="w-4 h-4 mr-1" /> Sensitive</span>}
                                 {note.noteCategory && <span className="px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full font-semibold">{note.noteCategory}</span>}
+                                {note.noteSubCategory && <span className="px-2 py-0.5 bg-gray-600 text-white rounded-full font-semibold">{note.noteSubCategory}</span>}
                             </div>
                         </div>
                         <p className="mt-2 text-sm text-solas-gray truncate">{note.description}</p>
@@ -99,6 +105,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ person, onClose, onAddNote }) =
                              <div className="flex items-center space-x-2">
                                 {detailViewNote.isSensitive && <span className="flex items-center font-bold text-status-orange"><WarningIcon className="w-4 h-4 mr-1" /> Sensitive</span>}
                                 {detailViewNote.noteCategory && <span className="px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full font-semibold">{detailViewNote.noteCategory}</span>}
+                                {detailViewNote.noteSubCategory && <span className="px-2 py-0.5 bg-gray-600 text-white rounded-full font-semibold">{detailViewNote.noteSubCategory}</span>}
                             </div>
                         </div>
                         <p className="mt-4 text-md text-solas-gray whitespace-pre-wrap">{detailViewNote.description}</p>
@@ -119,31 +126,37 @@ const NotesModal: React.FC<NotesModalProps> = ({ person, onClose, onAddNote }) =
             <span>Back to Notes</span>
         </button>
     ) : (
-        <button
-            onClick={onAddNote}
-            className="flex items-center space-x-2 bg-ivolve-mid-green text-white text-sm font-bold px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"
-        >
-            <AddIcon />
-            <span>Add New Note</span>
-        </button>
+        <div className="flex items-center space-x-2">
+            <HelpButton onClick={() => setIsHelpOpen(true)} variant="modal" />
+            <button
+                onClick={onAddNote}
+                className="flex items-center space-x-2 bg-ivolve-mid-green text-white text-sm font-bold px-3 py-1.5 rounded-md hover:bg-opacity-90 shadow-sm"
+            >
+                <AddIcon />
+                <span>Add New Note</span>
+            </button>
+        </div>
     );
 
     return (
-        <Modal 
-            title={modalTitle} 
-            onClose={onClose} 
-            className="max-w-6xl h-[90vh]"
-        >
-            {/* Custom Header within Modal Body */}
-            <div className="pb-4 border-b mb-4 flex justify-between items-center">
-                <h3 className="text-xl font-bold text-solas-dark">{modalTitle}</h3>
-                {headerActions}
-            </div>
-            
-            <div className="h-[calc(100%-60px)]">
-                 {detailViewNote ? renderDetailView() : renderListView()}
-            </div>
-        </Modal>
+        <>
+            {isHelpOpen && <HelpModal topic="notesAndUpdates" onClose={() => setIsHelpOpen(false)} />}
+            <Modal 
+                title={modalTitle} 
+                onClose={onClose} 
+                className="max-w-screen-xl h-[95vh]"
+            >
+                {/* Custom Header within Modal Body */}
+                <div className="pb-4 border-b mb-4 flex justify-between items-center">
+                    <h3 className="text-xl font-bold text-solas-dark">{modalTitle}</h3>
+                    {headerActions}
+                </div>
+                
+                <div className="h-[calc(100%-60px)]">
+                    {detailViewNote ? renderDetailView() : renderListView()}
+                </div>
+            </Modal>
+        </>
     );
 };
 

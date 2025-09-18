@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Person, PersonStatus, TimelineEvent, TimelineEventType, NoteCategory } from '../../../types';
+import { Person, PersonStatus, TimelineEvent, TimelineEventType, NoteCategory, Flag } from '../../../types';
 import Card from '../../Card';
 import TimelineView from '../TimelineView';
 import NotesModal from '../../NotesModal';
 import { useData } from '../../../contexts/DataContext';
 import AddNoteModal from '../../modals/AddNoteModal';
+import { NOTE_CATEGORIES_DATA } from '../../../services/noteCategories';
 
 const InfoItem: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
     <div>
@@ -39,7 +40,7 @@ const OverviewUpdatesView: React.FC<{ person: Person }> = ({ person }) => {
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 3);
 
-    const handleSaveNote = (noteData: { title: string; category: NoteCategory; description: string; isSensitive: boolean; }) => {
+    const handleSaveNote = (noteData: { title: string; category: NoteCategory; subCategory: string; description: string; isSensitive: boolean; }) => {
         const newNote: TimelineEvent = {
             id: `note-${Date.now()}`,
             date: new Date().toISOString(),
@@ -48,11 +49,27 @@ const OverviewUpdatesView: React.FC<{ person: Person }> = ({ person }) => {
             description: noteData.description,
             actor: 'Matt Fay', // Should be current user
             noteCategory: noteData.category,
+            noteSubCategory: noteData.subCategory,
             isSensitive: noteData.isSensitive
         };
+        
+        let updatedFlags = person.flags ? [...person.flags] : [];
+
+        // Check if this sub-category should generate a flag
+        const primaryCat = NOTE_CATEGORIES_DATA.find(c => c.name === noteData.category);
+        const subCat = primaryCat?.subCategories.find(sc => sc.name === noteData.subCategory);
+
+        if (subCat?.isFlag) {
+            const newFlag: Flag = {
+                id: `flag-note-${Date.now()}`,
+                message: `${noteData.category}: ${noteData.title}`,
+                level: subCat.flagLevel || 'warning',
+            };
+            updatedFlags.push(newFlag);
+        }
 
         const updatedTimeline = [...person.timeline, newNote];
-        handleUpdatePerson(person.id, { timeline: updatedTimeline });
+        handleUpdatePerson(person.id, { timeline: updatedTimeline, flags: updatedFlags });
         setIsAddNoteModalOpen(false);
         // Re-open the main notes modal to see the new note
         setIsNotesModalOpen(true);

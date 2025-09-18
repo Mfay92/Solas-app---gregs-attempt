@@ -1,6 +1,7 @@
 
 
 
+
 export enum ServiceType {
   SupportedLiving = 'Supported Living',
   Residential = 'Residential',
@@ -128,17 +129,30 @@ export interface IvolveStaff {
     isPinned?: boolean;
 }
 
-export type NoteCategory = 'General' | 'Safeguarding' | 'Incident' | 'Positive' | 'Health' | 'Finance' | 'Housing' | 'Family Contact';
+export type NoteCategory = 'General' | 'Safeguarding' | 'Incident' | 'Positive' | 'Health' | 'Finance' | 'Housing' | 'Family Contact' | 'Tenancy & Rent' | 'RP/Landlord';
+
+export type NoteSubCategory = {
+    name: string;
+    isFlag?: boolean;
+    flagLevel?: 'warning' | 'danger';
+};
+
+export type NotePrimaryCategory = {
+    name: NoteCategory;
+    subCategories: NoteSubCategory[];
+};
+
 
 export interface TimelineEvent {
   id: string;
   date: string;
   type: TimelineEventType;
-  title?: string; // Added title for notes
+  title?: string;
   description: string;
   actor: string;
-  noteCategory?: NoteCategory; // For notes
-  isSensitive?: boolean; // For important/locked notes
+  noteCategory?: NoteCategory;
+  noteSubCategory?: string;
+  isSensitive?: boolean;
 }
 
 export interface RentLine {
@@ -422,7 +436,7 @@ export interface Person {
   tenancy: TenancyDetails;
   timeline: TimelineEvent[];
   documents: Document[];
-  flags?: Flag[];
+  flags: Flag[];
   contacts: PersonContact[]; // New private contacts
   
   // Expanded "About Me" fields
@@ -650,7 +664,6 @@ export enum DevelopmentStage {
     Complete = '7. Complete & Handed Over',
 }
 
-// Fix: Add missing FrameworkStatus and TenderStatus enums
 export enum FrameworkStatus {
     Live = 'Live',
     ExpiringSoon = 'Expiring Soon',

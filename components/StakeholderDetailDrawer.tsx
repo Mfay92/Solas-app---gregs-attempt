@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Stakeholder, Property, Unit, UnitStatus, Contact } from '../types';
 import { getLogoComponent } from './StakeholderLogos';
@@ -169,7 +170,7 @@ const StakeholderDetailDrawer: React.FC = () => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-30 z-40" onClick={closeAllDrawers}></div>
+      <div className="fixed inset-0 bg-black bg-opacity-60 z-40" onClick={closeAllDrawers}></div>
       <div className="fixed top-0 right-0 h-full w-full max-w-2xl bg-ivolve-off-white shadow-2xl z-50 transform transition-transform ease-in-out duration-300 translate-x-0">
         <div className="h-full flex flex-col">
             <header className={`p-6 flex justify-between items-center ${stakeholder.branding.heroBg} ${stakeholder.branding.heroText}`}>

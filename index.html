@@ -11,7 +11,7 @@
         theme: {
           extend: {
             colors: {
-              // App Colors (Themeable)
+              // App Theme (Themeable)
               'app-bg': 'var(--app-bg)',
               'app-sidebar': 'var(--app-sidebar)',
               'app-sidebar-text': 'var(--app-sidebar-text)',
@@ -23,49 +23,58 @@
               'app-text-dark': 'var(--app-text-dark)',
               'app-text-gray': 'var(--app-text-gray)',
 
-              // Static Branding & Status Colors (Not Themeable)
-              'ivolve-dark-green': '#025A40',
-              'ivolve-mid-green': '#008C67',
-              'ivolve-bright-green': '#6BD052',
-              'ivolve-blue': '#009EA5',
-              'ivolve-off-white': '#FFF6F1',
-              'ivolve-purple': '#8B5CF6',
-              'ivolve-yellow': '#F59E0B',
-              'status-red': '#dc2626',
-              'status-orange': '#f97316',
-              'solas-dark': '#1f2937',
-              'solas-gray': '#4b5563',
-              'solas-light-gray': '#f3f4f6',
-              'ivolve-warning-bg': 'rgba(255, 237, 213, 0.6)',
-              'ivolve-warning-bg-deep': 'rgba(251, 146, 60, 0.4)',
+              // --- Refactored & Consolidated Palette ---
+
+              // Brand Palette
+              'brand-dark-green': '#025A40',
+              'brand-mid-green': '#008C67',
+              'brand-bright-green': '#6BD052',
+              'brand-blue': '#009EA5',
+              'brand-purple': '#8B5CF6',
+              'brand-yellow': '#F59E0B',
+              'brand-off-white': '#FFF6F1',
+              
+              // UI & Status Palette
+              'ui-dark': '#1f2937',
+              'ui-gray': '#4b5563',
+              'ui-light-gray': '#f3f4f6',
+              'status-danger': '#dc2626',
+              'status-warning': '#f97316',
+              'status-success': '#00B050',
+
+              // Backgrounds
+              'row-void-bg': '#cffafe',
+              'row-oom-bg': '#e5e7eb',
+              'row-occupied-bg': '#dcfce7',
+              'row-master-bg': '#fef3c7',
+              'warning-bg-light': 'rgba(255, 237, 213, 0.6)',
+              'warning-bg-deep': 'rgba(251, 146, 60, 0.4)',
+              
+              // Tags
               'tag-occupied': '#00B050',
               'tag-void': '#009EA5',
               'tag-oom': '#4b5563',
               'tag-master': '#F59E0B',
+              'tag-shared-living': '#1e3a8a',
+              'tag-self-contained': '#5b21b6',
+
+              // Regions
               'region-north': '#f97316',
               'region-midlands': '#1e40af',
               'region-south': '#ec4899',
               'region-south-west': '#7e22ce',
-              'region-wales-border': '#dc2626',
-              'region-wales-text': '#025A40',
-              'rp-harbour-bg': '#a5f3fc',
-              'rp-harbour-text': '#e11d48',
-              'be-st-bg': '#2E234B',
-              'be-st-border': '#6DAF4A',
-              'row-void-bg': '#cffafe',
-              'row-oom-bg': '#e5e7eb',
-              'row-occupied-bg': '#dcfce7',
-              'bg-tag-master-row': '#fef3c7',
-              'tag-shared-living': '#1e3a8a',
-              'tag-self-contained': '#5b21b6',
-              // Flag Colors
+              'region-wales-bg': '#006A44',
+              'region-wales-text': '#FFBF00',
+              
+              // Flags
               'flag-danger-bg': '#fef2f2',
               'flag-danger-text': '#991b1b',
               'flag-danger-border': '#fca5a5',
               'flag-warning-bg': '#fffbeb',
               'flag-warning-text': '#b45309',
               'flag-warning-border': '#fde68a',
-              // Entity Colors
+              
+              // Entities
               'entity-heathcotes-bg': '#dcfce7',
               'entity-heathcotes-text': '#166534',
               'entity-gresham-bg': '#e0e7ff',
@@ -76,14 +85,20 @@
               'entity-newdirections-text': '#0c4a6e',
               'entity-fieldbay-bg': '#fef9c3',
               'entity-fieldbay-text': '#854d0e',
+              
               // Stakeholder Branding
+              'rp-harbour-bg': '#a5f3fc',
+              'rp-harbour-text': '#e11d48',
+              'be-st-bg': '#2E234B',
+              'be-st-border': '#6DAF4A',
               'nyc-blue': '#005B8A',
               'notts-gray': '#3A3A3A',
               'newport-green': '#006A44',
               'newport-gold': '#FFBF00',
               'best-purple': '#4F2D7F',
               'best-green': '#78BE20',
-              // Org Chart Colors
+              
+              // Org Chart
               'org-chart-bg': '#f9fafb',
               'org-node-bg': '#ffffff',
               'org-node-border': '#d1d5db',
@@ -92,7 +107,8 @@
               'org-vacancy-border': '#facc15',
               'org-joining-bg': '#f0fdf4',
               'org-joining-border': '#4ade80',
-              // Department Colors
+              
+              // Departments
               'dept-board': '#f59e0b',
               'dept-exec': '#f59e0b',
               'dept-property': '#f97316',
@@ -107,7 +123,8 @@
               'dept-default-bg': '#e5e7eb',
               'dept-default-text': '#374151',
               'dept-default-border': '#d1d5db',
-              // Dev Hub Colors
+              
+              // Dev Hub
               'devhub-orange': '#c2410c',
               'devhub-grad-green-from': '#bbf7d0',
               'devhub-grad-green-to': '#86efac',
@@ -188,6 +205,13 @@
           transform: scale(1);
           box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
         }
+      }
+
+      /* Kanban Dragging Style */
+      .dragging-card {
+        opacity: 0.5;
+        transform: rotate(3deg) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       }
     </style>
   <script type="importmap">

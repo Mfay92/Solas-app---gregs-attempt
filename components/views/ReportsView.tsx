@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { GoogleGenAI, Type } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 import { ReportsCenterIcon, SparklesIcon } from '../Icons';
 import { AiReportDefinition, ReportData, PropertyUnitRow, UnitStatus, MaintenanceStatus, MaintenanceJob, Property, CustomWidget } from '../../types';
 import ReportRenderer from '../ReportRenderer';
@@ -7,35 +7,35 @@ import { useData } from '../../contexts/DataContext';
 import * as storage from '../../services/storage';
 import Modal from '../Modal';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
-
+// FIX: Export reportResponseSchema so it can be used in other components like ReportWidget.
 export const reportResponseSchema = {
-    type: Type.OBJECT,
+    type: 'OBJECT',
     properties: {
-        title: { type: Type.STRING, description: "A concise, professional title for the report based on the user's query." },
-        summary: { type: Type.STRING, description: "A one-sentence summary explaining what the report shows." },
-        displayType: { type: Type.STRING, enum: ['LIST', 'GROUPED_LIST', 'KPI'], description: "The best way to visualize the data. Use 'KPI' for single-number answers (like a count), 'GROUPED_LIST' if the user asks to group or break down data, and 'LIST' for all other requests for lists of items." },
-        entityType: { type: Type.STRING, enum: ['UNITS', 'MAINTENANCE_JOBS'], description: "The primary type of data being reported on. 'UNITS' for properties/units, 'MAINTENANCE_JOBS' for repairs." },
+        title: { type: 'STRING', description: "A concise, professional title for the report based on the user's query." },
+        summary: { type: 'STRING', description: "A one-sentence summary explaining what the report shows." },
+        displayType: { type: 'STRING', enum: ['LIST', 'GROUPED_LIST', 'KPI'], description: "The best way to visualize the data. Use 'KPI' for single-number answers (like a count), 'GROUPED_LIST' if the user asks to group or break down data, and 'LIST' for all other requests for lists of items." },
+        entityType: { type: 'STRING', enum: ['UNITS', 'MAINTENANCE_JOBS'], description: "The primary type of data being reported on. 'UNITS' for properties/units, 'MAINTENANCE_JOBS' for repairs." },
         filters: {
-            type: Type.OBJECT,
+            type: 'OBJECT',
             properties: {
-                searchText: { type: Type.STRING },
-                serviceTypes: { type: Type.ARRAY, items: { type: Type.STRING, enum: ['Supported Living', 'Residential', 'Nursing Care'] } },
-                unitStatuses: { type: Type.ARRAY, items: { type: Type.STRING, enum: ['Occupied', 'Void', 'Master', 'Unavailable', 'Out of Management', 'Staff Space'] } },
-                regions: { type: Type.ARRAY, items: { type: Type.STRING, enum: ['North', 'Midlands', 'South', 'South West', 'Wales'] } },
-                rp: { type: Type.ARRAY, items: { type: Type.STRING } },
-                isOverdue: { type: Type.BOOLEAN, description: "Set to true if the query mentions 'overdue' or 'late' jobs." },
-                priorities: { type: Type.ARRAY, items: { type: Type.STRING, enum: ['High', 'Medium', 'Low'] } }
+                searchText: { type: 'STRING' },
+                serviceTypes: { type: 'ARRAY', items: { type: 'STRING', enum: ['Supported Living', 'Residential', 'Nursing Care'] } },
+                unitStatuses: { type: 'ARRAY', items: { type: 'STRING', enum: ['Occupied', 'Void', 'Master', 'Unavailable', 'Out of Management', 'Staff Space'] } },
+                regions: { type: 'ARRAY', items: { type: 'STRING', enum: ['North', 'Midlands', 'South', 'South West', 'Wales'] } },
+                rp: { type: 'ARRAY', items: { type: 'STRING' } },
+                isOverdue: { type: 'BOOLEAN', description: "Set to true if the query mentions 'overdue' or 'late' jobs." },
+                priorities: { type: 'ARRAY', items: { type: 'STRING', enum: ['High', 'Medium', 'Low'] } }
             },
         },
-        groupBy: { type: Type.STRING, enum: ['region', 'serviceType', 'tags.rp', 'status', 'legalEntity', 'priority'], description: "The field to group the results by. Only use if displayType is 'GROUPED_LIST'." },
-        kpiMetric: { type: Type.STRING, enum: ['COUNT'], description: "The metric for the KPI. Only use if displayType is 'KPI'." },
+        groupBy: { type: 'STRING', enum: ['region', 'serviceType', 'tags.rp', 'status', 'legalEntity', 'priority'], description: "The field to group the results by. Only use if displayType is 'GROUPED_LIST'." },
+        kpiMetric: { type: 'STRING', enum: ['COUNT'], description: "The metric for the KPI. Only use if displayType is 'KPI'." },
     },
     propertyOrdering: ["title", "summary", "displayType", "entityType", "filters", "groupBy", "kpiMetric"],
 };
 
 const analyzeReportQuery = async (query: string): Promise<AiReportDefinition | null> => {
     try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: [{ parts: [{ text: `Generate a report definition for the query: "${query}"` }] }],

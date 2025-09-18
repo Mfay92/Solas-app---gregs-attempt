@@ -1,4 +1,4 @@
-import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, TagStyle, CustomWidget, GrowthOpportunity } from '../types';
+import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, TagStyle, CustomWidget, GrowthOpportunity, DrawerMode } from '../types';
 
 const STORAGE_KEY = 'ivolveAppState';
 const VIEW_SETTINGS_KEY = 'ivolvePropertiesViewSettings';
@@ -25,12 +25,11 @@ export interface PropertiesViewSettings {
     tagStyle?: TagStyle;
     columnOrder?: string[];
     viewMode?: 'table' | 'deck' | 'collapsible';
-    // FIX: Add 'toggles' property to store filter settings from PropertiesView
     toggles?: Record<string, boolean>;
 }
 
 export interface UISettings {
-    drawerMode: 'right' | 'bottom';
+    drawerMode: DrawerMode;
 }
 
 export interface MiniStatsSettings {

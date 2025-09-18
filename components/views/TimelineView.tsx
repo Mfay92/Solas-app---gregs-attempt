@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { TimelineEvent, TimelineEventType, KeyDates, ServiceType } from '../../types';
 import Card from '../Card';
@@ -21,7 +22,6 @@ const eventTypeColors: Record<TimelineEventType, string> = {
   [TimelineEventType.Notes]: 'bg-gray-100 text-gray-800',
   [TimelineEventType.Care]: 'bg-pink-100 text-pink-800',
   [TimelineEventType.Tenancy]: 'bg-orange-100 text-orange-800',
-  // FIX: Added missing System event type color
   [TimelineEventType.System]: 'bg-gray-100 text-gray-800',
 };
 

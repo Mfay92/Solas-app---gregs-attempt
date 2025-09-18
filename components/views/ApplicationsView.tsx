@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { ApplicationsIcon } from '../Icons';
+import { ApplicationsIcon, AddIcon } from '../Icons';
 import { usePersona } from '../../contexts/PersonaContext';
 import SplitText from '../SplitText';
 import { useData } from '../../contexts/DataContext';
 import { ApplicationStage, Person, PersonStatus } from '../../types';
 import ApplicantCard from '../ApplicantCard';
+import AddPersonModal from '../AddPersonModal';
 
 const KANBAN_COLUMNS: ApplicationStage[] = [
     ApplicationStage.Referral,
@@ -26,7 +27,9 @@ const stageColors: Record<ApplicationStage, { bg: string, text: string, border: 
 
 const ApplicationsView: React.FC = () => {
     const { t } = usePersona();
-    const { people } = useData();
+    const { people, handleUpdatePerson } = useData();
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [draggedOverColumn, setDraggedOverColumn] = useState<ApplicationStage | null>(null);
 
     const applicants = useMemo(() =>
         people.filter(p => p.status === PersonStatus.Applicant),
@@ -42,15 +45,42 @@ const ApplicationsView: React.FC = () => {
         }, {} as Record<ApplicationStage, Person[]>);
     }, [applicants]);
 
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>, stage: ApplicationStage) => {
+        e.preventDefault();
+        setDraggedOverColumn(stage);
+    };
+
+    const handleDragLeave = () => {
+        setDraggedOverColumn(null);
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>, newStage: ApplicationStage) => {
+        e.preventDefault();
+        setDraggedOverColumn(null);
+        const personId = e.dataTransfer.getData('personId');
+        const person = people.find(p => p.id === personId);
+
+        if (person && person.applicationStage !== newStage) {
+            handleUpdatePerson(personId, { applicationStage: newStage });
+        }
+    };
 
     return (
         <div className="h-full flex flex-col bg-gray-50">
+            {isAddModalOpen && <AddPersonModal onClose={() => setIsAddModalOpen(false)} />}
             <header className="flex-shrink-0 bg-app-header text-app-header-text p-4 shadow-md z-10">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                         <ApplicationsIcon />
                         <h1 className="text-3xl font-bold tracking-wider animated-heading" aria-label="APPLICATIONS & REFERRALS"><SplitText>{`APPLICATIONS & REFERRALS`}</SplitText></h1>
                     </div>
+                     <button
+                        onClick={() => setIsAddModalOpen(true)}
+                        className="flex items-center space-x-2 bg-brand-bright-green text-brand-dark-green font-bold py-2 px-4 rounded-md hover:opacity-90 transition-transform hover:scale-105"
+                    >
+                        <AddIcon />
+                        <span>Add New Applicant</span>
+                    </button>
                 </div>
             </header>
 
@@ -60,7 +90,13 @@ const ApplicationsView: React.FC = () => {
                         const applicantsInStage = applicantsByStage[stage] || [];
                         const stageColor = stageColors[stage];
                         return (
-                            <div key={stage} className="w-80 bg-gray-100 rounded-lg shadow-sm flex flex-col flex-shrink-0">
+                            <div 
+                                key={stage}
+                                onDragOver={(e) => handleDragOver(e, stage)}
+                                onDragLeave={handleDragLeave}
+                                onDrop={(e) => handleDrop(e, stage)}
+                                className={`w-80 bg-gray-100 rounded-lg shadow-sm flex flex-col flex-shrink-0 transition-colors ${draggedOverColumn === stage ? 'bg-blue-200' : ''}`}
+                            >
                                 <div className={`p-3 rounded-t-lg border-b-4 ${stageColor.border} ${stageColor.bg}`}>
                                     <h3 className={`font-bold text-sm ${stageColor.text}`}>{stage.replace(/^\d+\.\s/, '')} ({applicantsInStage.length})</h3>
                                 </div>

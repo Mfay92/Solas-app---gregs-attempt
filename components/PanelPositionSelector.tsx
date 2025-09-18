@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { PanelBottomIcon, PanelRightIcon } from './Icons';
 
-type DrawerMode = 'right' | 'bottom';
+import React, { useEffect } from 'react';
+import { PanelBottomIcon, PanelRightIcon, ExternalLinkIcon } from './Icons';
+import { DrawerMode } from '../types';
 
 type PanelPositionSelectorProps = {
     isOpen: boolean;
@@ -22,6 +22,12 @@ const positionOptions = [
         name: 'Bottom Sheet',
         description: 'Details slide up from the bottom of the screen.',
         icon: <PanelBottomIcon />,
+    },
+    {
+        id: 'popup',
+        name: 'Pop-up Window',
+        description: 'Details appear in a movable window.',
+        icon: <ExternalLinkIcon />,
     },
 ];
 

@@ -4,31 +4,34 @@ import { useUI } from '../contexts/UIContext';
 import StatusChip from './StatusChip';
 import RpTag from './RpTag';
 import { UserIcon } from './Icons';
+import { getRegionTagStyle } from '../../utils/theme';
 
 type ApplicantCardProps = {
   person: Person;
 };
 
-const getRegionTagStyle = (region: string): string => {
-    switch(region) {
-        case 'North': return 'bg-region-north text-white';
-        case 'Midlands': return 'bg-region-midlands text-white';
-        case 'South': return 'bg-region-south text-white';
-        case 'South West': return 'bg-region-south-west text-white';
-        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
-        default: return 'bg-gray-200 text-gray-700';
-    }
-}
-
 const ApplicantCard: React.FC<ApplicantCardProps> = ({ person }) => {
     const { selectPerson } = useUI();
     const primaryNeed = person.careNeeds.find(cn => cn.category === 'Primary Need')?.detail || person.careNeeds[0]?.detail || 'N/A';
     const regionStyle = person.preferredRegion ? getRegionTagStyle(person.preferredRegion) : '';
+
+    const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
+        e.dataTransfer.setData('personId', person.id);
+        e.currentTarget.classList.add('dragging-card');
+    };
+
+    const handleDragEnd = (e: React.DragEvent<HTMLButtonElement>) => {
+        e.currentTarget.classList.remove('dragging-card');
+    };
     
     return (
-        <div 
+        <button
+            type="button" 
             onClick={() => selectPerson(person.id)}
-            className="bg-white rounded-md shadow border border-gray-200 cursor-pointer hover:border-ivolve-blue transition-all duration-200 p-3 flex flex-col space-y-3"
+            draggable={true}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            className="w-full text-left bg-white rounded-md shadow border border-gray-200 cursor-pointer hover:border-ivolve-blue hover:shadow-lg hover:-translate-y-1 transition-all duration-200 p-3 flex flex-col space-y-3"
         >
             {/* Tags Section */}
             {(person.preferredRegion || person.preferredServiceType || person.potentialRp) && (
@@ -63,7 +66,7 @@ const ApplicantCard: React.FC<ApplicantCardProps> = ({ person }) => {
                 <p><strong>Ref Source:</strong> {person.referralSource || 'N/A'}</p>
                 <p><strong>Ref Date:</strong> {person.referralDate ? new Date(person.referralDate).toLocaleDateString('en-GB') : 'N/A'}</p>
             </div>
-        </div>
+        </button>
     );
 };
 

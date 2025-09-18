@@ -1,7 +1,8 @@
-import React, { createContext, useState, useEffect, useContext, ReactNode, useMemo } from 'react';
-import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, MaintenanceJob, Contact, MaintenanceStatus, ComplianceItem, Document, LinkedContact, GrowthOpportunity } from '../types';
+import React, { createContext, useState, useEffect, useContext, ReactNode, useMemo, useCallback } from 'react';
+import { Property, Stakeholder, IvolveStaff, PpmSchedule, Person, MaintenanceJob, Contact, MaintenanceStatus, ComplianceItem, Document, LinkedContact, GrowthOpportunity, Flag, PersonStatus } from '../types';
 import { fetchAllProperties, fetchAllStakeholders, fetchIvolveStaff, fetchAllPpmSchedules, fetchAllPeople, fetchAllGrowthOpportunities } from '../services/api';
 import * as storage from '../services/storage';
+import { completeComplianceJob } from '../services/propertyService';
 
 const CURRENT_USER_ID = 'MF01';
 
@@ -25,6 +26,53 @@ interface DataContextState {
 
 const DataContext = createContext<DataContextState | undefined>(undefined);
 
+// --- Data Sanitization ---
+// Ensures that data loaded from any source (API or localStorage) conforms to the expected shape,
+// preventing crashes from missing array properties (e.g., calling .flatMap on undefined).
+
+const sanitizeProperties = (props: Property[] = []): Property[] => {
+  if (!Array.isArray(props)) return [];
+  return props.map(p => ({
+    ...p,
+    units: p.units ?? [],
+    maintenanceJobs: p.maintenanceJobs ?? [],
+    complianceItems: p.complianceItems ?? [],
+    flags: p.flags ?? [],
+    contacts: p.contacts ?? [],
+    timeline: p.timeline ?? [],
+    legalAgreements: p.legalAgreements ?? [],
+    documents: p.documents ?? [],
+    features: p.features ?? [],
+    photos: p.photos ?? [],
+    floorplans: p.floorplans ?? [],
+    linkedContacts: p.linkedContacts ?? [],
+  }));
+};
+
+const sanitizeStakeholders = (stakeholders: Stakeholder[] = []): Stakeholder[] => {
+    if (!Array.isArray(stakeholders)) return [];
+    return stakeholders.map(s => ({
+        ...s,
+        contacts: s.contacts ?? [],
+    }));
+};
+
+const sanitizePeople = (people: Person[] = []): Person[] => {
+    if (!Array.isArray(people)) return [];
+    return people.map(p => ({
+        ...p,
+        careNeeds: p.careNeeds ?? [],
+        funding: p.funding ?? [],
+        timeline: p.timeline ?? [],
+        documents: p.documents ?? [],
+        flags: p.flags ?? [],
+        contacts: p.contacts ?? [],
+        benefits: p.benefits ?? [],
+        otherIncome: p.otherIncome ?? [],
+        medications: p.medications ?? [],
+    }));
+};
+
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
@@ -36,46 +84,37 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [error, setError] = useState<string | null>(null);
   const [pinnedContactIds, setPinnedContactIds] = useState<Set<string>>(new Set());
 
-  // Effect to load initial data from storage or API
   useEffect(() => {
     const loadInitialData = async () => {
       try {
         setLoading(true);
-        const savedState = storage.loadState();
+        // Clear any potentially corrupted state from previous sessions.
+        storage.clearState();
+        console.log("Cleared localStorage to ensure a fresh start with mock data.");
 
-        if (savedState) {
-          // If we have saved state, use it
-          setProperties(savedState.properties);
-          setStakeholders(savedState.stakeholders);
-          setIvolveStaff(savedState.ivolveStaff);
-          setPpmSchedules(savedState.ppmSchedules);
-          setPeople(savedState.people);
-          setGrowthOpportunities(savedState.growthOpportunities || []);
-          setPinnedContactIds(new Set(savedState.pinnedContactIds)); // Rehydrate Set from array
-          console.log("App state loaded from localStorage.");
-        } else {
-          // If no saved state, fetch from mock API (seeding)
-          console.log("No saved state found. Seeding from mock API.");
-          const [propertiesData, stakeholdersData, staffData, ppmData, peopleData, growthData] = await Promise.all([
-            fetchAllProperties(),
-            fetchAllStakeholders(),
-            fetchIvolveStaff(),
-            fetchAllPpmSchedules(),
-            fetchAllPeople(),
-            fetchAllGrowthOpportunities(),
-          ]);
-          setProperties(propertiesData);
-          setStakeholders(stakeholdersData);
-          setIvolveStaff(staffData);
-          setPpmSchedules(ppmData);
-          setPeople(peopleData);
-          setGrowthOpportunities(growthData);
+        // Always fetch fresh data from the mock API on load.
+        const [propertiesData, stakeholdersData, staffData, ppmData, peopleData, growthData] = await Promise.all([
+          fetchAllProperties(),
+          fetchAllStakeholders(),
+          fetchIvolveStaff(),
+          fetchAllPpmSchedules(),
+          fetchAllPeople(),
+          fetchAllGrowthOpportunities(),
+        ]);
+        
+        // Sanitize the fresh data to ensure it has the correct structure.
+        setProperties(sanitizeProperties(propertiesData));
+        setStakeholders(sanitizeStakeholders(stakeholdersData));
+        setIvolveStaff(staffData);
+        setPpmSchedules(ppmData);
+        setPeople(sanitizePeople(peopleData));
+        setGrowthOpportunities(growthData);
 
-          const initiallyPinned = new Set<string>();
-          staffData.forEach(s => { if (s.isPinned) initiallyPinned.add(s.id) });
-          stakeholdersData.forEach(s => s.contacts.forEach(c => { if (c.isPinned) initiallyPinned.add(c.id) }));
-          setPinnedContactIds(initiallyPinned);
-        }
+        const initiallyPinned = new Set<string>();
+        staffData.forEach(s => { if (s.isPinned) initiallyPinned.add(s.id) });
+        stakeholdersData.forEach(s => s.contacts.forEach(c => { if (c.isPinned) initiallyPinned.add(c.id) }));
+        setPinnedContactIds(initiallyPinned);
+        
         setError(null);
       } catch (err) {
         setError('Failed to fetch application data.');
@@ -85,29 +124,16 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     };
     loadInitialData();
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once on mount.
 
-  // Effect to save state to localStorage whenever it changes
-  useEffect(() => {
-    // Don't save during the initial load, wait until data is populated.
-    if (!loading) {
-      const stateToSave: storage.AppState = {
-        properties,
-        stakeholders,
-        ivolveStaff,
-        ppmSchedules,
-        people,
-        growthOpportunities,
-        pinnedContactIds: Array.from(pinnedContactIds), // Convert Set to array for JSON
-      };
-      storage.saveState(stateToSave);
-    }
-  }, [properties, stakeholders, ivolveStaff, ppmSchedules, people, growthOpportunities, pinnedContactIds, loading]);
-
+  // NOTE: The useEffect hook responsible for saving state to localStorage has been removed.
+  // This prevents any user modifications from being persisted, ensuring the app always
+  // starts with a clean slate from the mock data source.
 
   const currentUserProfile = useMemo(() => ivolveStaff.find(s => s.id === CURRENT_USER_ID) || null, [ivolveStaff]);
 
   const handleTogglePin = (contactId: string) => {
+    // This will only affect the current session state.
     setPinnedContactIds(prev => {
         const newSet = new Set(prev);
         if (newSet.has(contactId)) {
@@ -134,59 +160,14 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const handleCompleteComplianceJob = (jobId: string, newCertificateName: string) => {
-    setProperties(prevProps => {
-        let targetProperty: Property | undefined;
-        let targetJob: MaintenanceJob | undefined;
-
-        for (const p of prevProps) {
-            const job = p.maintenanceJobs.find(j => j.id === jobId);
-            if (job) {
-                targetProperty = p;
-                targetJob = job;
-                break;
-            }
-        }
-
-        if (!targetProperty || !targetJob || !targetJob.linkedComplianceId) {
-            console.error("Could not find property or job for compliance completion.");
-            return prevProps;
-        }
-        
-        const propId = targetProperty.id;
-        const updatedProperty = JSON.parse(JSON.stringify(targetProperty));
-
-        const jobIndex = updatedProperty.maintenanceJobs.findIndex((j: MaintenanceJob) => j.id === jobId);
-        updatedProperty.maintenanceJobs[jobIndex].status = MaintenanceStatus.Completed;
-        updatedProperty.maintenanceJobs[jobIndex].activityLog.push({
-            date: new Date().toISOString(),
-            actor: currentUserProfile?.name || 'System',
-            action: `Compliance certificate uploaded. Job completed.`
-        });
-
-        const complianceIndex = updatedProperty.complianceItems.findIndex((c: ComplianceItem) => c.id === targetJob!.linkedComplianceId);
-        if (complianceIndex > -1) {
-            const complianceItem = updatedProperty.complianceItems[complianceIndex];
-            complianceItem.lastCheck = new Date().toISOString().split('T')[0];
-            const nextCheckDate = new Date();
-            const frequency = ppmSchedules.find(p => p.complianceType === complianceItem.type)?.frequencyMonths || 12;
-            nextCheckDate.setMonth(nextCheckDate.getMonth() + frequency);
-            complianceItem.nextCheck = nextCheckDate.toISOString().split('T')[0];
-            complianceItem.status = 'Compliant';
-            complianceItem.reportUrl = `/docs/${newCertificateName}.pdf`;
-        }
-
-        updatedProperty.documents.push({
-            id: `doc-${Date.now()}`,
-            name: newCertificateName,
-            type: 'PDF',
-            date: new Date().toISOString().split('T')[0],
-            year: new Date().getFullYear(),
-            url: `/docs/${newCertificateName}.pdf`,
-            linkedJobRef: targetJob.ref,
-        } as Document);
-
-        return prevProps.map(p => p.id === propId ? updatedProperty : p);
-      });
+      const updatedProperties = completeComplianceJob(
+        properties,
+        ppmSchedules,
+        currentUserProfile,
+        jobId,
+        newCertificateName
+      );
+      setProperties(updatedProperties);
   };
 
   const handleUpdatePropertyLinks = (propertyId: string, updatedStaffLinks: LinkedContact[]) => {
@@ -206,16 +187,19 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   
    const handleAddNewPerson = (newPersonData: Partial<Person>) => {
     setPeople(prevPeople => {
-        // This is a simplified version for mock data. A real implementation would
-        // use a proper ID generation strategy and ensure all required fields are present.
         const newPerson: Person = {
-            id: `P${(prevPeople.length + 1).toString().padStart(3, '0')}`,
-            legalFirstName: newPersonData.preferredFirstName || '', // Default legal to preferred if not provided
-            photoUrl: `https://i.pravatar.cc/150?u=P${prevPeople.length + 1}`,
-            // Provide default empty values for required fields
+            // Core required fields that should come from the form
+            id: `P-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`, // More robust ID for demo
+            preferredFirstName: newPersonData.preferredFirstName || 'Unknown',
+            surname: newPersonData.surname || 'Unknown',
+            dob: newPersonData.dob || new Date().toISOString().split('T')[0],
+            status: newPersonData.status || PersonStatus.Applicant,
+            
+            // Sensible defaults for other required fields to ensure type safety
+            legalFirstName: newPersonData.legalFirstName || newPersonData.preferredFirstName || 'Unknown',
             propertyId: '',
             unitId: '',
-            moveInDate: new Date().toISOString(),
+            moveInDate: '', // Correct for an applicant
             moveOutDate: null,
             keyWorkerId: '',
             areaManagerId: '',
@@ -224,12 +208,15 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             tenancy: { type: 'Licence Agreement', startDate: '', documents: [] },
             timeline: [],
             documents: [],
+            flags: [], // Add missing flags array
             contacts: [],
-            title: '',
-            firstLanguage: 'English',
-            isNonVerbal: false,
+            title: newPersonData.title || '',
+            firstLanguage: newPersonData.firstLanguage || 'English',
+            isNonVerbal: newPersonData.isNonVerbal || false,
+            
+            // Spread remaining optional data that might have been passed
             ...newPersonData,
-        } as Person;
+        };
 
         return [...prevPeople, newPerson];
     });

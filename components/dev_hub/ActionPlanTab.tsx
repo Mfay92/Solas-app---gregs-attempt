@@ -271,6 +271,43 @@ const ActionPlanTab: React.FC = () => {
             </section>
 
             <section className="mt-8">
+                <h3 className="text-xl font-semibold text-solas-dark pb-2 border-b-2 border-devhub-orange">Incident & Fix Log</h3>
+                <div className="mt-4 space-y-4">
+                    <div className="p-4 bg-white rounded-lg border">
+                        <h4 className="text-lg font-bold text-solas-dark">Issue: Persistent Application Crash on Load</h4>
+                        <p className="text-sm text-solas-gray mt-1"><b className="text-solas-dark">Date Resolved:</b> Current</p>
+                        <div className="mt-2 text-sm space-y-2">
+                            <div>
+                                <h5 className="font-semibold">Root Cause Analysis:</h5>
+                                <p className="text-solas-gray">The application was crashing on startup due to stale and malformed data stored in the browser's `localStorage` from previous sessions. Initial attempts to sanitize data only applied to fresh API fetches, but the app was loading the old, corrupted local data first, bypassing the fix and causing components to fail when they received data that didn't match the expected structure (e.g., missing arrays like `maintenanceJobs`).</p>
+                            </div>
+                            <div>
+                                <h5 className="font-semibold">Resolution:</h5>
+                                <ul className="list-disc list-inside text-solas-gray space-y-1">
+                                    <li><b>Forced Data Refresh:</b> The data loading logic in `DataContext.tsx` was modified to call `storage.clearState()` on every application start. This purges any old data from `localStorage`.</li>
+                                    <li><b>Disabled Persistence:</b> The `useEffect` hook that saved application state back to `localStorage` was removed. The app now exclusively loads fresh, sanitized mock data on every session, ensuring a consistent, clean start and preventing data corruption issues.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="p-4 bg-white rounded-lg border">
+                        <h4 className="text-lg font-bold text-solas-dark">Issue: Module Resolution Error for `@/Icons`</h4>
+                        <p className="text-sm text-solas-gray mt-1"><b className="text-solas-dark">Date Resolved:</b> Current</p>
+                        <div className="mt-2 text-sm space-y-2">
+                            <div>
+                                <h5 className="font-semibold">Root Cause Analysis:</h5>
+                                <p className="text-solas-gray">Multiple components were using a non-standard path alias (`@/Icons`) to import icon components. While common in frameworks with build tools (like Vite or Webpack), this alias is not natively understood by the browser's module loader, leading to a `TypeError` as it couldn't resolve the path.</p>
+                            </div>
+                            <div>
+                                <h5 className="font-semibold">Resolution:</h5>
+                                <p className="text-solas-gray">Manually updated the import paths in all affected files (`LegalHubView.tsx`, `AnalyzerTool.tsx`, etc.) from the alias (`@/Icons`) to the correct relative path (e.g., `../Icons` or `./Icons`). This allows the browser to correctly locate and load the icon modules.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="mt-8">
                 <h3 className="text-xl font-semibold text-solas-dark pb-2 border-b-2 border-devhub-orange">Changelog</h3>
                 <div className="mt-4 space-y-4">
                     {changelog.map(log => (

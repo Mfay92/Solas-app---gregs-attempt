@@ -76,9 +76,10 @@ const ContactCard: React.FC<ContactCardProps> = ({ person, onClick, isEditing = 
     };
 
     return (
-        <div 
+        <button
+            type="button" 
             onClick={onClick}
-            className={`relative rounded-2xl shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1 p-4 border-4 ${departmentStyles.border} overflow-hidden flex flex-col items-center ${cardBgClass}`}
+            className={`relative rounded-2xl shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1 p-4 border-4 ${departmentStyles.border} overflow-hidden flex flex-col items-center w-full ${cardBgClass}`}
             style={{ minHeight: '280px' }}
         >
             {onTogglePin && (
@@ -146,7 +147,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ person, onClick, isEditing = 
                     </>
                 )}
             </div>
-        </div>
+        </button>
     );
 };
 

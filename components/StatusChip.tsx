@@ -1,5 +1,6 @@
 
-import React from 'react';
+
+import React, { memo } from 'react';
 import { ServiceType, TagStyle } from '../types';
 
 type StatusChipProps = {
@@ -8,8 +9,8 @@ type StatusChipProps = {
 };
 
 const statusStyles: Record<ServiceType, { color: string; border: string; bg: string }> = {
-  [ServiceType.SupportedLiving]: { color: 'text-ivolve-mid-green', border: 'border-ivolve-mid-green', bg: 'bg-green-50' },
-  [ServiceType.Residential]: { color: 'text-ivolve-purple', border: 'border-ivolve-purple', bg: 'bg-purple-50' },
+  [ServiceType.SupportedLiving]: { color: 'text-brand-mid-green', border: 'border-brand-mid-green', bg: 'bg-green-50' },
+  [ServiceType.Residential]: { color: 'text-brand-purple', border: 'border-brand-purple', bg: 'bg-purple-50' },
   [ServiceType.NursingCare]: { color: 'text-teal-600', border: 'border-teal-500', bg: 'bg-teal-50' },
 };
 
@@ -33,4 +34,4 @@ const StatusChip: React.FC<StatusChipProps> = ({ status, styleType = 'default' }
   );
 };
 
-export default StatusChip;
+export default memo(StatusChip);

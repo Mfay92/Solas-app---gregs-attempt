@@ -1,20 +1,11 @@
+
 import React, { useState, useMemo } from 'react';
 import { Person, Property, UnitStatus, PersonStatus } from '../types';
 import { EyeIcon, EyeOffIcon, ArrowLeftIcon, WarningIcon, ExternalLinkIcon } from './Icons';
 import { useUI } from '../contexts/UIContext';
 import StatusChip from './StatusChip';
 import RpTag from './RpTag';
-
-const getRegionTagStyle = (region: string): string => {
-    switch(region) {
-        case 'North': return 'bg-region-north text-white';
-        case 'Midlands': return 'bg-region-midlands text-white';
-        case 'South': return 'bg-region-south text-white';
-        case 'South West': return 'bg-region-south-west text-white';
-        case 'Wales': return 'bg-white text-region-wales-text border-2 border-region-wales-border font-bold';
-        default: return 'bg-gray-200 text-gray-700';
-    }
-}
+import { getRegionTagStyle } from '../../utils/theme';
 
 const LivingTypeTag: React.FC<{ livingType: Property['livingType'] }> = ({ livingType }) => {
     const styles = {
