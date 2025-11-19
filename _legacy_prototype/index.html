@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ivolve Care & Support | Solas Housing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Corbel', 'Calibri', 'Candara', 'Segoe UI', 'sans-serif'],
+            },
+            colors: {
+              // App Theme (Themeable)
+              'app-bg': 'var(--app-bg)',
+              'app-sidebar': 'var(--app-sidebar)',
+              'app-sidebar-text': 'var(--app-sidebar-text)',
+              'app-sidebar-text-hover': 'var(--app-sidebar-text-hover)',
+              'app-sidebar-active': 'var(--app-sidebar-active)',
+              'app-header': 'var(--app-header)',
+              'app-header-text': 'var(--app-header-text)',
+              'app-card-bg': 'var(--app-card-bg)',
+              'app-text-dark': 'var(--app-text-dark)',
+              'app-text-gray': 'var(--app-text-gray)',
+
+              // --- Refactored & Consolidated Palette ---
+
+              // Brand Palette
+              'brand-dark-green': '#025A40',
+              'brand-mid-green': '#008C67',
+              'brand-mid-green-light': '#22a281',
+              'brand-bright-green': '#6BD052',
+              'brand-blue': '#009EA5',
+              'brand-purple': '#8B5CF6',
+              'brand-yellow': '#F59E0B',
+              'brand-off-white': '#FFF6F1',
+              
+              // UI & Status Palette
+              'ui-dark': '#1f2937',
+              'ui-gray': '#4b5563',
+              'ui-light-gray': '#f3f4f6',
+              'status-danger': '#dc2626',
+              'status-warning': '#f97316',
+              'status-success': '#00B050',
+
+              // Backgrounds
+              'row-void-bg': '#cffafe',
+              'row-oom-bg': '#e5e7eb',
+              'row-occupied-bg': '#dcfce7',
+              'row-master-bg': '#fef3c7',
+              'warning-bg-light': 'rgba(255, 237, 213, 0.6)',
+              'warning-bg-deep': 'rgba(251, 146, 60, 0.4)',
+              
+              // Tags
+              'tag-occupied': '#00B050',
+              'tag-void': '#009EA5',
+              'tag-oom': '#4b5563',
+              'tag-master': '#F59E0B',
+              'tag-shared-living': '#1e3a8a',
+              'tag-self-contained': '#5b21b6',
+
+              // Regions
+              'region-north': '#f97316',
+              'region-midlands': '#1e40af',
+              'region-south': '#ec4899',
+              'region-south-west': '#7e22ce',
+              'region-wales-bg': '#006A44',
+              'region-wales-text': '#FFBF00',
+              
+              // Flags
+              'flag-danger-bg': '#fef2f2',
+              'flag-danger-text': '#991b1b',
+              'flag-danger-border': '#fca5a5',
+              'flag-warning-bg': '#fffbeb',
+              'flag-warning-text': '#b45309',
+              'flag-warning-border': '#fde68a',
+              
+              // Entities
+              'entity-heathcotes-bg': '#dcfce7',
+              'entity-heathcotes-text': '#166534',
+              'entity-gresham-bg': '#e0e7ff',
+              'entity-gresham-text': '#312e81',
+              'entity-tlc-bg': '#fce7f3',
+              'entity-tlc-text': '#9d174d',
+              'entity-newdirections-bg': '#e0f2fe',
+              'entity-newdirections-text': '#0c4a6e',
+              'entity-fieldbay-bg': '#fef9c3',
+              'entity-fieldbay-text': '#854d0e',
+              
+              // Stakeholder Branding
+              'rp-harbour-bg': '#a5f3fc',
+              'rp-harbour-text': '#e11d48',
+              'be-st-bg': '#2E234B',
+              'be-st-border': '#6DAF4A',
+              'nyc-blue': '#005B8A',
+              'notts-gray': '#3A3A3A',
+              'newport-green': '#006A44',
+              'newport-gold': '#FFBF00',
+              'best-purple': '#4F2D7F',
+              'best-green': '#78BE20',
+              
+              // Org Chart
+              'org-chart-bg': '#f9fafb',
+              'org-node-bg': '#ffffff',
+              'org-node-border': '#d1d5db',
+              'org-line-color': '#9ca3af',
+              'org-vacancy-bg': '#fefce8',
+              'org-vacancy-border': '#facc15',
+              'org-joining-bg': '#f0fdf4',
+              'org-joining-border': '#4ade80',
+              
+              // Departments
+              'dept-board': '#f59e0b',
+              'dept-exec': '#f59e0b',
+              'dept-property': '#f97316',
+              'dept-ops': '#1e40af',
+              'dept-finance': '#0ea5e9',
+              'dept-commercial': '#ec4899',
+              'dept-bizdev': '#ec4899',
+              'dept-people': '#8b5cf6',
+              'dept-quality': '#14b8a6',
+              'dept-it': '#64748b',
+              'dept-landd': '#84cc16',
+              'dept-default-bg': '#e5e7eb',
+              'dept-default-text': '#374151',
+              'dept-default-border': '#d1d5db',
+              
+              // Dev Hub
+              'devhub-orange': '#c2410c',
+              'devhub-grad-green-from': '#bbf7d0',
+              'devhub-grad-green-to': '#86efac',
+              'devhub-grad-blue-from': '#bfdbfe',
+              'devhub-grad-blue-to': '#93c5fd',
+              'devhub-grad-yellow-from': '#fef08a',
+              'devhub-grad-yellow-to': '#fde047',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar styles for the sidebar */
+      .sidebar-nav {
+        /* For Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+      }
+      .sidebar-nav:hover {
+        /* For Firefox on hover */
+        scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+      }
+      /* For Webkit browsers (Chrome, Safari, Edge) */
+      .sidebar-nav::-webkit-scrollbar {
+        width: 6px;
+      }
+      .sidebar-nav::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-nav::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 10px;
+      }
+      .sidebar-nav:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Split Text Animation */
+      .animated-heading .animated-char {
+        display: inline-block;
+        opacity: 0;
+        animation-name: slide-up;
+        animation-duration: 800ms;
+        animation-fill-mode: both;
+        animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+      }
+
+      @keyframes slide-up {
+        from {
+          transform: translateY(1em);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Person Profile Warning Flags */
+      .person-flag-banner.danger-pulse {
+        animation-name: pulse-danger;
+        animation-duration: 1.5s;
+        animation-iteration-count: 2; /* Pulse twice */
+        animation-timing-function: ease-in-out;
+      }
+
+      @keyframes pulse-danger {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.7);
+        }
+        70% {
+          transform: scale(1.01);
+          box-shadow: 0 0 10px 15px rgba(185, 28, 28, 0);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
+        }
+      }
+
+      /* Kanban Dragging Style */
+      .dragging-card {
+        opacity: 0.5;
+        transform: rotate(3deg) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-app-bg font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
