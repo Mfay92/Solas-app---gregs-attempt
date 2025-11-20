@@ -35,8 +35,8 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
             <button
               onClick={() => setShowAssistance(!showAssistance)}
               className={`p-2 rounded-full transition-all ${showAssistance
-                  ? 'bg-ivolve-mid text-white shadow-lg ring-2 ring-ivolve-mid ring-offset-2'
-                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                ? 'bg-ivolve-mid text-white shadow-lg ring-2 ring-ivolve-mid ring-offset-2'
+                : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                 }`}
               title="Toggle Assistance Mode"
             >
@@ -56,9 +56,9 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
           {rentItems.map((item, index) => (
             <div
               key={index}
-              className={`rounded-xl border transition-all duration-300 ${showAssistance
-                  ? 'bg-ivolve-paper border-ivolve-mid/20 p-4 shadow-sm'
-                  : 'bg-gray-50 border-transparent p-3 flex justify-between items-center'
+              className={`rounded-xl border transition-all duration-700 ease-in-out ${showAssistance
+                ? 'bg-ivolve-paper border-ivolve-mid/20 p-4 shadow-sm'
+                : 'bg-gray-50 border-transparent p-3 flex justify-between items-center'
                 }`}
             >
               <div className="flex justify-between items-center w-full">
@@ -72,7 +72,7 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
 
               {/* Assistance Text (Animated) */}
               {showAssistance && (
-                <div className="mt-2 text-sm text-gray-600 border-t border-ivolve-mid/10 pt-2 italic animate-in slide-in-from-top-2 fade-in">
+                <div className="mt-2 text-sm text-gray-600 border-t border-ivolve-mid/10 pt-2 italic animate-in slide-in-from-top-2 fade-in duration-700">
                   {item.description}
                 </div>
               )}
