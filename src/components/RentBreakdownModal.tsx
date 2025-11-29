@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { X, HelpCircle, Info } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, HelpCircle } from 'lucide-react';
 
 interface RentItem {
+  id: string;
   label: string;
   amount: number;
   description: string; // The "Assistance" text
@@ -17,19 +18,44 @@ interface RentBreakdownModalProps {
 const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose, propertyAddress, rentItems }) => {
   const [showAssistance, setShowAssistance] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const totalRent = rentItems.reduce((sum, item) => sum + item.amount, 0);
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
+    <div
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rent-modal-title"
+    >
+      <div
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
 
         {/* Header */}
         <div className="p-6 border-b border-gray-100 flex justify-between items-start">
           <div>
-            <h2 className="text-2xl font-bold text-ivolve-dark">Rent Breakdown</h2>
-            <p className="text-sm text-gray-500 mt-1">{propertyAddress}</p>
+            <h2 id="rent-modal-title" className="text-2xl font-bold text-ivolve-dark font-rounded">Rent Breakdown</h2>
+            <p className="text-xl font-bold text-ivolve-dark mt-1 font-rounded">{propertyAddress}</p>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -45,6 +71,7 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
             <button
               onClick={onClose}
               className="p-2 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors"
+              aria-label="Close modal"
             >
               <X size={20} />
             </button>
@@ -53,9 +80,9 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
 
         {/* Body */}
         <div className="p-6 space-y-3 max-h-[60vh] overflow-y-auto">
-          {rentItems.map((item, index) => (
+          {rentItems.map((item) => (
             <div
-              key={index}
+              key={item.id}
               className={`rounded-xl border transition-all duration-700 ease-in-out ${showAssistance
                 ? 'bg-ivolve-paper border-ivolve-mid/20 p-4 shadow-sm'
                 : 'bg-gray-50 border-transparent p-3 flex justify-between items-center'
@@ -83,8 +110,8 @@ const RentBreakdownModal: React.FC<RentBreakdownModalProps> = ({ isOpen, onClose
         {/* Footer */}
         <div className="p-6 bg-gray-50 border-t border-gray-100">
           <div className="flex justify-between items-center">
-            <span className="text-lg font-medium text-gray-500">Total Rent Per Month</span>
-            <span className="text-3xl font-bold text-ivolve-dark">£{totalRent.toFixed(2)}</span>
+            <span className="text-lg font-medium text-gray-500 font-rounded">Total Rent Per Month</span>
+            <span className="text-5xl font-black text-ivolve-dark font-rounded">£{totalRent.toFixed(2)}</span>
           </div>
         </div>
 

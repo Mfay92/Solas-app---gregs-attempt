@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Data folders (not for version control)
+Data Sample 1/
+data folder2/
+reference_materials/
+
+# Legacy/prototype code
+_legacy_prototype/

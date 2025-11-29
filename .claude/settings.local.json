@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(cat:*)",
+      "Bash(dir /s /b \"c:\\Users\\Matt\\OneDrive\\Desktop\\Solas-app---gregs-attempt\\src\")",
+      "Bash(findstr:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

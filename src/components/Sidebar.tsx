@@ -1,57 +1,113 @@
 import React from 'react';
-import { Home, Building2, Users, FileText, Settings, PieChart, Hammer } from 'lucide-react';
+import { Home, Building2, PoundSterling, Settings, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
+import clsx from 'clsx';
+import { useApp } from '../context/AppContext';
 
-interface SidebarProps {
-    onNavigate: (view: string) => void;
-    activeView: string;
-}
+const Sidebar: React.FC = () => {
+    const { activeView, setActiveView, sidebarCollapsed, setSidebarCollapsed } = useApp();
 
-const Sidebar: React.FC<SidebarProps> = ({ onNavigate, activeView }) => {
-    const navItems = [
-        { icon: Home, label: 'Dashboard' },
-        { icon: Building2, label: 'Properties' },
-        { icon: Users, label: 'People' },
-        { icon: Hammer, label: 'Maintenance' },
-        { icon: FileText, label: 'Documents' },
-        { icon: PieChart, label: 'Reports' },
-        { icon: Settings, label: 'Settings' },
-    ];
+    const menuItems = [
+        { id: 'Dashboard', icon: Home, label: 'Dashboard' },
+        { id: 'Properties', icon: Building2, label: 'Property Hub' },
+        { id: 'Finance', icon: PoundSterling, label: 'Finance' },
+        { id: 'Settings', icon: Settings, label: 'Settings' },
+    ] as const;
+
+    const toggleCollapse = () => setSidebarCollapsed(!sidebarCollapsed);
 
     return (
-        <div className="w-64 bg-ivolve-dark h-screen text-white flex flex-col shadow-xl">
-            <div className="p-6 border-b border-ivolve-mid/30">
-                <h1 className="text-2xl font-bold text-white tracking-tight">
-                    Solas
-                </h1>
-                <p className="text-ivolve-bright text-xs mt-1 font-medium tracking-wide">PROPERTY INTELLIGENCE</p>
+        <div
+            className={clsx(
+                "bg-ivolve-dark text-white flex flex-col transition-all duration-300 relative z-20",
+                sidebarCollapsed ? "w-20" : "w-64"
+            )}
+        >
+            {/* Logo Area */}
+            <div className="p-6 flex items-center justify-between border-b border-white/10 h-20 relative">
+                <div className={clsx("flex items-center justify-center w-full", sidebarCollapsed ? "" : "pr-4")}>
+                    {sidebarCollapsed ? (
+                        <div className="w-8 h-8 rounded-full bg-ivolve-bright flex items-center justify-center font-bold text-ivolve-dark">
+                            S
+                        </div>
+                    ) : (
+                        <h1 className="text-2xl font-bold font-rounded tracking-wide">Solas</h1>
+                    )}
+                </div>
+
+                {/* Collapse Toggle - Moved to header area */}
+                <button
+                    onClick={toggleCollapse}
+                    aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-ivolve-dark p-1 rounded-full shadow-md border border-gray-200 hover:bg-gray-50 transition-colors z-30"
+                >
+                    {sidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+                </button>
             </div>
 
-            <nav className="flex-1 px-4 py-6 space-y-2">
-                {navItems.map((item) => (
-                    <button
-                        key={item.label}
-                        onClick={() => onNavigate(item.label)}
-                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${activeView === item.label
-                                ? 'bg-ivolve-mid text-white shadow-md border-l-4 border-ivolve-bright'
-                                : 'text-gray-300 hover:bg-ivolve-mid/50 hover:text-white'
-                            }`}
-                    >
-                        <item.icon size={20} className={activeView === item.label ? 'text-ivolve-bright' : ''} />
-                        <span className="font-medium">{item.label}</span>
-                    </button>
-                ))}
+            {/* Navigation */}
+            <nav className="flex-1 py-6 px-3 space-y-2" role="navigation" aria-label="Main navigation">
+                {menuItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeView === item.id;
+
+                    return (
+                        <button
+                            key={item.id}
+                            onClick={() => setActiveView(item.id)}
+                            aria-current={isActive ? "page" : undefined}
+                            className={clsx(
+                                "w-full flex items-center rounded-lg transition-all duration-200 group relative",
+                                sidebarCollapsed ? "justify-center p-3" : "px-4 py-3 space-x-3",
+                                isActive
+                                    ? "bg-ivolve-mid text-white shadow-md"
+                                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                            )}
+                        >
+                            <Icon size={20} className={clsx(isActive ? "text-white" : "text-white/70 group-hover:text-white")} />
+
+                            {!sidebarCollapsed && (
+                                <span className="font-medium whitespace-nowrap">{item.label}</span>
+                            )}
+
+                            {/* Tooltip / Expanded Label on Hover (Collapsed Mode) */}
+                            {sidebarCollapsed && (
+                                <div className="absolute left-full ml-2 px-3 py-1.5 bg-ivolve-dark text-white text-sm font-medium rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg z-50 border border-white/10">
+                                    {item.label}
+                                </div>
+                            )}
+                        </button>
+                    );
+                })}
             </nav>
 
-            <div className="p-4 border-t border-ivolve-mid/30 bg-ivolve-dark/50">
-                <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-ivolve-mid flex items-center justify-center font-bold text-ivolve-paper border-2 border-ivolve-bright">
-                        MF
+            {/* Footer */}
+            <div className="p-4 border-t border-white/10 space-y-2">
+                {/* User Profile */}
+                <div className={clsx(
+                    "flex items-center rounded-lg bg-white/5 p-2 transition-all",
+                    sidebarCollapsed ? "justify-center" : "space-x-3"
+                )}>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 border border-white/20 overflow-hidden flex-shrink-0">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Matt" alt="User avatar for Matt" className="w-full h-full" />
                     </div>
-                    <div>
-                        <p className="text-sm font-bold text-white">Matt Fay</p>
-                        <p className="text-xs text-ivolve-bright">Housing Partnerships</p>
-                    </div>
+                    {!sidebarCollapsed && (
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-bold text-white truncate">Matt</p>
+                            <p className="text-xs text-white/50 truncate">Admin</p>
+                        </div>
+                    )}
                 </div>
+
+                <button
+                    aria-label="Log out"
+                    className={clsx(
+                        "w-full flex items-center rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors",
+                        sidebarCollapsed ? "justify-center p-3" : "px-4 py-2 space-x-3"
+                    )}
+                >
+                    <LogOut size={20} />
+                    {!sidebarCollapsed && <span className="font-medium">Logout</span>}
+                </button>
             </div>
         </div>
     );
