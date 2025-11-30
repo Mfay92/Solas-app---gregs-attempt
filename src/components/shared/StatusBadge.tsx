@@ -15,8 +15,7 @@ const statusColors: Record<string, string> = {
     'Non-Compliant': 'bg-red-100 text-red-700',
     'Pending': 'bg-orange-100 text-orange-700',
     'Supported Living': 'bg-ivolve-mid/10 text-ivolve-mid',
-    'Residential': 'bg-ivolve-blue/10 text-ivolve-blue',
-    'Nursing Home': 'bg-ivolve-blue/10 text-ivolve-blue'
+    'Residential': 'bg-blue-100 text-blue-700'
 };
 
 const sizeClasses = {
@@ -25,12 +24,10 @@ const sizeClasses = {
 };
 
 export default function StatusBadge({ status, size = 'sm', className = '' }: StatusBadgeProps) {
-    // Handle undefined/null status gracefully
-    const displayStatus = status || 'Unknown';
-    const colorClass = statusColors[displayStatus] || 'bg-gray-100 text-gray-500';
+    const colorClass = statusColors[status] || 'bg-gray-100 text-gray-500';
 
     const getIcon = () => {
-        switch (displayStatus) {
+        switch (status) {
             case 'Occupied':
             case 'Compliant':
                 return <CheckCircle size={12} />;
@@ -45,7 +42,7 @@ export default function StatusBadge({ status, size = 'sm', className = '' }: Sta
     };
 
     const icon = getIcon();
-    const isPending = displayStatus === 'Pending';
+    const isPending = status === 'Pending';
 
     return (
         <span className={`
@@ -57,7 +54,7 @@ export default function StatusBadge({ status, size = 'sm', className = '' }: Sta
             ${className}
         `.trim().replace(/\s+/g, ' ')}>
             {icon}
-            <span>{displayStatus}</span>
+            <span>{status}</span>
         </span>
     );
 }
