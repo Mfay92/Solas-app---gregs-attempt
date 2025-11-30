@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { PropertyAsset } from '../../types';
 import PropertyHeroBanner, { TabId } from './PropertyHeroBanner';
-import FloatingToolbar from './FloatingToolbar';
 
 // Tab content components
 import ServiceOverviewTab from './tabs/ServiceOverviewTab';
@@ -12,13 +11,12 @@ import RPsLandlordsTab from './tabs/RPsLandlordsTab';
 import LegalTab from './tabs/LegalTab';
 import RentsFinanceTab from './tabs/RentsFinanceTab';
 
-// Sidebar components
-import DocumentsSidebar from './sidebars/DocumentsSidebar';
-import ActivityLogSidebar from './sidebars/ActivityLogSidebar';
-
-// Modal components
-import GalleryLightbox from './modals/GalleryLightbox';
-import FloorPlanModal from './modals/FloorPlanModal';
+// TODO: Re-enable when ready
+// import FloatingToolbar from './FloatingToolbar';
+// import DocumentsSidebar from './sidebars/DocumentsSidebar';
+// import ActivityLogSidebar from './sidebars/ActivityLogSidebar';
+// import GalleryLightbox from './modals/GalleryLightbox';
+// import FloorPlanModal from './modals/FloorPlanModal';
 
 interface PropertyProfileProps {
     asset: PropertyAsset;
@@ -29,30 +27,10 @@ interface PropertyProfileProps {
 const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units }) => {
     const [activeTab, setActiveTab] = useState<TabId>('service-overview');
 
-    // Sidebar states
-    const [isDocumentsSidebarOpen, setIsDocumentsSidebarOpen] = useState(false);
-    const [isActivityLogSidebarOpen, setIsActivityLogSidebarOpen] = useState(false);
-
-    // Modal states
-    const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-    const [isFloorPlanOpen, setIsFloorPlanOpen] = useState(false);
-    const [galleryInitialIndex, setGalleryInitialIndex] = useState(0);
-
+    // Gallery click handler for hero banner
     const handleGalleryClick = () => {
-        setGalleryInitialIndex(0);
-        setIsGalleryOpen(true);
-    };
-
-    const handleFloorPlanClick = () => {
-        setIsFloorPlanOpen(true);
-    };
-
-    const handleDocumentsClick = () => {
-        setIsDocumentsSidebarOpen(true);
-    };
-
-    const handleActivityLogClick = () => {
-        setIsActivityLogSidebarOpen(true);
+        // TODO: Open gallery lightbox when ready
+        console.log('Gallery clicked - feature coming soon');
     };
 
     const renderTabContent = () => {
@@ -99,47 +77,7 @@ const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units 
                 {renderTabContent()}
             </div>
 
-            {/* Floating Toolbar */}
-            <FloatingToolbar
-                onReportRepairClick={() => {}}
-                onDocumentsClick={handleDocumentsClick}
-                onFloorPlanClick={handleFloorPlanClick}
-                onActivityLogClick={handleActivityLogClick}
-                documentCount={asset.documents?.length || 0}
-                hasFloorPlan={!!asset.floorPlanUrl}
-            />
-
-            {/* Documents Sidebar */}
-            <DocumentsSidebar
-                isOpen={isDocumentsSidebarOpen}
-                onClose={() => setIsDocumentsSidebarOpen(false)}
-                asset={asset}
-            />
-
-            {/* Activity Log Sidebar */}
-            <ActivityLogSidebar
-                isOpen={isActivityLogSidebarOpen}
-                onClose={() => setIsActivityLogSidebarOpen(false)}
-                asset={asset}
-                units={units}
-            />
-
-            {/* Gallery Lightbox */}
-            <GalleryLightbox
-                isOpen={isGalleryOpen}
-                onClose={() => setIsGalleryOpen(false)}
-                photos={asset.photos || []}
-                initialIndex={galleryInitialIndex}
-                propertyAddress={asset.address}
-            />
-
-            {/* Floor Plan Modal */}
-            <FloorPlanModal
-                isOpen={isFloorPlanOpen}
-                onClose={() => setIsFloorPlanOpen(false)}
-                floorPlanUrl={asset.floorPlanUrl}
-                propertyAddress={asset.address}
-            />
+            {/* TODO: Re-enable sidebars, modals, and floating toolbar when ready */}
         </div>
     );
 };

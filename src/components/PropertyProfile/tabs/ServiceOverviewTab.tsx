@@ -377,7 +377,7 @@ const ServiceOverviewTab: React.FC<TabProps> = ({ asset, units, onJumpToTab }) =
             )}
 
             {/* Location info */}
-            {asset.coordinates && (
+            {asset.coordinates && asset.coordinates.lat != null && asset.coordinates.lng != null && (
                 <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
                     <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-3 flex items-center gap-2">
                         <MapPin size={16} className="text-ivolve-mid" />
@@ -387,11 +387,9 @@ const ServiceOverviewTab: React.FC<TabProps> = ({ asset, units, onJumpToTab }) =
                         <MapPin size={14} className="text-gray-400" />
                         <span>{asset.address}, {asset.postcode}</span>
                     </div>
-                    {asset.coordinates && (
-                        <p className="text-xs text-gray-400 mt-1">
-                            {asset.coordinates.lat.toFixed(6)}, {asset.coordinates.lng.toFixed(6)}
-                        </p>
-                    )}
+                    <p className="text-xs text-gray-400 mt-1">
+                        {asset.coordinates.lat.toFixed(6)}, {asset.coordinates.lng.toFixed(6)}
+                    </p>
                 </div>
             )}
         </div>
