@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import propertiesData from '../data/properties.json';
 import { PropertyAsset } from '../types';
 import { Search, List, LayoutGrid, ChevronRight, Home, BedDouble, FileText, AlertCircle, FileQuestion, Check } from 'lucide-react';
@@ -24,11 +25,13 @@ const properties: PropertyAsset[] = Array.isArray(propertiesData)
     : [];
 
 const PropertyHub: React.FC = () => {
+    const { propertyId } = useParams<{ propertyId: string }>();
+    const navigate = useNavigate();
+
     const [viewMode, setViewMode] = useState<'table' | 'card'>('table');
     const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedMasters, setExpandedMasters] = useState<Set<string>>(new Set());
-    const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
 
     const toggleMaster = (id: string) => {
         const newExpanded = new Set(expandedMasters);
@@ -78,32 +81,33 @@ const PropertyHub: React.FC = () => {
     }, [filteredAssets, expandedMasters]);
 
     const selectedProperty = useMemo(() => {
-        return properties.find(p => p.id === selectedPropertyId);
-    }, [selectedPropertyId]);
+        if (!propertyId) return null;
+        return properties.find(p => p.id === propertyId);
+    }, [propertyId]);
 
     const selectedPropertyUnits = useMemo(() => {
-        if (!selectedPropertyId) return [];
-        return properties.filter(p => p.parentId === selectedPropertyId);
-    }, [selectedPropertyId]);
+        if (!propertyId) return [];
+        return properties.filter(p => p.parentId === propertyId);
+    }, [propertyId]);
 
     if (selectedProperty) {
         return (
             <PropertyProfile
                 asset={selectedProperty}
                 units={selectedPropertyUnits}
-                onBack={() => setSelectedPropertyId(null)}
+                onBack={() => navigate('/properties')}
             />
         );
     }
 
     return (
-        <div className="p-8 space-y-6 bg-ivolve-paper min-h-screen">
+        <div className="p-4 space-y-4 bg-ivolve-paper min-h-screen">
 
             {/* Header & Controls */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <div>
-                    <h1 className="text-3xl font-black text-ivolve-dark font-rounded">Property Hub</h1>
-                    <p className="text-ivolve-slate">Manage your portfolio, units, and assets.</p>
+                    <h1 className="text-2xl font-black text-ivolve-dark font-rounded">Property Hub</h1>
+                    <p className="text-ivolve-slate text-sm">Manage your portfolio, units, and assets.</p>
                 </div>
 
                 <div className="flex items-center space-x-3 bg-white p-2 rounded-xl shadow-sm border border-gray-100 w-full md:w-auto">
@@ -161,13 +165,13 @@ const PropertyHub: React.FC = () => {
                     <table className="w-full text-left border-collapse" role="table">
                         <thead className="bg-gradient-to-r from-ivolve-dark to-ivolve-mid shadow-sm">
                             <tr>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider w-1/3">Address / Unit</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider">Service / Status</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider">Units / Since</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider">Compliance</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider">Docs</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider">Manager</th>
-                                <th scope="col" className="p-4 text-white font-bold text-xs uppercase tracking-wider text-right">Actions</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider w-1/3">Address / Unit</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider">Service / Status</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider">Units / Since</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider">Compliance</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider">Docs</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider">Manager</th>
+                                <th scope="col" className="px-3 py-2 text-white font-bold text-xs uppercase tracking-wider text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
@@ -191,10 +195,10 @@ const PropertyHub: React.FC = () => {
                                     <tr
                                         key={asset.id}
                                         className={rowClasses}
-                                        onClick={() => setSelectedPropertyId(asset.id)}
+                                        onClick={() => navigate(`/properties/${asset.id}`)}
                                     >
-                                        <td className="p-4">
-                                            <div className={`flex items-center ${isUnit ? 'pl-8' : ''}`}>
+                                        <td className="px-3 py-2">
+                                            <div className={`flex items-center ${isUnit ? 'pl-6' : ''}`}>
                                                 {asset.type === 'Master' && (
                                                     <button
                                                         onClick={(e) => {
@@ -237,7 +241,7 @@ const PropertyHub: React.FC = () => {
                                         </td>
 
                                         {/* Service / Status Column */}
-                                        <td className="p-4">
+                                        <td className="px-3 py-2">
                                             {asset.type === 'Master' ? (
                                                 <StatusBadge status={asset.serviceType} />
                                             ) : (
@@ -246,7 +250,7 @@ const PropertyHub: React.FC = () => {
                                         </td>
 
                                         {/* Units / Since Column */}
-                                        <td className="p-4">
+                                        <td className="px-3 py-2">
                                             {asset.type === 'Master' ? (
                                                 <span className="text-sm font-bold text-gray-700">{asset.totalUnits} Units</span>
                                             ) : (
@@ -257,7 +261,7 @@ const PropertyHub: React.FC = () => {
                                         </td>
 
                                         {/* Compliance Column */}
-                                        <td className="p-4">
+                                        <td className="px-3 py-2">
                                             {asset.type === 'Master' && asset.complianceStatus ? (
                                                 <StatusBadge status={asset.complianceStatus} size="sm" />
                                             ) : (
@@ -266,7 +270,7 @@ const PropertyHub: React.FC = () => {
                                         </td>
 
                                         {/* Docs Column */}
-                                        <td className="p-4">
+                                        <td className="px-3 py-2">
                                             {asset.documents && asset.documents.length > 0 ? (
                                                 <div className="flex items-center space-x-1 text-gray-600">
                                                     <FileText size={16} />
@@ -280,15 +284,15 @@ const PropertyHub: React.FC = () => {
                                             )}
                                         </td>
 
-                                        <td className="p-4 text-sm text-gray-600">
+                                        <td className="px-3 py-2 text-sm text-gray-600">
                                             <div className="flex flex-col">
                                                 <span>{asset.housingManager}</span>
                                                 {asset.areaManager && <span className="text-xs text-ivolve-slate/70">AM: {asset.areaManager}</span>}
                                             </div>
                                         </td>
-                                        <td className="p-4 text-right">
+                                        <td className="px-3 py-2 text-right">
                                             <button
-                                                onClick={() => setSelectedPropertyId(asset.id)}
+                                                onClick={() => navigate(`/properties/${asset.id}`)}
                                                 className="text-ivolve-mid hover:text-ivolve-dark font-medium text-sm"
                                             >
                                                 View
@@ -313,7 +317,7 @@ const PropertyHub: React.FC = () => {
                         return (
                             <div
                                 key={asset.id}
-                                onClick={() => setSelectedPropertyId(asset.id)}
+                                onClick={() => navigate(`/properties/${asset.id}`)}
                                 className={`bg-white rounded-2xl shadow-sm border-2 border-transparent hover:border-ivolve-mid overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group cursor-pointer animate-fade-in-up stagger-${(index % 6) + 1}`}
                             >
                                 <div className={`p-4 flex justify-between items-start relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent ${asset.serviceType === 'Supported Living' ? 'bg-ivolve-mid' : 'bg-ivolve-blue'}`}>

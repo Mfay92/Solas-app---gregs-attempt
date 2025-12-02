@@ -45,10 +45,10 @@ export const WidgetWrapper = React.forwardRef<HTMLDivElement, WidgetWrapperProps
             }
         };
 
-        // Common styles for the card
+        // Common styles for the card - off-white background for contrast on white page
         const cardClasses = clsx(
-            'bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 group/card',
-            isFullScreen ? 'fixed inset-4 z-50 shadow-2xl' : 'h-full w-full hover:shadow-lg hover:-translate-y-1',
+            'bg-ivolve-paper rounded-xl shadow-sm border border-slate-200/50 flex flex-col overflow-hidden transition-all duration-300 group/card',
+            isFullScreen ? 'fixed inset-4 z-50 shadow-2xl bg-white' : 'h-full w-full hover:shadow-md hover:-translate-y-0.5',
             className
         );
 
@@ -71,8 +71,9 @@ export const WidgetWrapper = React.forwardRef<HTMLDivElement, WidgetWrapperProps
                     {...props}
                 >
                     {/* Header */}
-                    <div className="group/header flex items-center justify-between px-5 py-4 bg-ivolve-mid drag-handle cursor-move relative overflow-hidden">
-                        <div className="flex-1 flex items-center gap-2 min-w-0 z-10">
+                    <div className="group/header flex items-center justify-between px-4 py-3 bg-ivolve-mid drag-handle cursor-move relative overflow-hidden">
+                        {/* Title - always visible, full width when buttons hidden */}
+                        <div className="flex-1 min-w-0 z-10">
                             {isEditingTitle ? (
                                 <input
                                     ref={titleInputRef}
@@ -81,62 +82,71 @@ export const WidgetWrapper = React.forwardRef<HTMLDivElement, WidgetWrapperProps
                                     onChange={(e) => setTitle(e.target.value)}
                                     onBlur={handleTitleSubmit}
                                     onKeyDown={handleKeyDown}
-                                    className="bg-white/10 text-white font-bold text-xl rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-white/50"
+                                    className="bg-white/10 text-white font-bold text-lg rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-white/50"
                                     aria-label="Widget title"
                                 />
                             ) : (
-                                <div className="flex items-center gap-2 overflow-hidden">
-                                    <h2 className="font-bold text-white text-xl truncate select-none font-rounded tracking-wide">
-                                        {title}
-                                    </h2>
-                                    <button
-                                        onClick={() => setIsEditingTitle(true)}
-                                        className="opacity-0 group-hover/header:opacity-100 p-1 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 active:scale-95"
-                                        title="Rename"
-                                        aria-label="Rename widget"
-                                    >
-                                        <Pencil size={14} />
-                                    </button>
-                                </div>
+                                <h2 className="font-bold text-white text-lg truncate select-none font-rounded tracking-wide pr-2">
+                                    {title}
+                                </h2>
                             )}
                         </div>
 
-                        <div className="flex items-center gap-2 ml-4 z-10">
+                        {/* Action buttons - hover to reveal (always visible in fullscreen) */}
+                        <div className={clsx(
+                            "flex items-center gap-1.5 z-10 transition-all duration-200",
+                            isFullScreen
+                                ? "opacity-100"
+                                : "opacity-0 group-hover/header:opacity-100 translate-x-2 group-hover/header:translate-x-0"
+                        )}>
+                            {/* Rename button */}
+                            <button
+                                onClick={() => setIsEditingTitle(true)}
+                                className="p-1.5 bg-white/20 text-white hover:bg-white hover:text-ivolve-mid rounded-full transition-all duration-200 active:scale-95"
+                                title="Rename"
+                                aria-label="Rename widget"
+                            >
+                                <Pencil size={14} />
+                            </button>
+
                             {/* Lock Button */}
                             <button
                                 onClick={onToggleLock}
-                                className="p-1.5 bg-white text-ivolve-mid hover:text-ivolve-bright hover:shadow-[0_0_10px_rgba(107,208,82,0.5)] rounded-full transition-all duration-300 shadow-sm opacity-0 group-hover/header:opacity-100 active:scale-95"
+                                className="p-1.5 bg-white/20 text-white hover:bg-white hover:text-ivolve-mid rounded-full transition-all duration-200 active:scale-95"
                                 title={isLocked ? "Unlock Widget" : "Lock Widget"}
                                 aria-label={isLocked ? "Unlock widget" : "Lock widget"}
                             >
-                                {isLocked ? <Lock size={16} /> : <Unlock size={16} />}
+                                {isLocked ? <Lock size={14} /> : <Unlock size={14} />}
                             </button>
 
                             {/* Minimize Button */}
                             <button
                                 onClick={onMinimize}
-                                className="p-1.5 bg-white text-ivolve-mid hover:text-ivolve-bright hover:shadow-[0_0_10px_rgba(107,208,82,0.5)] rounded-full transition-all duration-300 shadow-sm opacity-0 group-hover/header:opacity-100 active:scale-95"
+                                className="p-1.5 bg-white/20 text-white hover:bg-white hover:text-ivolve-mid rounded-full transition-all duration-200 active:scale-95"
                                 title="Minimize to Dock"
                                 aria-label="Minimize widget to dock"
                             >
-                                <Minus size={16} />
+                                <Minus size={14} />
                             </button>
 
+                            {/* Fullscreen Button */}
                             <button
                                 onClick={toggleFullScreen}
-                                className="p-1.5 bg-white text-ivolve-mid hover:text-ivolve-bright hover:shadow-[0_0_10px_rgba(107,208,82,0.5)] rounded-full transition-all duration-300 shadow-sm group/icon active:scale-95"
+                                className="p-1.5 bg-white/20 text-white hover:bg-white hover:text-ivolve-mid rounded-full transition-all duration-200 active:scale-95"
                                 title={isFullScreen ? "Exit Full Screen" : "Full Screen"}
                                 aria-label={isFullScreen ? "Exit full screen" : "Enter full screen"}
                             >
-                                {isFullScreen ? <X size={16} /> : <Maximize2 size={16} className="group-hover/icon:text-ivolve-mid" />}
+                                {isFullScreen ? <X size={14} /> : <Maximize2 size={14} />}
                             </button>
+
+                            {/* More Options */}
                             <button
-                                className="p-1.5 bg-white text-ivolve-mid hover:text-ivolve-bright hover:shadow-[0_0_10px_rgba(107,208,82,0.5)] rounded-full transition-all duration-300 shadow-sm active:scale-95 cursor-not-allowed opacity-50"
+                                className="p-1.5 bg-white/10 text-white/50 rounded-full transition-all duration-200 cursor-not-allowed"
                                 title="Settings (Coming soon)"
                                 disabled
                                 aria-label="Widget settings (coming soon)"
                             >
-                                <MoreHorizontal size={16} />
+                                <MoreHorizontal size={14} />
                             </button>
                         </div>
                     </div>

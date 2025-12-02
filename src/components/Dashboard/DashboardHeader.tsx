@@ -31,13 +31,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
     }, []);
 
     return (
-        <div className="flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-30 shadow-sm transition-all">
+        <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200/60 sticky top-0 z-30 transition-all">
             {/* Greeting Section */}
             <div>
-                <h1 className="text-2xl font-bold text-slate-800 tracking-tight font-rounded">
-                    {greeting} <span className="text-2xl animate-wave inline-block origin-bottom-right">👋</span>
+                <h1 className="text-xl font-bold text-slate-800 tracking-tight font-rounded">
+                    {greeting} <span className="text-xl animate-wave inline-block origin-bottom-right">👋</span>
                 </h1>
-                <p className="text-slate-500 text-sm mt-0.5 font-medium animate-fade-in">
+                <p className="text-slate-500 text-xs mt-0.5 font-medium animate-fade-in">
                     {subGreeting}
                 </p>
             </div>

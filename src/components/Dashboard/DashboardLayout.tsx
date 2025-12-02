@@ -27,22 +27,55 @@ const gridStyles = `
   }
 `;
 
-// Default layout configuration
+// Widget type constraints - min/max sizes per type
+const WIDGET_CONSTRAINTS: Record<WidgetData['type'], { minW: number; minH: number; maxW: number; maxH: number }> = {
+    battery: { minW: 2, minH: 3, maxW: 6, maxH: 6 },      // Simple status - keep compact
+    numbers: { minW: 2, minH: 3, maxW: 6, maxH: 5 },      // KPI numbers - compact
+    chart: { minW: 3, minH: 4, maxW: 12, maxH: 10 },      // Charts need more space
+    files: { minW: 3, minH: 3, maxW: 12, maxH: 8 },       // File list - flexible
+    text: { minW: 2, minH: 2, maxW: 8, maxH: 6 },         // Text widgets - flexible
+};
+
+// Default layout configuration for different breakpoints
 const defaultLayouts: Layouts = {
-    lg: [
-        { i: '1', x: 0, y: 0, w: 4, h: 4, minW: 2, minH: 3 },
-        { i: '2', x: 4, y: 0, w: 4, h: 4, minW: 2, minH: 3 },
-        { i: '3', x: 8, y: 0, w: 4, h: 8, minW: 2, minH: 3 }, // Chart
-        { i: '4', x: 0, y: 4, w: 8, h: 6, minW: 2, minH: 3 }, // Files
+    lg: [ // 12 cols, >= 1200px
+        { i: '1', x: 0, y: 0, w: 4, h: 4, ...WIDGET_CONSTRAINTS.battery },
+        { i: '2', x: 4, y: 0, w: 4, h: 4, ...WIDGET_CONSTRAINTS.numbers },
+        { i: '3', x: 8, y: 0, w: 4, h: 7, ...WIDGET_CONSTRAINTS.chart },
+        { i: '4', x: 0, y: 4, w: 8, h: 5, ...WIDGET_CONSTRAINTS.files },
+    ],
+    md: [ // 10 cols, >= 996px
+        { i: '1', x: 0, y: 0, w: 5, h: 4, ...WIDGET_CONSTRAINTS.battery },
+        { i: '2', x: 5, y: 0, w: 5, h: 4, ...WIDGET_CONSTRAINTS.numbers },
+        { i: '3', x: 0, y: 4, w: 5, h: 6, ...WIDGET_CONSTRAINTS.chart },
+        { i: '4', x: 5, y: 4, w: 5, h: 5, ...WIDGET_CONSTRAINTS.files },
+    ],
+    sm: [ // 6 cols, >= 768px
+        { i: '1', x: 0, y: 0, w: 3, h: 4, ...WIDGET_CONSTRAINTS.battery },
+        { i: '2', x: 3, y: 0, w: 3, h: 4, ...WIDGET_CONSTRAINTS.numbers },
+        { i: '3', x: 0, y: 4, w: 6, h: 5, ...WIDGET_CONSTRAINTS.chart },
+        { i: '4', x: 0, y: 9, w: 6, h: 4, ...WIDGET_CONSTRAINTS.files },
+    ],
+    xs: [ // 4 cols, >= 480px
+        { i: '1', x: 0, y: 0, w: 4, h: 4, ...WIDGET_CONSTRAINTS.battery },
+        { i: '2', x: 0, y: 4, w: 4, h: 4, ...WIDGET_CONSTRAINTS.numbers },
+        { i: '3', x: 0, y: 8, w: 4, h: 5, ...WIDGET_CONSTRAINTS.chart },
+        { i: '4', x: 0, y: 13, w: 4, h: 4, ...WIDGET_CONSTRAINTS.files },
+    ],
+    xxs: [ // 2 cols, < 480px
+        { i: '1', x: 0, y: 0, w: 2, h: 4, ...WIDGET_CONSTRAINTS.battery },
+        { i: '2', x: 0, y: 4, w: 2, h: 4, ...WIDGET_CONSTRAINTS.numbers },
+        { i: '3', x: 0, y: 8, w: 2, h: 5, ...WIDGET_CONSTRAINTS.chart },
+        { i: '4', x: 0, y: 13, w: 2, h: 4, ...WIDGET_CONSTRAINTS.files },
     ],
 };
 
 export const DashboardLayout: React.FC = () => {
     const [items, setItems] = useState<DashboardItem[]>([
-        { id: '1', type: 'battery', title: 'Project Status', x: 0, y: 0, w: 4, h: 4, minW: 2, minH: 3, locked: false },
-        { id: '2', type: 'numbers', title: 'Total Revenue', x: 4, y: 0, w: 4, h: 4, minW: 2, minH: 3, locked: false },
-        { id: '3', type: 'chart', title: 'Monthly Performance', x: 8, y: 0, w: 4, h: 8, minW: 2, minH: 3, locked: false },
-        { id: '4', type: 'files', title: 'Recent Documents', x: 0, y: 4, w: 8, h: 6, minW: 2, minH: 3, locked: false },
+        { id: '1', type: 'battery', title: 'Project Status', x: 0, y: 0, w: 4, h: 4, ...WIDGET_CONSTRAINTS.battery, locked: false },
+        { id: '2', type: 'numbers', title: 'Total Revenue', x: 4, y: 0, w: 4, h: 4, ...WIDGET_CONSTRAINTS.numbers, locked: false },
+        { id: '3', type: 'chart', title: 'Monthly Performance', x: 8, y: 0, w: 4, h: 7, ...WIDGET_CONSTRAINTS.chart, locked: false },
+        { id: '4', type: 'files', title: 'Recent Documents', x: 0, y: 4, w: 8, h: 5, ...WIDGET_CONSTRAINTS.files, locked: false },
     ]);
 
     const [dockedItems, setDockedItems] = useState<DashboardItem[]>([]);
@@ -109,16 +142,16 @@ export const DashboardLayout: React.FC = () => {
 
 
     const handleAddWidget = (type: WidgetData['type']) => {
+        const constraints = WIDGET_CONSTRAINTS[type] || { minW: 2, minH: 3, maxW: 6, maxH: 6 };
         const newItem: DashboardItem = {
             id: Date.now().toString(),
             type,
             title: type.charAt(0).toUpperCase() + type.slice(1),
             x: 0,
             y: Infinity,
-            w: 4,
-            h: 4,
-            minW: 2,
-            minH: 3,
+            w: Math.max(4, constraints.minW), // Start at reasonable size
+            h: Math.max(4, constraints.minH),
+            ...constraints,
             locked: false
         };
         setItems([...items, newItem]);
@@ -189,7 +222,7 @@ export const DashboardLayout: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden">
+        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
             <style>{gridStyles}</style>
 
             {/* New Header */}
@@ -200,17 +233,17 @@ export const DashboardLayout: React.FC = () => {
 
             <div className="flex flex-1 overflow-hidden relative">
                 {/* Main Content Area */}
-                <div className="flex-1 p-8 pt-6 overflow-y-auto">
+                <div className="flex-1 p-4 pt-4 overflow-y-auto">
                     <div className="max-w-[1600px] mx-auto">
 
                         {items.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center h-[60vh] text-slate-400 border-2 border-dashed border-slate-200 rounded-3xl bg-white/50">
-                                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                                    <LayoutIcon size={40} className="text-slate-300" />
+                            <div className="flex flex-col items-center justify-center h-[60vh] text-slate-400 border-2 border-dashed border-slate-300 rounded-2xl bg-ivolve-paper/50">
+                                <div className="w-16 h-16 bg-ivolve-paper rounded-full flex items-center justify-center mb-3 border border-slate-200">
+                                    <LayoutIcon size={32} className="text-slate-400" />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-600">Start Building Your Dashboard</h3>
-                                <p className="text-slate-500 mt-2 max-w-md text-center">
-                                    Click "Add Widget" to customize your workspace with the tools you need.
+                                <h3 className="text-lg font-bold text-slate-600">Start Building Your Dashboard</h3>
+                                <p className="text-slate-500 mt-1 max-w-md text-center text-sm">
+                                    Click "Add Widget" to customize your workspace.
                                 </p>
                             </div>
                         ) : (
@@ -219,13 +252,13 @@ export const DashboardLayout: React.FC = () => {
                                 layouts={layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                                rowHeight={60}
+                                rowHeight={50}
                                 draggableHandle=".drag-handle"
                                 onLayoutChange={(_currentLayout, allLayouts) => setLayouts(allLayouts)}
                                 onDragStart={onDragStart}
                                 onDrag={onDrag}
                                 onDragStop={onDragStop}
-                                margin={[24, 24]}
+                                margin={[16, 16]}
                             >
                                 {items.map((item) => (
                                     <div key={item.id} className={item.locked ? "static-widget" : ""}>
@@ -247,22 +280,22 @@ export const DashboardLayout: React.FC = () => {
 
                 {/* Storage Drawer Overlay (Slides out from right) */}
                 <div
-                    className={`absolute top-0 right-0 bottom-0 w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-40 flex flex-col border-l border-slate-200 ${isStorageOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                    className={`absolute top-0 right-0 bottom-0 w-72 bg-ivolve-paper shadow-2xl transform transition-transform duration-300 ease-in-out z-40 flex flex-col border-l border-slate-200 ${isStorageOpen ? 'translate-x-0' : 'translate-x-full'}`}
                 >
-                    <div className="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-                        <h2 className="font-bold text-lg flex items-center gap-2 text-slate-700">
-                            <LayoutIcon size={20} className="text-ivolve-mid" />
+                    <div className="px-3 py-2.5 bg-white border-b border-slate-200 flex items-center justify-between">
+                        <h2 className="font-bold text-sm flex items-center gap-2 text-slate-700">
+                            <LayoutIcon size={16} className="text-ivolve-mid" />
                             Storage
                         </h2>
                         <button
                             onClick={() => setIsStorageOpen(false)}
-                            className="p-1 hover:bg-slate-200 rounded-full transition-colors text-slate-400"
+                            className="p-1 hover:bg-slate-100 rounded-full transition-colors text-slate-400"
                         >
-                            <X size={20} />
+                            <X size={16} />
                         </button>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50 flex flex-col">
+                    <div className="flex-1 overflow-y-auto p-2 space-y-2 flex flex-col">
                         {isDragging ? (
                             <div className="flex-1 flex items-center justify-center border-2 border-dashed border-ivolve-mid m-4 rounded-xl bg-green-50/50 animate-pulse">
                                 <div className="text-center text-ivolve-mid">
@@ -271,25 +304,22 @@ export const DashboardLayout: React.FC = () => {
                                 </div>
                             </div>
                         ) : dockedItems.length === 0 ? (
-                            <div className="text-center py-10 text-slate-400">
-                                <Package size={32} className="mx-auto mb-2 opacity-50" />
-                                <p className="text-sm">Storage is empty</p>
+                            <div className="text-center py-8 text-slate-400">
+                                <Package size={24} className="mx-auto mb-2 opacity-50" />
+                                <p className="text-xs">Storage is empty</p>
                             </div>
                         ) : (
                             dockedItems.map((item) => (
-                                <div key={item.id} className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all group">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <span className="font-bold text-slate-700 truncate">{item.title}</span>
+                                <div key={item.id} className="bg-white p-2 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all group">
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-medium text-slate-700 truncate text-sm">{item.title}</span>
                                         <button
                                             onClick={() => handleRestoreFromDock(item.id)}
-                                            className="p-1.5 text-slate-400 hover:text-ivolve-mid hover:bg-green-50 rounded-full transition-colors"
+                                            className="p-1 text-slate-400 hover:text-ivolve-mid hover:bg-green-50 rounded-full transition-colors"
                                             title="Restore to Dashboard"
                                         >
-                                            <ArrowLeft size={16} />
+                                            <ArrowLeft size={14} />
                                         </button>
-                                    </div>
-                                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div className="h-full w-2/3 bg-slate-300 rounded-full"></div>
                                     </div>
                                 </div>
                             ))

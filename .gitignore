@@ -26,7 +26,15 @@ dist-ssr
 # Data folders (not for version control)
 Data Sample 1/
 data folder2/
-reference_materials/
 
-# Legacy/prototype code
-_legacy_prototype/
+# Windows artifacts
+nul
+
+# Source fonts (already in public/fonts/)
+Fonts/
+
+# Screenshots (generated)
+screenshots/
+# Reference/data files - not for git
+reference_materials/
+RENTS & SERVICES/

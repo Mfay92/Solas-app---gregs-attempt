@@ -306,13 +306,210 @@ export const woodhurstRentSchedule: RentScheduleDocument = {
   },
 };
 
+// Sample Rent Schedule for Sovereign House - Larger property with more items
+export const sovereignHouseRentSchedule: RentScheduleDocument = {
+  id: 'rs_sovereign_2025',
+  propertyId: 'prop_sovereign_house',
+  rpName: 'EHSL Supported Housing',
+  financialYear: '2025/26',
+  effectiveDate: '2025-04-01',
+  version: 2,
+
+  header: {
+    address: 'Sovereign House, 12 High Street, London, SE1 4RT',
+    localAuthority: 'Southwark Council',
+    occupancyLevel: 12,
+    overnightRooms: 12,
+  },
+
+  coreRent: {
+    id: 'coreRent',
+    type: 'coreRent',
+    title: 'Core Rent',
+    description: 'Housing Benefit eligible rent charges',
+    easyReadTitle: 'Main Rent',
+    easyReadDescription: 'The main costs for your home - Housing Benefit can help pay for these',
+    items: [
+      { id: 'cr_base', label: 'Base rent', amount: 245.00, description: 'Weekly rent for accommodation', easyReadDescription: 'The main cost for your room', category: 'base-rent' },
+      { id: 'cr_insurance', label: 'Buildings Insurance', amount: 12.00, description: 'Property insurance cover', easyReadDescription: 'Protects the building', category: 'insurance' },
+      { id: 'cr_repairs', label: 'Major repairs fund', amount: 18.00, description: 'Reserve for significant repairs', easyReadDescription: 'Savings for big repairs', category: 'repairs-maintenance' },
+      { id: 'cr_daytoday', label: 'Day-to-day repairs', amount: 15.50, description: 'Ongoing maintenance costs', easyReadDescription: 'Fixing small things', category: 'repairs-maintenance' },
+      { id: 'cr_council', label: 'Council Tax contribution', amount: 52.00, description: 'Local authority charge', easyReadDescription: 'Pays for local services', category: 'council-tax' },
+      { id: 'cr_management', label: 'Management & Admin', amount: 28.00, description: 'Property management costs', easyReadDescription: 'Running the building', category: 'management' },
+      { id: 'cr_overheads', label: 'Operational costs', amount: 14.00, description: 'General running costs', easyReadDescription: 'Keeping things going', category: 'overheads' },
+      { id: 'cr_void', label: 'Void cover (7%)', amount: 27.02, description: 'Coverage for vacant periods', easyReadDescription: 'Covers empty room costs', category: 'void-cover', isVoidCover: true, voidPercentage: 7 },
+    ],
+    subtotal: 411.52,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  eligibleServiceCharges: {
+    id: 'eligibleServiceCharges',
+    type: 'eligibleServiceCharges',
+    title: 'HB Eligible Service Charges',
+    description: 'Communal services covered by Housing Benefit',
+    easyReadTitle: 'Extra Services',
+    easyReadDescription: 'Services for shared areas - Housing Benefit can help pay for these too',
+    items: [
+      { id: 'sc_cleaning', label: 'Communal cleaning', amount: 22.00, description: 'Weekly cleaning of shared areas', easyReadDescription: 'Cleaning hallways and shared spaces', category: 'cleaning' },
+      { id: 'sc_gardening', label: 'Grounds maintenance', amount: 8.50, description: 'Garden and external upkeep', easyReadDescription: 'Looking after the garden', category: 'gardening' },
+      { id: 'sc_fire', label: 'Fire safety systems', amount: 6.25, description: 'Alarms and extinguisher maintenance', easyReadDescription: 'Fire alarms and safety equipment', category: 'fire-safety' },
+      { id: 'sc_lift', label: 'Lift maintenance', amount: 12.00, description: 'Elevator service contract', easyReadDescription: 'Keeping the lift working', category: 'equipment' },
+      { id: 'sc_entry', label: 'Door entry system', amount: 4.50, description: 'Intercom and access maintenance', easyReadDescription: 'Buzzer system at the door', category: 'equipment' },
+      { id: 'sc_utilities', label: 'Communal utilities', amount: 18.00, description: 'Shared area electricity', easyReadDescription: 'Lights in hallways', category: 'utilities' },
+      { id: 'sc_furniture', label: 'Furniture fund', amount: 10.00, description: 'Communal furniture replacement', easyReadDescription: 'New furniture for shared rooms', category: 'furnishings' },
+      { id: 'sc_cctv', label: 'CCTV & Security', amount: 5.00, description: 'Security camera maintenance', easyReadDescription: 'Security cameras', category: 'equipment' },
+      { id: 'sc_mgmt', label: 'Service charge admin (15%)', amount: 12.94, description: 'Management of services', easyReadDescription: 'Organising the services', category: 'management' },
+      { id: 'sc_void', label: 'Void cover (7%)', amount: 6.04, description: 'Coverage for vacant periods', easyReadDescription: 'Covers empty room costs', category: 'void-cover', isVoidCover: true, voidPercentage: 7 },
+    ],
+    subtotal: 105.23,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  ineligibleServices: {
+    id: 'ineligibleServices',
+    type: 'ineligibleServices',
+    title: 'Ineligible Services',
+    description: 'Personal utilities - tenant responsibility',
+    easyReadTitle: 'Your Personal Bills',
+    easyReadDescription: 'These are your own bills - Housing Benefit does not pay for these',
+    items: [
+      { id: 'in_gas', label: 'Gas & Electric', amount: 125.00, description: 'Personal energy usage', easyReadDescription: 'Your heating and electric', category: 'utilities' },
+      { id: 'in_water', label: 'Water', amount: 24.00, description: 'Water supply and sewerage', easyReadDescription: 'Water for your room', category: 'utilities' },
+      { id: 'in_tv', label: 'TV Licence contribution', amount: 3.50, description: 'BBC licence fee share', easyReadDescription: 'TV licence', category: 'other' },
+    ],
+    subtotal: 152.50,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  totals: {
+    coreRentWeekly: 411.52,
+    serviceChargesWeekly: 105.23,
+    ineligibleWeekly: 152.50,
+    grossWeeklyRent: 669.25,
+    eligibleForHB: 516.75,
+    ineligibleForHB: 152.50,
+  },
+
+  metadata: {
+    source: 'manual',
+    uploadedAt: '2025-11-30T00:00:00.000Z',
+  },
+};
+
+// Sample Rent Schedule for Blanford Road - Smaller property with fewer items
+export const blanfordRoadRentSchedule: RentScheduleDocument = {
+  id: 'rs_blanford_2025',
+  propertyId: 'prop_blanford_road',
+  rpName: 'EHSL Supported Housing',
+  financialYear: '2025/26',
+  effectiveDate: '2025-04-01',
+  version: 1,
+
+  header: {
+    address: '45 Blanford Road, Birmingham, B12 9QP',
+    localAuthority: 'Birmingham City Council',
+    occupancyLevel: 4,
+    overnightRooms: 4,
+  },
+
+  coreRent: {
+    id: 'coreRent',
+    type: 'coreRent',
+    title: 'Core Rent',
+    description: 'Housing Benefit eligible rent charges',
+    easyReadTitle: 'Main Rent',
+    easyReadDescription: 'The main costs for your home - Housing Benefit can help pay for these',
+    items: [
+      { id: 'cr_base', label: 'Base rent', amount: 140.00, description: 'Weekly rent for accommodation', easyReadDescription: 'The main cost for your room', category: 'base-rent' },
+      { id: 'cr_insurance', label: 'Buildings Insurance', amount: 6.00, description: 'Property insurance cover', easyReadDescription: 'Protects the building', category: 'insurance' },
+      { id: 'cr_repairs', label: 'Repairs & Maintenance', amount: 18.00, description: 'General upkeep fund', easyReadDescription: 'Fixing things', category: 'repairs-maintenance' },
+      { id: 'cr_council', label: 'Council Tax', amount: 38.00, description: 'Local authority charge', easyReadDescription: 'Pays for local services', category: 'council-tax' },
+      { id: 'cr_management', label: 'Management costs', amount: 18.00, description: 'Property management', easyReadDescription: 'Running the house', category: 'management' },
+      { id: 'cr_void', label: 'Void cover (7%)', amount: 15.40, description: 'Coverage for vacant periods', easyReadDescription: 'Covers empty room costs', category: 'void-cover', isVoidCover: true, voidPercentage: 7 },
+    ],
+    subtotal: 235.40,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  eligibleServiceCharges: {
+    id: 'eligibleServiceCharges',
+    type: 'eligibleServiceCharges',
+    title: 'HB Eligible Service Charges',
+    description: 'Communal services covered by Housing Benefit',
+    easyReadTitle: 'Extra Services',
+    easyReadDescription: 'Services for shared areas - Housing Benefit can help pay for these too',
+    items: [
+      { id: 'sc_cleaning', label: 'Cleaning', amount: 12.00, description: 'Shared area cleaning', easyReadDescription: 'Cleaning the house', category: 'cleaning' },
+      { id: 'sc_gardening', label: 'Garden maintenance', amount: 5.00, description: 'Garden upkeep', easyReadDescription: 'Looking after the garden', category: 'gardening' },
+      { id: 'sc_fire', label: 'Fire safety', amount: 4.00, description: 'Fire equipment', easyReadDescription: 'Fire alarms', category: 'fire-safety' },
+      { id: 'sc_utilities', label: 'Shared utilities', amount: 8.00, description: 'Hallway lighting', easyReadDescription: 'Lights in shared areas', category: 'utilities' },
+      { id: 'sc_void', label: 'Void cover (7%)', amount: 2.03, description: 'Vacancy coverage', easyReadDescription: 'Empty room costs', category: 'void-cover', isVoidCover: true, voidPercentage: 7 },
+    ],
+    subtotal: 31.03,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  ineligibleServices: {
+    id: 'ineligibleServices',
+    type: 'ineligibleServices',
+    title: 'Ineligible Services',
+    description: 'Personal utilities - tenant responsibility',
+    easyReadTitle: 'Your Personal Bills',
+    easyReadDescription: 'These are your own bills - Housing Benefit does not pay for these',
+    items: [
+      { id: 'in_energy', label: 'Gas & Electric', amount: 85.00, description: 'Personal energy', easyReadDescription: 'Your heating and electric', category: 'utilities' },
+      { id: 'in_water', label: 'Water', amount: 16.00, description: 'Water supply', easyReadDescription: 'Your water', category: 'utilities' },
+    ],
+    subtotal: 101.00,
+    isCollapsible: true,
+    defaultExpanded: true,
+  },
+
+  totals: {
+    coreRentWeekly: 235.40,
+    serviceChargesWeekly: 31.03,
+    ineligibleWeekly: 101.00,
+    grossWeeklyRent: 367.43,
+    eligibleForHB: 266.43,
+    ineligibleForHB: 101.00,
+  },
+
+  metadata: {
+    source: 'manual',
+    uploadedAt: '2025-11-30T00:00:00.000Z',
+  },
+};
+
+// All available rent schedules
+export const allRentSchedules: RentScheduleDocument[] = [
+  woodhurstRentSchedule,
+  sovereignHouseRentSchedule,
+  blanfordRoadRentSchedule,
+];
+
 // Helper function to get rent schedule by property ID
 export function getRentScheduleByPropertyId(propertyId: string): RentScheduleDocument | undefined {
-  // For now, we only have one sample - this will expand as more schedules are added
-  if (propertyId === 'prop_0_1763943025011') {
-    return woodhurstRentSchedule;
+  switch (propertyId) {
+    case 'prop_0_1763943025011':
+      return woodhurstRentSchedule;
+    case 'prop_sovereign_house':
+      return sovereignHouseRentSchedule;
+    case 'prop_blanford_road':
+      return blanfordRoadRentSchedule;
+    default:
+      return undefined;
   }
-  return undefined;
+}
+
+// Get all rent schedules for demo/testing
+export function getAllRentSchedules(): RentScheduleDocument[] {
+  return allRentSchedules;
 }
 
 export default woodhurstRentSchedule;
