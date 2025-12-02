@@ -20,8 +20,8 @@ export default {
                 // Keep generic grays for neutral text if needed, but prefer ivolve colors
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'], // Modern font
-                rounded: ['"M PLUS Rounded 1c"', 'sans-serif'], // Friendly, premium rounded font
+                sans: ['"Volte Rounded"', 'Inter', 'sans-serif'], // ivolve brand font
+                rounded: ['"Volte Rounded"', 'sans-serif'], // ivolve brand font
             }
         },
     },
