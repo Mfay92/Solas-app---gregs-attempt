@@ -23,7 +23,10 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Wire PropertyHubEnhanced, add Volte Rounded fonts, fix hooks error\n\n- Replace static PropertyHubDashboard with functional PropertyHubEnhanced\n- Add Volte Rounded font family (@font-face in index.css)\n- Update Tailwind fontFamily to use Volte Rounded as primary\n- Fix React hooks order violation in PropertyHubEnhanced (moved useMemo before early return)\n- Integrate Sidekick assistant into Layout\n- Add screenshot automation script\n- Property Hub now has full search, filters, saved views, and table functionality\n- Property Profile loads correctly when clicking on properties\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git push)",
       "Bash(ls:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(git push:*)",
+      "Bash(netstat:*)"
     ],
     "deny": [],
     "ask": []

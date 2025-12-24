@@ -1,162 +1,141 @@
 # Solas CRM — Development TODO
 
-**Last Updated:** 30 November 2025
+**Last Updated:** 24 December 2024
 **Current Branch:** `feature/code-quality-fixes`
 
 ---
 
-## Phase 1: Unblock Core Flow (P0)
+## Current State Summary
 
-> **Goal:** Get property viewing working so Solas is demo-able.
-
-### 1.1 Fix Property Profile Crash
-- [ ] Open browser DevTools, click a property, capture the exact error
-- [ ] Check `src/components/PropertyProfile/index.tsx` for undefined props
-- [ ] Verify all 17 tab imports resolve (check for typos/missing exports)
-- [ ] Test with reduced tab set (comment out all but Overview)
-- [ ] Fix data shape mismatches between `PropertyAsset` and tab props
-- [ ] Confirm fix by clicking all 6 mock properties
-
-### 1.2 Improve Dev Error Visibility
-- [ ] Update `ErrorBoundary.tsx` to show stack trace when `import.meta.env.DEV`
-- [ ] Add `console.error` logging in error boundary
-
-### 1.3 Verify All Navigation
-- [ ] Dashboard loads ✓
-- [ ] Properties loads ✓
-- [ ] Finance loads (check for errors)
-- [ ] Settings/StyleGuide loads
+| Area | Status | Notes |
+|------|--------|-------|
+| Dashboard | ✅ Working | Drag-drop widgets, greeting, stats |
+| Property Hub | ✅ Working | Full table, search, filters, saved views |
+| Property Profile | ✅ Working | 7 tabs, all loading correctly |
+| Finance Page | ⚠️ Basic | Structure in place, needs features |
+| Sidebar/Routing | ✅ Working | React Router, browser nav works |
+| Brand/Fonts | ✅ Working | Volte Rounded, ivolve colours |
+| Backend | ❌ Not started | Mock data only |
+| Tests | ❌ Not started | No test coverage |
 
 ---
 
-## Phase 2: Infrastructure (P1)
+## Phase 1: Core Flow ✅ COMPLETE
 
-> **Goal:** Professional-grade architecture for scaling.
+- [x] Fix Property Profile crash (React hooks order issue)
+- [x] Wire up PropertyHubEnhanced with full functionality
+- [x] React Router integration
+- [x] Sidebar navigation with Links
+- [x] Browser back/forward working
+- [x] All views loading without errors
 
-### 2.1 Add React Router ✅ COMPLETE
-- [x] Install `react-router-dom`
-- [x] Create route structure: `/`, `/properties`, `/properties/:id`, `/finance`, `/settings`
-- [x] Update Sidebar to use `<Link>` components
-- [x] Replace AppContext view switching with router navigation
-- [x] Handle browser back/forward
+---
 
-### 2.2 Wire Up Enhanced PropertyHub
-- [ ] Connect `PropertyHubEnhanced.tsx` or integrate its features
-- [ ] Enable AdvancedFilterBuilder in UI
-- [ ] Connect SavedViewsPanel
-- [ ] Wire up exportUtils (CSV/XLSX export buttons)
+## Phase 2: Codebase Health ✅ COMPLETE
 
-### 2.3 Add Basic Testing
+- [x] Major cleanup - removed ~130 unused files
+- [x] Deleted legacy prototype folder
+- [x] Removed 13 unused PropertyProfile tabs
+- [x] Organised docs into `docs/` folder
+- [x] Updated .gitignore
+- [x] Down to 75 source files (from ~200+)
+
+---
+
+## Phase 3: Brand Alignment ✅ COMPLETE
+
+- [x] Volte Rounded fonts installed (`public/fonts/`)
+- [x] @font-face declarations in index.css
+- [x] Tailwind fontFamily updated
+- [x] ivolve brand colours configured:
+  - Dark Green: #025A40
+  - Mid Green: #008C67
+  - Bright Green: #6BD052
+  - Teal Blue: #009EA5
+  - Off-White: #FFF6F1
+
+---
+
+## Phase 4: Next Priorities
+
+### 4.1 Testing (P1)
 - [ ] Install Vitest + React Testing Library
-- [ ] Write smoke test: Dashboard renders
-- [ ] Write smoke test: PropertyHub renders with mock data
-- [ ] Write unit test: compliance status calculation
+- [ ] Smoke test: Dashboard renders
+- [ ] Smoke test: PropertyHub renders with mock data
+- [ ] Unit test: compliance status calculation
 
----
-
-## Phase 3: Backend Integration (P1)
-
-> **Goal:** Persistent data, real users.
-
-### 3.1 Firebase Setup
+### 4.2 Firebase Integration (P1)
 - [ ] Create Firebase project
 - [ ] Configure Firebase in `src/firebase/config.ts`
 - [ ] Set up Firestore database structure
-
-### 3.2 Authentication
 - [ ] Implement Firebase Auth
 - [ ] Create login page
-- [ ] Protect routes (redirect to login if not authenticated)
-- [ ] Update Sidebar to show real user info
+- [ ] Protect routes
 
-### 3.3 Data Layer
-- [ ] Create `useProperties` hook to fetch from Firestore
-- [ ] Replace `properties.json` import with Firestore query
-- [ ] Add loading states for data fetching
-- [ ] Implement property CRUD operations
-
----
-
-## Phase 4: Feature Completion (P2)
-
-> **Goal:** Full feature parity with design intent.
-
-### 4.1 Finance Module
-- [ ] Complete Rent Schedule table with all fields
+### 4.3 Finance Module (P2)
+- [ ] Complete Rent Schedule table
 - [ ] Implement Void Cost Calculator
 - [ ] Add arrears tracking display
 
-### 4.2 Compliance Dashboard
-- [ ] Create "Expiring Soon" widget (30/60/90 day warnings)
-- [ ] Add compliance traffic lights to PropertyHub
-- [ ] Implement "At Risk Properties" view
-
-### 4.3 Care & Support
-- [ ] Elevate care features to top-level navigation
-- [ ] Build Care Plans section
-- [ ] Implement Incident Report log with timeline
-- [ ] Add Support Hours tracking (commissioned vs delivered)
-
----
-
-## Phase 5: Polish & UX (P2)
-
-### 5.1 Visual Refinement
-- [ ] Add subtle gradients to card backgrounds
-- [ ] Improve button hover/active states
-- [ ] Add loading skeletons instead of spinners
-
-### 5.2 Accessibility
-- [ ] Audit ARIA labels on all interactive elements
-- [ ] Ensure keyboard navigation works throughout
-- [ ] Test focus management in modals
-
-### 5.3 Mobile Responsiveness
+### 4.4 Mobile Responsiveness (P2)
 - [ ] Test all views on mobile viewport
 - [ ] Add hamburger menu for mobile sidebar
-- [ ] Ensure PropertyHub table is usable on small screens
+- [ ] Ensure PropertyHub table scrolls properly
 
 ---
 
-## Phase 6: Advanced Features (P3)
+## Phase 5: Future Features (P3)
 
-> **Goal:** Differentiating "cheat codes" for competitive advantage.
+### Compliance Dashboard
+- [ ] "Expiring Soon" widget (30/60/90 day warnings)
+- [ ] Compliance traffic lights in PropertyHub
+- [ ] "At Risk Properties" view
 
-### 6.1 Document Intelligence
-- [ ] Implement file upload to Firebase Storage
-- [ ] Add document viewer for PDFs
-- [ ] (Future) AI document parsing for compliance certificates
+### Care & Support
+- [ ] Care Plans section
+- [ ] Incident Report log with timeline
+- [ ] Support Hours tracking
 
-### 6.2 Notifications
-- [ ] Set up Firebase Cloud Messaging
-- [ ] Create notification centre in UI
-- [ ] Trigger alerts for expiring compliance items
+### Document Intelligence
+- [ ] File upload to Firebase Storage
+- [ ] Document viewer for PDFs
+- [ ] (Future) AI document parsing
 
-### 6.3 Reporting
-- [ ] Property portfolio summary PDF export
+### Reporting
+- [ ] Property portfolio summary PDF
 - [ ] Compliance status report
 - [ ] Financial overview report
 
 ---
 
-## Quick Reference: Key Files
+## Key Files Reference
 
-| Area | Primary File |
-|------|--------------|
-| Crash Location | `src/components/PropertyProfile/index.tsx` |
-| Navigation | `src/context/AppContext.tsx`, `src/components/Sidebar.tsx` |
+| Area | File |
+|------|------|
+| App Entry | `src/App.tsx` |
+| Dashboard | `src/components/Dashboard/DashboardLayout.tsx` |
+| Property Hub | `src/components/PropertyHub/PropertyHubEnhanced.tsx` |
+| Property Profile | `src/components/PropertyProfile/index.tsx` |
 | Data Model | `src/types.ts` |
 | Mock Data | `src/data/properties.json` |
-| Unused Features | `src/components/PropertyHub/PropertyHubEnhanced.tsx` |
-| Dashboard | `src/components/Dashboard/DashboardLayout.tsx` |
+| Styles | `src/index.css`, `tailwind.config.js` |
+| Context | `src/context/AppContext.tsx` |
 
 ---
 
-## Agent Prompts Ready
+## Quick Commands
 
-When you're ready to tackle a task, I can write prompts for:
-- Claude Code (Haiku/Sonnet/Opus)
-- Gemini CLI
-- Cursor/Windsurf
+```bash
+# Start dev server
+npm run dev
 
-Just tell me which task and which tool you're using.
+# Type check
+npx tsc --noEmit
+
+# Take screenshots
+node scripts/screenshot.js
+```
+
+---
+
+*Last session: Dec 2024 - Fixed hooks error, wired PropertyHubEnhanced, major cleanup*
