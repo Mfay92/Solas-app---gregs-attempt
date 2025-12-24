@@ -68,7 +68,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
                 {/* Primary Actions */}
                 <button
                     onClick={onToggleStorage}
-                    className="flex items-center gap-2 text-slate-600 hover:text-ivolve-dark hover:bg-slate-100 px-3 py-2 rounded-lg font-medium transition-all text-sm"
+                    className="flex items-center gap-2 text-slate-600 hover:text-ivolve-dark bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm active:scale-[0.98] shadow-sm hover:shadow"
                 >
                     <Package size={18} />
                     <span>Storage</span>
@@ -76,9 +76,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
 
                 <button
                     onClick={onAddWidget}
-                    className="flex items-center gap-2 bg-ivolve-mid hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+                    className="flex items-center gap-2 bg-ivolve-mid hover:bg-ivolve-dark text-white px-4 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98] text-sm"
                 >
-                    <Plus size={18} strokeWidth={3} />
+                    <Plus size={18} strokeWidth={2.5} />
                     Add Widget
                 </button>
             </div>

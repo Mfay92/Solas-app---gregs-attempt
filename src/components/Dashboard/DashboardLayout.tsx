@@ -222,7 +222,7 @@ export const DashboardLayout: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
+        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden page-enter">
             <style>{gridStyles}</style>
 
             {/* New Header */}

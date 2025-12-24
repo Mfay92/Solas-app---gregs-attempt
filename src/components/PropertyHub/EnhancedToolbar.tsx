@@ -236,7 +236,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
     const activeView = savedViews.find(v => v.id === activeViewId);
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200/80 shadow-md overflow-hidden">
             {/* Main Toolbar Row */}
             <div className="p-3 flex flex-wrap items-center gap-2">
                 {/* Search with keyboard hint */}
@@ -287,7 +287,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                         </button>
 
                         {viewDropdownOpen && (
-                            <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                            <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
                                 <div className="p-2 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Saved Views</span>
                                     <button
@@ -353,7 +353,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {filterDropdownOpen && (
-                        <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                        <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
                             <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Quick Filters</span>
                             </div>
@@ -416,7 +416,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {groupDropdownOpen && (
-                        <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                        <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
                             <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Group By</span>
                             </div>
@@ -474,7 +474,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {columnDropdownOpen && (
-                        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
                             <div className="p-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Columns</span>
                                 <button
@@ -560,7 +560,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {densityDropdownOpen && (
-                        <div className="absolute right-0 top-full mt-2 w-40 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                        <div className="absolute right-0 top-full mt-2 w-40 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
                             <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Row Density</span>
                             </div>

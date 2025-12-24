@@ -47,8 +47,8 @@ export const WidgetWrapper = React.forwardRef<HTMLDivElement, WidgetWrapperProps
 
         // Common styles for the card - off-white background for contrast on white page
         const cardClasses = clsx(
-            'bg-ivolve-paper rounded-xl shadow-sm border border-slate-200/50 flex flex-col overflow-hidden transition-all duration-300 group/card',
-            isFullScreen ? 'fixed inset-4 z-50 shadow-2xl bg-white' : 'h-full w-full hover:shadow-md hover:-translate-y-0.5',
+            'bg-white rounded-xl shadow-md border border-slate-200/60 flex flex-col overflow-hidden transition-all duration-300 group/card',
+            isFullScreen ? 'fixed inset-4 z-50 shadow-2xl bg-white' : 'h-full w-full hover:shadow-lg hover:-translate-y-1 hover:border-slate-200',
             className
         );
 

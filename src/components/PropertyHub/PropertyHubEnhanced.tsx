@@ -553,7 +553,7 @@ const PropertyHubEnhanced: React.FC = () => {
     const isAllSelected = selectedRows.size === filteredAssets.filter(a => a.type === 'Master').length && selectedRows.size > 0;
 
     return (
-        <div className="p-6 md:p-8 space-y-4 bg-ivolve-paper min-h-screen">
+        <div className="p-6 md:p-8 space-y-4 bg-ivolve-paper min-h-screen page-enter">
             {/* Page Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
                 <div>
@@ -876,11 +876,11 @@ const PropertyHubEnhanced: React.FC = () => {
         const borderColor = isRegisteredSite ? 'border-ivolve-blue' : 'border-ivolve-mid';
         const hoverBg = isRegisteredSite ? 'hover:bg-ivolve-blue/5' : 'hover:bg-ivolve-mid/5';
 
-        let rowClasses = "transition-all duration-200 hover:shadow-md cursor-pointer";
+        let rowClasses = "transition-all duration-200 cursor-pointer group/row";
         if (isMaster) {
-            rowClasses += ` border-l-4 ${borderColor} ${isSelected ? 'bg-ivolve-mid/5' : 'bg-white'} ${hoverBg}`;
+            rowClasses += ` border-l-4 ${borderColor} ${isSelected ? 'bg-ivolve-mid/10' : 'bg-white'} ${hoverBg} hover:shadow-sm`;
         } else if (isUnit) {
-            rowClasses += " bg-gray-50/50 border-l-4 border-transparent";
+            rowClasses += " bg-slate-50/80 border-l-4 border-transparent hover:bg-slate-100/80";
         }
         rowClasses += ` ${rowOpacity}`;
 
@@ -979,7 +979,7 @@ const PropertyHubEnhanced: React.FC = () => {
                             e.stopPropagation();
                             setSelectedPropertyId(isMaster ? asset.id : asset.parentId || asset.id);
                         }}
-                        className="text-ivolve-mid hover:text-ivolve-dark font-medium text-sm hover:underline"
+                        className="px-3 py-1.5 text-sm font-medium text-ivolve-mid bg-transparent border border-transparent rounded-lg transition-all duration-200 hover:bg-ivolve-mid hover:text-white group-hover/row:border-ivolve-mid/30 active:scale-95"
                     >
                         View
                     </button>
