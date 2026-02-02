@@ -2,7 +2,7 @@
 
 > This file maintains persistent context for Claude Code sessions. It ensures continuity across conversations and tracks project knowledge, decisions, and permissions.
 
-**Last Updated:** 2 February 2026
+**Last Updated:** 2 February 2026 (Session 3)
 **Primary Advisor:** Amy (CRM Development Expert persona)
 **Developer:** Matt Fay (Housing Partnerships & Operations Manager, ivolve)
 
@@ -33,11 +33,11 @@
 
 | Metric | Status |
 |--------|--------|
-| Core Infrastructure | 85% complete |
-| Features Functional | 60% |
+| Core Infrastructure | 90% complete |
+| Features Functional | 65% |
 | Backend Integration | 0% (deferred to Phase 3) |
 | Test Coverage | 0% |
-| Production Readiness | 50% |
+| Production Readiness | 55% |
 
 **Branch:** `feature/code-quality-fixes`
 
@@ -54,16 +54,18 @@
 - Developer Settings with feature toggles ✓
 - Void Management hub ✓
 - Finance page (basic) ✓
-- Sidebar navigation ✓
+- **16-item sidebar navigation with 2-column collapsed grid** ✓
+- **7 new hub placeholder pages** (Projects, Report Centre, Development, Repairs, Legal, Library, Address Book) ✓
 
 **Broken:**
 - None currently — all P0 issues resolved
 
-**Recent Improvements (Phase 2.6):**
-- Notice Board redesign (tabs left, content right, scrollbar on far right)
-- Service type color coding applied to PersonProfile hero banners
-- Colored borders (border-2) on ALL cards in ALL 12 PersonProfile tabs
-- Improved spacing and alignment throughout hero banners
+**Recent Improvements (Phase 2.7 - Navigation Overhaul):**
+- Complete sidebar redesign: 16 hubs, 2-column grid when collapsed
+- Fixed z-index (z-50) so sidebar overlays hero banners
+- Removed Sidekick button
+- Added 7 new hub pages with hero banners (placeholder content)
+- Renamed nav items for consistency (Dashboard→My Dashboard, etc.)
 
 ---
 
@@ -150,6 +152,55 @@
 - Ready for user review and testing
 - Next priority: Apply same theming to ReferralProfile, implement forms (Add Referral, Edit Person, Notes system)
 
+### Session 3 — 2 February 2026 (Navigation Overhaul)
+**Actions Taken:**
+1. Major sidebar navigation overhaul — now 16 hub areas
+2. Created 7 new hub placeholder pages with hero banners
+3. Redesigned sidebar: 2-column grid when collapsed, single column expanded
+4. Fixed z-index (z-30→z-50) so sidebar overlays content
+5. Removed Sidekick button from Layout
+6. Added sensitive folders to .gitignore
+
+**New Hubs Created:**
+| Hub | Route | Icon | Purpose |
+|-----|-------|------|---------|
+| Projects Hub | `/projects` | FolderKanban | Personal/company projects |
+| Report Centre | `/reports` | BarChart3 | Business reporting |
+| Development Hub | `/development` | HousePlus | New business pipeline |
+| Repairs Hub | `/repairs` | Wrench | CAFM system (placeholder) |
+| Legal Hub | `/legal` | Gavel | Contracts, leases, SLAs |
+| The Library | `/library` | BookOpen | Knowledge base, articles |
+| Address Book | `/address-book` | Contact | Staff & external contacts |
+
+**Navigation Renames:**
+- Dashboard → My Dashboard
+- People → People Hub
+- Referrals → Referrals Hub
+- Voids → Void Hub
+- Compliance → Compliance Hub
+- Finance → Finance Hub
+- Library → The Library
+
+**Final Nav Order (8 rows × 2 columns when collapsed):**
+1. My Dashboard + My Meetings
+2. Projects Hub + Report Centre
+3. Development Hub + Property Hub
+4. Referrals Hub + People Hub
+5. Void Hub + Legal Hub
+6. Repairs Hub + Compliance Hub
+7. Finance Hub + The Library
+8. Address Book + Settings
+
+**Commits:**
+- `8043d2c` feat: Major navigation overhaul - 16 hub areas with redesigned sidebar
+- `491967e` chore: Add sensitive data folders to .gitignore
+
+**Outcome:**
+- Phase 2.7 (Navigation Overhaul) **COMPLETE** ✓
+- All 16 navigation areas accessible and working
+- Sidebar scales well with 2-column collapsed layout
+- Ready to build out individual hub features
+
 ---
 
 ## Working Patterns
@@ -183,11 +234,23 @@
 | Mock property data | `src/data/properties.json` |
 | App state | `src/context/AppContext.tsx` |
 | Main layout | `src/components/Layout.tsx` |
-| Sidebar nav | `src/components/Sidebar.tsx` |
+| **Sidebar nav (16 items)** | `src/components/Sidebar.tsx` |
+| **Routes config** | `src/App.tsx` |
 | Dashboard | `src/components/Dashboard/DashboardLayout.tsx` |
-| Property list | `src/components/PropertyHub/PropertyHub.tsx` |
+| Property list | `src/components/PropertyHub/PropertyHubEnhanced.tsx` |
 | Property detail | `src/components/PropertyProfile/index.tsx` |
 | Error handling | `src/components/ErrorBoundary.tsx` |
+
+**New Hub Pages (Session 3):**
+| Hub | File |
+|-----|------|
+| Projects Hub | `src/components/ProjectsHub/index.tsx` |
+| Report Centre | `src/components/ReportCentre/index.tsx` |
+| Development Hub | `src/components/DevelopmentHub/index.tsx` |
+| Repairs Hub | `src/components/RepairsHub/index.tsx` |
+| Legal Hub | `src/components/LegalHub/index.tsx` |
+| The Library | `src/components/Library/index.tsx` |
+| Address Book | `src/components/AddressBook/index.tsx` |
 
 ## Project Documentation
 
