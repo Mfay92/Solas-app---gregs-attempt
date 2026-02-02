@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Building2, PoundSterling, Settings, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
+import { Home, Calendar, FolderKanban, BarChart3, HousePlus, Building2, UserPlus, Users, AlertTriangle, Gavel, Wrench, ShieldCheck, PoundSterling, BookOpen, Contact, Settings, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
 import clsx from 'clsx';
 import { useApp } from '../context/AppContext';
 
@@ -9,9 +9,21 @@ const Sidebar: React.FC = () => {
     const location = useLocation();
 
     const menuItems = [
-        { path: '/', icon: Home, label: 'Dashboard' },
+        { path: '/', icon: Home, label: 'My Dashboard' },
+        { path: '/meetings', icon: Calendar, label: 'My Meetings' },
+        { path: '/projects', icon: FolderKanban, label: 'Projects Hub' },
+        { path: '/reports', icon: BarChart3, label: 'Report Centre' },
+        { path: '/development', icon: HousePlus, label: 'Development Hub' },
         { path: '/properties', icon: Building2, label: 'Property Hub' },
-        { path: '/finance', icon: PoundSterling, label: 'Finance' },
+        { path: '/referrals', icon: UserPlus, label: 'Referrals Hub' },
+        { path: '/people', icon: Users, label: 'People Hub' },
+        { path: '/voids', icon: AlertTriangle, label: 'Void Hub' },
+        { path: '/legal', icon: Gavel, label: 'Legal Hub' },
+        { path: '/repairs', icon: Wrench, label: 'Repairs Hub' },
+        { path: '/compliance', icon: ShieldCheck, label: 'Compliance Hub' },
+        { path: '/finance', icon: PoundSterling, label: 'Finance Hub' },
+        { path: '/library', icon: BookOpen, label: 'The Library' },
+        { path: '/address-book', icon: Contact, label: 'Address Book' },
         { path: '/settings', icon: Settings, label: 'Settings' },
     ] as const;
 
@@ -34,7 +46,7 @@ const Sidebar: React.FC = () => {
             onMouseLeave={handleMouseLeave}
             className={clsx(
                 // Base styles with subtle gradient
-                "fixed left-0 top-0 h-screen text-white flex flex-col z-20",
+                "fixed left-0 top-0 h-screen text-white flex flex-col z-50",
                 "bg-gradient-to-b from-ivolve-dark via-ivolve-dark to-[#024535]",
                 // Smooth width transition
                 "transition-all duration-300 ease-out",
@@ -61,7 +73,7 @@ const Sidebar: React.FC = () => {
                     onClick={toggleCollapse}
                     aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
                     className={clsx(
-                        "absolute top-1/2 -translate-y-1/2 p-1.5 rounded-full transition-all duration-200 z-30",
+                        "absolute top-1/2 -translate-y-1/2 p-1.5 rounded-full transition-all duration-200 z-50",
                         "bg-white text-ivolve-dark shadow-md border border-gray-200",
                         "hover:bg-gray-50 hover:scale-110 active:scale-95",
                         sidebarCollapsed ? "-right-3" : "right-2"
@@ -72,7 +84,14 @@ const Sidebar: React.FC = () => {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 py-4 px-2 space-y-1" role="navigation" aria-label="Main navigation">
+            <nav
+                className={clsx(
+                    "flex-1 py-2 px-1.5 overflow-y-auto",
+                    sidebarCollapsed ? "grid grid-cols-2 gap-1 content-start" : "space-y-0.5"
+                )}
+                role="navigation"
+                aria-label="Main navigation"
+            >
                 {menuItems.map((item) => {
                     const Icon = item.icon;
                     const active = isActive(item.path);
@@ -83,17 +102,19 @@ const Sidebar: React.FC = () => {
                             to={item.path}
                             aria-current={active ? "page" : undefined}
                             className={clsx(
-                                "w-full flex items-center rounded-lg transition-all duration-200 group relative",
-                                sidebarCollapsed ? "justify-center p-2.5" : "px-3 py-2.5 space-x-3",
+                                "flex items-center rounded-lg transition-all duration-200 group relative",
+                                sidebarCollapsed
+                                    ? "justify-center p-2 aspect-square"
+                                    : "px-3 py-2 space-x-3",
                                 active
                                     ? "bg-gradient-to-r from-ivolve-mid to-ivolve-mid/80 text-white shadow-md"
                                     : "text-white/70 hover:bg-white/10 hover:text-white"
                             )}
                         >
                             <Icon
-                                size={20}
+                                size={sidebarCollapsed ? 18 : 18}
                                 className={clsx(
-                                    "transition-transform duration-200",
+                                    "transition-transform duration-200 flex-shrink-0",
                                     active ? "text-white" : "text-white/70 group-hover:text-white",
                                     "group-hover:scale-110"
                                 )}
@@ -105,7 +126,7 @@ const Sidebar: React.FC = () => {
 
                             {/* Tooltip on hover (Collapsed Mode) */}
                             {sidebarCollapsed && (
-                                <div className="absolute left-full ml-3 px-3 py-1.5 bg-ivolve-dark text-white text-sm font-medium rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap shadow-xl z-50 border border-white/10 group-hover:translate-x-0 -translate-x-1">
+                                <div className="fixed left-24 px-3 py-1.5 bg-ivolve-dark text-white text-sm font-medium rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap shadow-xl z-[9999] border border-white/10 group-hover:translate-x-0 -translate-x-1">
                                     {item.label}
                                 </div>
                             )}

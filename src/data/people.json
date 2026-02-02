@@ -1,0 +1,576 @@
+[
+  {
+    "id": "person-001",
+    "personal": {
+      "title": "Mr",
+      "firstName": "James",
+      "lastName": "Thompson",
+      "preferredName": "Jamie",
+      "dateOfBirth": "1987-03-15",
+      "age": 38,
+      "niNumber": "AB123456C",
+      "occupantType": "Main Tenant",
+      "email": "james.thompson@example.com",
+      "phone": "0121 496 0234",
+      "mobile": "07712 345 678",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-001",
+      "unitId": null,
+      "propertyAddress": "Montfort Court, 8 Montfort Road, Birmingham, B23 6JY",
+      "room": "Room 3",
+      "tenancyType": "License",
+      "tenancyStatus": "Current",
+      "moveInDate": "2022-06-15",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Aspire Care Services",
+      "socialWorker": "Sarah Mitchell",
+      "keyWorker": "Tom Davies",
+      "caseManager": "Lisa Brown",
+      "careHours": 14,
+      "supportLevel": "Medium",
+      "medicationNeeds": "Takes daily medication for anxiety and diabetes - supervised",
+      "dietaryRequirements": "Diabetic diet - low sugar",
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-001",
+        "name": "Margaret Thompson",
+        "relationship": "Mother",
+        "phone": "0121 496 8899",
+        "email": "margaret.t@example.com",
+        "isPrimary": true
+      },
+      {
+        "id": "ec-002",
+        "name": "Dr. Patel",
+        "relationship": "GP",
+        "phone": "0121 555 0100",
+        "email": null,
+        "isPrimary": false
+      }
+    ],
+    "finance": {
+      "rentAmount": 125.50,
+      "serviceCharge": 35.00,
+      "supportCharge": 89.50,
+      "totalCharges": 250.00,
+      "currentBalance": -45.20,
+      "housingBenefit": true,
+      "housingBenefitAmount": 160.50,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "warning": {
+      "id": "warning-001",
+      "content": "IMPORTANT: Jamie has a severe allergy to peanuts and tree nuts. EpiPen is kept in the medication cabinet in the office. In case of exposure, administer EpiPen immediately and call 999.",
+      "createdAt": "2025-12-10T09:15:00Z",
+      "createdBy": "Matt Fay"
+    },
+    "notes": "Previously homeless. Making good progress with independent living skills.",
+    "tags": ["Mental Health Support", "Diabetes", "Move-on Plan"],
+    "createdAt": "2022-06-15T10:30:00Z",
+    "updatedAt": "2026-01-20T14:22:00Z"
+  },
+  {
+    "id": "person-002",
+    "personal": {
+      "title": "Ms",
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "preferredName": null,
+      "dateOfBirth": "1995-08-22",
+      "age": 30,
+      "niNumber": "CD987654E",
+      "occupantType": "Main Tenant",
+      "email": null,
+      "phone": null,
+      "mobile": "07823 456 789",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-002",
+      "unitId": null,
+      "propertyAddress": "Oak House, 45 Park Lane, Erdington, B24 9HG",
+      "room": "Flat 2",
+      "tenancyType": "Assured Shorthold",
+      "tenancyStatus": "Current",
+      "moveInDate": "2023-11-01",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Community Care Plus",
+      "socialWorker": "John Williams",
+      "keyWorker": "Emma Clarke",
+      "caseManager": "David Reed",
+      "careHours": 21,
+      "supportLevel": "High",
+      "medicationNeeds": "Psychiatric medication - self-administered with monitoring",
+      "dietaryRequirements": null,
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-003",
+        "name": "Crisis Team",
+        "relationship": "Mental Health Crisis Team",
+        "phone": "0121 244 5555",
+        "email": "crisis@mh-trust.nhs.uk",
+        "isPrimary": true
+      }
+    ],
+    "finance": {
+      "rentAmount": 145.00,
+      "serviceCharge": 42.00,
+      "supportCharge": 112.00,
+      "totalCharges": 299.00,
+      "currentBalance": 0.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 187.00,
+      "paymentMethod": "Direct Debit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Recovering from mental health crisis. Requires structured support and routine.",
+    "tags": ["Mental Health Support", "Intensive Support"],
+    "createdAt": "2023-11-01T09:15:00Z",
+    "updatedAt": "2026-01-18T11:45:00Z"
+  },
+  {
+    "id": "person-003",
+    "personal": {
+      "title": "Mr",
+      "firstName": "Michael",
+      "lastName": "O'Brien",
+      "preferredName": "Mick",
+      "dateOfBirth": "1972-11-30",
+      "age": 53,
+      "niNumber": "EF456789G",
+      "occupantType": "Main Tenant",
+      "email": "m.obrien@email.com",
+      "phone": "0121 789 1234",
+      "mobile": null,
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-003",
+      "unitId": null,
+      "propertyAddress": "Willow Lodge, 22 Station Road, Sutton Coldfield, B73 6AT",
+      "room": "Room 1A",
+      "tenancyType": "License",
+      "tenancyStatus": "Current",
+      "moveInDate": "2019-02-10",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "ivolve Support Services",
+      "socialWorker": "Rachel Green",
+      "keyWorker": "Mark Harrison",
+      "caseManager": "Claire Walsh",
+      "careHours": 7,
+      "supportLevel": "Low",
+      "medicationNeeds": null,
+      "dietaryRequirements": null,
+      "mobilityNeeds": "Limited mobility - uses walking stick"
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-004",
+        "name": "Patrick O'Brien",
+        "relationship": "Brother",
+        "phone": "07901 234 567",
+        "email": "patrick.ob@example.com",
+        "isPrimary": true
+      }
+    ],
+    "finance": {
+      "rentAmount": 110.00,
+      "serviceCharge": 28.00,
+      "supportCharge": 62.00,
+      "totalCharges": 200.00,
+      "currentBalance": 15.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 138.00,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Long-term resident. Stable tenancy. Preparing for move-on to independent living.",
+    "tags": ["Long-term Resident", "Move-on Planning", "Mobility Support"],
+    "createdAt": "2019-02-10T14:00:00Z",
+    "updatedAt": "2026-01-15T10:20:00Z"
+  },
+  {
+    "id": "person-004",
+    "personal": {
+      "title": "Ms",
+      "firstName": "Amara",
+      "lastName": "Okafor",
+      "preferredName": null,
+      "dateOfBirth": "2001-04-18",
+      "age": 24,
+      "niNumber": "GH234567H",
+      "occupantType": "Main Tenant",
+      "email": "amara.okafor@example.com",
+      "phone": null,
+      "mobile": "07734 567 890",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-001",
+      "unitId": null,
+      "propertyAddress": "Montfort Court, 8 Montfort Road, Birmingham, B23 6JY",
+      "room": "Room 7A",
+      "tenancyType": "License",
+      "tenancyStatus": "Current",
+      "moveInDate": "2024-09-01",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Aspire Care Services",
+      "socialWorker": "David Chen",
+      "keyWorker": "Jessica Moore",
+      "caseManager": "Lisa Brown",
+      "careHours": 28,
+      "supportLevel": "Intensive",
+      "medicationNeeds": "Antipsychotic medication - supervised administration",
+      "dietaryRequirements": "Halal diet",
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-005",
+        "name": "Ngozi Okafor",
+        "relationship": "Mother",
+        "phone": "07812 345 678",
+        "email": "ngozi.o@example.com",
+        "isPrimary": true
+      },
+      {
+        "id": "ec-006",
+        "name": "Dr. Ahmed",
+        "relationship": "Psychiatrist",
+        "phone": "0121 465 0000",
+        "email": "ahmed@mh-trust.nhs.uk",
+        "isPrimary": false
+      }
+    ],
+    "finance": {
+      "rentAmount": 125.50,
+      "serviceCharge": 35.00,
+      "supportCharge": 89.50,
+      "totalCharges": 250.00,
+      "currentBalance": -120.50,
+      "housingBenefit": true,
+      "housingBenefitAmount": 160.50,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Young person with complex mental health needs. Requires intensive 1:1 support.",
+    "tags": ["Mental Health Support", "Intensive Support", "Young Person", "Cultural Needs"],
+    "createdAt": "2024-09-01T11:30:00Z",
+    "updatedAt": "2026-01-25T16:10:00Z"
+  },
+  {
+    "id": "person-005",
+    "personal": {
+      "title": "Mr",
+      "firstName": "Robert",
+      "lastName": "Hughes",
+      "preferredName": "Bob",
+      "dateOfBirth": "1968-07-05",
+      "age": 57,
+      "niNumber": "IJ567890J",
+      "occupantType": "Main Tenant",
+      "email": null,
+      "phone": "0121 333 4444",
+      "mobile": null,
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-004",
+      "unitId": null,
+      "propertyAddress": "Cedar Place, 16 High Street, Walsall, WS1 1RE",
+      "room": "Flat 5",
+      "tenancyType": "Assured",
+      "tenancyStatus": "Current",
+      "moveInDate": "2021-03-20",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Beacon Support",
+      "socialWorker": null,
+      "keyWorker": "Anna Taylor",
+      "caseManager": "Steven Price",
+      "careHours": 10,
+      "supportLevel": "Medium",
+      "medicationNeeds": "Blood pressure medication - self-administered",
+      "dietaryRequirements": "Low sodium diet",
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-007",
+        "name": "Carol Hughes",
+        "relationship": "Ex-wife",
+        "phone": "07923 456 789",
+        "email": null,
+        "isPrimary": true
+      }
+    ],
+    "finance": {
+      "rentAmount": 135.00,
+      "serviceCharge": 40.00,
+      "supportCharge": 75.00,
+      "totalCharges": 250.00,
+      "currentBalance": 250.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 175.00,
+      "paymentMethod": "Standing Order"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Good tenant. Manages well with minimal support. Attends all appointments.",
+    "tags": ["Stable Tenancy", "Health Monitoring"],
+    "createdAt": "2021-03-20T09:45:00Z",
+    "updatedAt": "2026-01-12T13:55:00Z"
+  },
+  {
+    "id": "person-006",
+    "personal": {
+      "title": "Ms",
+      "firstName": "Lucy",
+      "lastName": "Bennett",
+      "preferredName": null,
+      "dateOfBirth": "1989-12-08",
+      "age": 36,
+      "niNumber": "KL678901K",
+      "occupantType": "Main Tenant",
+      "email": "lucy.bennett@example.com",
+      "phone": null,
+      "mobile": "07845 678 901",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-002",
+      "unitId": null,
+      "propertyAddress": "Oak House, 45 Park Lane, Erdington, B24 9HG",
+      "room": "Flat 4",
+      "tenancyType": "Assured Shorthold",
+      "tenancyStatus": "Current",
+      "moveInDate": "2023-05-12",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Community Care Plus",
+      "socialWorker": "Michelle Roberts",
+      "keyWorker": "Daniel Foster",
+      "caseManager": "David Reed",
+      "careHours": 16,
+      "supportLevel": "Medium",
+      "medicationNeeds": "Antidepressants - self-administered",
+      "dietaryRequirements": "Vegetarian",
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-008",
+        "name": "Helen Bennett",
+        "relationship": "Sister",
+        "phone": "07734 890 123",
+        "email": "helen.b@example.com",
+        "isPrimary": true
+      }
+    ],
+    "finance": {
+      "rentAmount": 145.00,
+      "serviceCharge": 42.00,
+      "supportCharge": 112.00,
+      "totalCharges": 299.00,
+      "currentBalance": -75.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 187.00,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Recovering from domestic abuse. Building confidence and independence skills.",
+    "tags": ["Mental Health Support", "Domestic Abuse Survivor", "Vegetarian"],
+    "createdAt": "2023-05-12T10:00:00Z",
+    "updatedAt": "2026-01-22T09:30:00Z"
+  },
+  {
+    "id": "person-007",
+    "personal": {
+      "title": "Mr",
+      "firstName": "David",
+      "lastName": "Patel",
+      "preferredName": "Dave",
+      "dateOfBirth": "1978-02-14",
+      "age": 48,
+      "niNumber": "MN789012L",
+      "occupantType": "Main Tenant",
+      "email": "d.patel@example.com",
+      "phone": "0121 222 3333",
+      "mobile": "07956 789 012",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-003",
+      "unitId": null,
+      "propertyAddress": "Willow Lodge, 22 Station Road, Sutton Coldfield, B73 6AT",
+      "room": "Room 4B",
+      "tenancyType": "License",
+      "tenancyStatus": "Current",
+      "moveInDate": "2020-08-15",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "ivolve Support Services",
+      "socialWorker": "Karen Murphy",
+      "keyWorker": "Sophie Anderson",
+      "caseManager": "Claire Walsh",
+      "careHours": 12,
+      "supportLevel": "Medium",
+      "medicationNeeds": "Epilepsy medication - self-administered with reminders",
+      "dietaryRequirements": null,
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-009",
+        "name": "Priya Patel",
+        "relationship": "Wife (separated)",
+        "phone": "07867 123 456",
+        "email": "priya.p@example.com",
+        "isPrimary": true
+      },
+      {
+        "id": "ec-010",
+        "name": "Dr. Williams",
+        "relationship": "Neurologist",
+        "phone": "0121 344 5566",
+        "email": null,
+        "isPrimary": false
+      }
+    ],
+    "finance": {
+      "rentAmount": 110.00,
+      "serviceCharge": 28.00,
+      "supportCharge": 62.00,
+      "totalCharges": 200.00,
+      "currentBalance": -30.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 138.00,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Manages epilepsy well with support. Actively seeking employment.",
+    "tags": ["Epilepsy Support", "Employment Support"],
+    "createdAt": "2020-08-15T11:20:00Z",
+    "updatedAt": "2026-01-19T14:40:00Z"
+  },
+  {
+    "id": "person-008",
+    "personal": {
+      "title": "Ms",
+      "firstName": "Emma",
+      "lastName": "Williams",
+      "preferredName": null,
+      "dateOfBirth": "1992-06-25",
+      "age": 33,
+      "niNumber": "OP890123M",
+      "occupantType": "Main Tenant",
+      "email": null,
+      "phone": null,
+      "mobile": "07712 890 123",
+      "photo": null
+    },
+    "tenancy": {
+      "propertyId": "prop-001",
+      "unitId": null,
+      "propertyAddress": "Montfort Court, 8 Montfort Road, Birmingham, B23 6JY",
+      "room": "Room 5",
+      "tenancyType": "License",
+      "tenancyStatus": "Current",
+      "moveInDate": "2024-01-10",
+      "moveOutDate": null
+    },
+    "support": {
+      "careProvider": "Aspire Care Services",
+      "socialWorker": "Paul Jackson",
+      "keyWorker": "Rebecca Smith",
+      "caseManager": "Lisa Brown",
+      "careHours": 18,
+      "supportLevel": "High",
+      "medicationNeeds": "Bipolar medication - supervised",
+      "dietaryRequirements": null,
+      "mobilityNeeds": null
+    },
+    "emergencyContacts": [
+      {
+        "id": "ec-011",
+        "name": "Mary Williams",
+        "relationship": "Mother",
+        "phone": "0121 567 8901",
+        "email": "mary.w@example.com",
+        "isPrimary": true
+      }
+    ],
+    "finance": {
+      "rentAmount": 125.50,
+      "serviceCharge": 35.00,
+      "supportCharge": 89.50,
+      "totalCharges": 250.00,
+      "currentBalance": 0.00,
+      "housingBenefit": true,
+      "housingBenefitAmount": 160.50,
+      "paymentMethod": "Housing Benefit"
+    },
+    "cases": {
+      "safeguardingCases": [],
+      "asbCases": [],
+      "supportPlans": [],
+      "riskAssessments": []
+    },
+    "notes": "Settling in well. Engaging with support services.",
+    "tags": ["Mental Health Support", "Recent Move-in"],
+    "createdAt": "2024-01-10T10:15:00Z",
+    "updatedAt": "2026-01-28T11:05:00Z"
+  }
+]

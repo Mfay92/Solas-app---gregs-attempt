@@ -1,6 +1,5 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import { Sidekick } from './Sidekick';
 import { useApp } from '../context/AppContext';
 
 interface LayoutProps {
@@ -22,14 +21,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
             </main>
 
-            {/* Sidekick floating assistant */}
-            <Sidekick />
 
             {/* Backdrop overlay when sidebar expanded - click to close */}
             {!sidebarCollapsed && (
                 <div
                     onClick={() => setSidebarCollapsed(true)}
-                    className="fixed inset-0 bg-black/20 z-10 transition-opacity duration-300 cursor-pointer"
+                    className="fixed inset-0 bg-black/20 z-40 transition-opacity duration-300 cursor-pointer"
                     aria-hidden="true"
                 />
             )}

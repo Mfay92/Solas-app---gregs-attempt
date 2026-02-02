@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { PropertyAsset } from '../../types';
 import PropertyHeroBanner, { TabId } from './PropertyHeroBanner';
 import FloatingToolbar from './FloatingToolbar';
@@ -11,6 +11,11 @@ import RepairsComplianceTab from './tabs/RepairsComplianceTab';
 import RPsLandlordsTab from './tabs/RPsLandlordsTab';
 import LegalTab from './tabs/LegalTab';
 import RentsFinanceTab from './tabs/RentsFinanceTab';
+
+// Compliance components
+import { PropertyComplianceTab, DocumentViewerModal } from '../Compliance';
+import complianceData from '../../data/compliance-data.json';
+import { ComplianceRecord } from '../../types/compliance';
 
 // Sidebar components
 import DocumentsSidebar from './sidebars/DocumentsSidebar';
@@ -37,6 +42,30 @@ const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units 
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
     const [isFloorPlanOpen, setIsFloorPlanOpen] = useState(false);
     const [galleryInitialIndex, setGalleryInitialIndex] = useState(0);
+
+    // Document viewer state
+    const [documentViewerOpen, setDocumentViewerOpen] = useState(false);
+    const [selectedDocument, setSelectedDocument] = useState<{ fileName: string; filePath: string } | null>(null);
+
+    // Get compliance records for this property
+    const propertyComplianceRecords = useMemo(() => {
+        // Try to match by property name (normalize for comparison)
+        const normalizedAddress = asset.address.toLowerCase().replace(/\s+/g, ' ').trim();
+
+        const propertyData = complianceData.properties.find(p => {
+            const normalizedPropertyName = p.propertyName.toLowerCase().replace(/\s+/g, ' ').trim();
+            return normalizedAddress.includes(normalizedPropertyName) ||
+                normalizedPropertyName.includes(normalizedAddress) ||
+                normalizedAddress.includes(normalizedPropertyName.split(' ')[0]);
+        });
+
+        return (propertyData?.records || []) as ComplianceRecord[];
+    }, [asset.address]);
+
+    const handleViewDocument = (doc: { fileName: string; filePath: string }) => {
+        setSelectedDocument(doc);
+        setDocumentViewerOpen(true);
+    };
 
     const handleGalleryClick = () => {
         setGalleryInitialIndex(0);
@@ -71,6 +100,15 @@ const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units 
                 return <UnitsOccupancyTab {...props} />;
             case 'repairs-compliance':
                 return <RepairsComplianceTab {...props} />;
+            case 'compliance':
+                return (
+                    <PropertyComplianceTab
+                        propertyId={asset.id}
+                        propertyName={asset.address}
+                        records={propertyComplianceRecords}
+                        onViewDocument={handleViewDocument}
+                    />
+                );
             case 'rps-landlords':
                 return <RPsLandlordsTab {...props} />;
             case 'legal':
@@ -94,14 +132,14 @@ const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units 
             />
 
             {/* Content Area */}
-            <div className="px-4 md:px-8 py-6">
+            <div className="p-6 max-w-7xl mx-auto w-full">
                 {/* Tab Content */}
                 {renderTabContent()}
             </div>
 
             {/* Floating Toolbar */}
             <FloatingToolbar
-                onReportRepairClick={() => {}}
+                onReportRepairClick={() => { }}
                 onDocumentsClick={handleDocumentsClick}
                 onFloorPlanClick={handleFloorPlanClick}
                 onActivityLogClick={handleActivityLogClick}
@@ -139,6 +177,16 @@ const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units 
                 onClose={() => setIsFloorPlanOpen(false)}
                 floorPlanUrl={asset.floorPlanUrl}
                 propertyAddress={asset.address}
+            />
+
+            {/* Compliance Document Viewer */}
+            <DocumentViewerModal
+                isOpen={documentViewerOpen}
+                onClose={() => {
+                    setDocumentViewerOpen(false);
+                    setSelectedDocument(null);
+                }}
+                documentInfo={selectedDocument}
             />
         </div>
     );

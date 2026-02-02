@@ -287,7 +287,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                         </button>
 
                         {viewDropdownOpen && (
-                            <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
+                            <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 z-[100] overflow-hidden animate-fade-in-up">
                                 <div className="p-2 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Saved Views</span>
                                     <button
@@ -353,7 +353,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {filterDropdownOpen && (
-                        <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
+                        <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 z-[100] overflow-hidden animate-fade-in-up">
                             <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Quick Filters</span>
                             </div>
@@ -416,7 +416,7 @@ const EnhancedToolbar: React.FC<EnhancedToolbarProps> = ({
                     </button>
 
                     {groupDropdownOpen && (
-                        <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in-up">
+                        <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 z-[100] overflow-hidden animate-fade-in-up">
                             <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Group By</span>
                             </div>

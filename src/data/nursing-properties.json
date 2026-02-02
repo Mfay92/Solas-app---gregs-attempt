@@ -1,0 +1,307 @@
+[
+  {
+    "id": "prop_nursing_1",
+    "type": "Master",
+    "parentId": null,
+    "address": "St. Mary's Nursing Home",
+    "postcode": "AL1 3BW",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Dr. Elizabeth Hayes",
+    "serviceType": "Nursing Care",
+    "status": "In Management",
+    "totalUnits": 32,
+    "occupiedUnits": 30,
+    "statusDate": "2022-03-01T00:00:00.000Z",
+    "documents": [
+      {
+        "id": "doc_nur_1_1",
+        "name": "CQC Registration Certificate - Nursing.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2024-03-01T00:00:00.000Z"
+      },
+      {
+        "id": "doc_nur_1_2",
+        "name": "Nursing Staff Registration - NMC.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2024-01-15T00:00:00.000Z"
+      },
+      {
+        "id": "doc_nur_1_3",
+        "name": "Fire Risk Assessment 2024.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2024-04-10T00:00:00.000Z"
+      }
+    ],
+    "complianceStatus": "Compliant",
+    "missingDocs": false,
+    "buildingPhone": "01727 345678",
+    "areaManager": "Rachel Green",
+    "opsDirector": "David Thompson",
+    "careProvider": "St. Mary's Healthcare Ltd",
+    "localAuthority": "Hertfordshire County Council",
+    "landlord": "Healthcare Properties Trust",
+    "owner": "Medical Care Investments PLC",
+    "propertyType": "Nursing Home",
+    "unitType": "Shared Living",
+    "features": {
+      "bedrooms": 32,
+      "bathrooms": 20,
+      "floors": 3,
+      "yearBuilt": 2010,
+      "squareFeet": 12000,
+      "parking": "Car Park",
+      "garage": false,
+      "garden": "Communal",
+      "heating": "Gas Central",
+      "underfloorHeating": true,
+      "glazing": "Triple",
+      "epcRating": "B",
+      "epcExpiryDate": "2028-05-20",
+      "cctv": true,
+      "cctvCameras": 16,
+      "alarmSystem": true,
+      "secureEntry": true,
+      "adaptations": [
+        "Fully wheelchair accessible",
+        "Patient hoists in all rooms",
+        "Oxygen supply points",
+        "Clinical waste disposal",
+        "Medication storage rooms",
+        "Nurse call system",
+        "Automated external defibrillators (AEDs)"
+      ],
+      "amenities": [
+        "Nursing station (3)",
+        "Treatment rooms (2)",
+        "Quiet room",
+        "Family visiting rooms",
+        "Communal lounges (3)",
+        "Dining rooms (2)",
+        "Activities room",
+        "Chapel",
+        "Physiotherapy room",
+        "Sensory garden"
+      ]
+    },
+    "complianceItems": [
+      {
+        "id": "comp_nur_1_1",
+        "type": "CQC Registration - Nursing",
+        "status": "Compliant",
+        "certificateNumber": "CQC-N-987654321",
+        "issuedDate": "2024-03-01",
+        "expiryDate": "2025-02-28",
+        "contractor": "Care Quality Commission",
+        "notes": "Rated Outstanding"
+      },
+      {
+        "id": "comp_nur_1_2",
+        "type": "NMC Registration - Registered Nurses",
+        "status": "Compliant",
+        "issuedDate": "2024-01-15",
+        "expiryDate": "2025-01-14",
+        "contractor": "Nursing & Midwifery Council",
+        "notes": "12 registered nurses on staff"
+      },
+      {
+        "id": "comp_nur_1_3",
+        "type": "Fire Risk Assessment",
+        "status": "Compliant",
+        "certificateNumber": "FRA-2024-789",
+        "issuedDate": "2024-04-10",
+        "expiryDate": "2025-04-09",
+        "contractor": "Healthcare Fire Safety Ltd"
+      },
+      {
+        "id": "comp_nur_1_4",
+        "type": "Gas Safety",
+        "status": "Compliant",
+        "certificateNumber": "GS-2024-456",
+        "issuedDate": "2024-06-20",
+        "expiryDate": "2025-06-19",
+        "contractor": "Medical Gas Services"
+      },
+      {
+        "id": "comp_nur_1_5",
+        "type": "Legionella",
+        "status": "Compliant",
+        "certificateNumber": "LEG-2024-123",
+        "issuedDate": "2024-03-01",
+        "expiryDate": "2026-02-28",
+        "contractor": "Healthcare Water Hygiene"
+      },
+      {
+        "id": "comp_nur_1_6",
+        "type": "Infection Control Audit",
+        "status": "Compliant",
+        "certificateNumber": "ICA-2024-567",
+        "issuedDate": "2024-05-15",
+        "expiryDate": "2024-11-15",
+        "contractor": "NHS Infection Control Team"
+      }
+    ],
+    "coordinates": {
+      "lat": 51.7520,
+      "lng": -0.3360
+    },
+    "description": "Outstanding-rated nursing home providing specialist nursing care for complex health needs. 24/7 registered nursing staff with on-site GP services and palliative care expertise.",
+    "internalNotes": "CQC Outstanding rating. Strong NHS partnerships. Specialist dementia nursing unit. Waiting list active.",
+    "tags": ["nursing-care", "24hr-nursing", "palliative-care", "dementia-nursing", "outstanding-rated"],
+    "heroImageUrl": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1200",
+    "heroImages": [
+      "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1200",
+      "https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200",
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200"
+    ]
+  },
+  {
+    "id": "prop_nursing_1_unit_1",
+    "type": "Unit",
+    "parentId": "prop_nursing_1",
+    "address": "Room 101",
+    "postcode": "AL1 3BW",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Dr. Elizabeth Hayes",
+    "serviceType": "Nursing Care",
+    "status": "Occupied",
+    "totalUnits": 1,
+    "occupiedUnits": 1,
+    "statusDate": "2022-08-15T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living",
+    "tenants": [
+      {
+        "id": "resident_nur_1",
+        "name": "Dorothy Evans",
+        "status": "Current",
+        "unitId": "prop_nursing_1_unit_1",
+        "moveInDate": "2022-08-15",
+        "dateOfBirth": "1935-07-22",
+        "phone": "07700 900444",
+        "emergencyContact": {
+          "name": "Catherine Evans",
+          "relationship": "Daughter",
+          "phone": "07700 900555"
+        },
+        "supportProvider": "St. Mary's Healthcare Ltd",
+        "careHours": 168,
+        "notes": "Requires 24/7 nursing care. Palliative care pathway. Family visits daily."
+      }
+    ]
+  },
+  {
+    "id": "prop_nursing_1_unit_2",
+    "type": "Unit",
+    "parentId": "prop_nursing_1",
+    "address": "Room 102",
+    "postcode": "AL1 3BW",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Dr. Elizabeth Hayes",
+    "serviceType": "Nursing Care",
+    "status": "Occupied",
+    "totalUnits": 1,
+    "occupiedUnits": 1,
+    "statusDate": "2023-01-10T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living",
+    "tenants": [
+      {
+        "id": "resident_nur_2",
+        "name": "George Mitchell",
+        "status": "Current",
+        "unitId": "prop_nursing_1_unit_2",
+        "moveInDate": "2023-01-10",
+        "dateOfBirth": "1940-03-15",
+        "emergencyContact": {
+          "name": "Anne Mitchell",
+          "relationship": "Wife",
+          "phone": "07700 900666"
+        },
+        "supportProvider": "St. Mary's Healthcare Ltd",
+        "careHours": 168,
+        "notes": "Advanced dementia nursing care. Musical therapy sessions twice weekly."
+      }
+    ]
+  },
+  {
+    "id": "prop_nursing_1_unit_3",
+    "type": "Unit",
+    "parentId": "prop_nursing_1",
+    "address": "Room 103",
+    "postcode": "AL1 3BW",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Dr. Elizabeth Hayes",
+    "serviceType": "Nursing Care",
+    "status": "Void",
+    "totalUnits": 1,
+    "occupiedUnits": 0,
+    "statusDate": "2025-11-20T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living"
+  },
+  {
+    "id": "prop_nursing_2",
+    "type": "Master",
+    "parentId": null,
+    "address": "Willow Gardens Nursing Home",
+    "postcode": "WD25 8JQ",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Nurse Claire Robertson",
+    "serviceType": "Nursing Care",
+    "status": "In Management",
+    "totalUnits": 28,
+    "occupiedUnits": 27,
+    "statusDate": "2023-05-01T00:00:00.000Z",
+    "documents": [
+      {
+        "id": "doc_nur_2_1",
+        "name": "CQC Registration Certificate - Nursing.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2023-05-01T00:00:00.000Z"
+      }
+    ],
+    "complianceStatus": "Compliant",
+    "missingDocs": false,
+    "buildingPhone": "01923 567890",
+    "areaManager": "James Patterson",
+    "opsDirector": "David Thompson",
+    "careProvider": "Willow Gardens Healthcare",
+    "localAuthority": "Hertfordshire County Council",
+    "propertyType": "Nursing Home",
+    "unitType": "Shared Living",
+    "features": {
+      "bedrooms": 28,
+      "bathrooms": 16,
+      "floors": 2,
+      "yearBuilt": 2015,
+      "squareFeet": 9500,
+      "parking": "Car Park",
+      "garden": "Communal",
+      "heating": "Gas Central",
+      "glazing": "Double",
+      "epcRating": "B",
+      "cctv": true,
+      "cctvCameras": 12,
+      "alarmSystem": true,
+      "secureEntry": true,
+      "adaptations": ["Wheelchair accessible", "Hoists", "Nurse call system", "Clinical rooms"],
+      "amenities": ["Nursing stations", "Treatment rooms", "Activities room", "Dining rooms", "Garden"]
+    },
+    "description": "Modern nursing home specialising in stroke rehabilitation and neurological nursing care. 24/7 registered nurses with physiotherapy services.",
+    "internalNotes": "CQC rated Good. Stroke rehabilitation specialism. Strong NHS partnerships.",
+    "tags": ["nursing-care", "stroke-care", "neuro-rehab"],
+    "heroImageUrl": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200"
+  }
+]

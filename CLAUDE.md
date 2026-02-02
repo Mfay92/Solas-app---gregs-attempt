@@ -2,7 +2,7 @@
 
 > This file maintains persistent context for Claude Code sessions. It ensures continuity across conversations and tracks project knowledge, decisions, and permissions.
 
-**Last Updated:** 30 November 2025
+**Last Updated:** 2 February 2026
 **Primary Advisor:** Amy (CRM Development Expert persona)
 **Developer:** Matt Fay (Housing Partnerships & Operations Manager, ivolve)
 
@@ -29,27 +29,41 @@
 
 ---
 
-## Current State (30 Nov 2025)
+## Current State (2 Feb 2026)
 
 | Metric | Status |
 |--------|--------|
-| Core Infrastructure | 70% complete |
-| Features Functional | 40% |
-| Backend Integration | 0% |
+| Core Infrastructure | 85% complete |
+| Features Functional | 60% |
+| Backend Integration | 0% (deferred to Phase 3) |
 | Test Coverage | 0% |
-| Production Readiness | 30% |
+| Production Readiness | 50% |
 
 **Branch:** `feature/code-quality-fixes`
 
 **Working:**
-- Dashboard with drag-and-drop widgets
-- Property Hub with Master/Unit hierarchy
+- Dashboard with drag-and-drop widgets ✓
+- Property Hub with Master/Unit hierarchy ✓
 - Property Profile (all tabs loading correctly) ✓
-- Finance page (basic)
-- Sidebar navigation
+- PersonProfile with 12 tabs, service type color coding ✓
+- ReferralsHub with 11-stage workflow ✓
+- ReferralProfile with 8 tabs ✓
+- Notice Board component (redesigned Quick Access Toolbox) ✓
+- Service type theming (Green/Blue/Rose) throughout ✓
+- Colored borders on all cards matching service type ✓
+- Developer Settings with feature toggles ✓
+- Void Management hub ✓
+- Finance page (basic) ✓
+- Sidebar navigation ✓
 
 **Broken:**
 - None currently — all P0 issues resolved
+
+**Recent Improvements (Phase 2.6):**
+- Notice Board redesign (tabs left, content right, scrollbar on far right)
+- Service type color coding applied to PersonProfile hero banners
+- Colored borders (border-2) on ALL cards in ALL 12 PersonProfile tabs
+- Improved spacing and alignment throughout hero banners
 
 ---
 
@@ -104,6 +118,37 @@
 - Ready to proceed to Phase 2 (P1 priorities)
 
 **Next Priority:** React Router integration (Phase 2.1)
+
+### Session 2 — 2 February 2026
+**Actions Taken:**
+1. UI polish pass on PersonProfile based on user feedback
+2. Redesigned QuickAccessToolbox → Notice Board (tabs left, content right)
+3. Implemented service type color coding for PersonProfile hero banners
+4. Applied colored borders to ALL cards in ALL 12 PersonProfile tabs
+5. Improved spacing and alignment throughout hero banners
+6. Updated CHANGELOG.md with Phase 2.6 section
+7. Updated this CLAUDE.md file with current progress
+
+**User Feedback Addressed:**
+- "Notice Board" naming (renamed from "Quick Access Tool Box")
+- Layout flip (tabs LEFT, content RIGHT, scrollbar on far right)
+- Bigger size (430px × 360px)
+- Service type color bug fix (all profiles were blue, now dynamically colored)
+- Colored borders on all cards matching service type
+- Reduced padding (profiles closer to sidebar)
+- Consistent "People Hub" terminology
+
+**Findings:**
+- All 12 PersonProfile tabs successfully updated with colored borders
+- Service type utility (getServiceTypeColor) working perfectly
+- Notice Board layout vastly improved with new side-by-side design
+- User feedback resulted in significant visual polish improvements
+
+**Outcome:**
+- Phase 2.6 (UI Polish & Service Type Theming) **COMPLETE** ✓
+- PersonProfile now has consistent service type theming throughout
+- Ready for user review and testing
+- Next priority: Apply same theming to ReferralProfile, implement forms (Add Referral, Edit Person, Notes system)
 
 ---
 

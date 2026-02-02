@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { ChevronRight, Home, BedDouble, FileQuestion, ArrowUpDown, ArrowUp, ArrowDown, Square, CheckSquare } from 'lucide-react';
 import propertiesData from '../../data/properties.json';
+import residentialPropertiesData from '../../data/residential-properties.json';
+import nursingPropertiesData from '../../data/nursing-properties.json';
 import { PropertyAsset } from '../../types';
 import PropertyProfile from '../PropertyProfile';
 import LoadingSpinner from '../shared/LoadingSpinner';
@@ -14,6 +16,7 @@ import SavedViewsPanel from './SavedViewsPanel';
 import BulkActionsBar from './BulkActionsBar';
 import KeyboardShortcutsModal from './KeyboardShortcutsModal';
 import { exportData } from './exportUtils';
+import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
 
 // Type guard to validate property asset structure from JSON
 function isValidPropertyData(obj: unknown): obj is Record<string, unknown> {
@@ -26,10 +29,25 @@ function isValidPropertyData(obj: unknown): obj is Record<string, unknown> {
     );
 }
 
-// Safely cast JSON import with validation
-const properties: PropertyAsset[] = Array.isArray(propertiesData)
+// Safely cast JSON import with validation and merge all property types
+const supportedLivingProperties: PropertyAsset[] = Array.isArray(propertiesData)
     ? (propertiesData.filter(isValidPropertyData) as PropertyAsset[])
     : [];
+
+const residentialProperties: PropertyAsset[] = Array.isArray(residentialPropertiesData)
+    ? (residentialPropertiesData.filter(isValidPropertyData) as PropertyAsset[])
+    : [];
+
+const nursingProperties: PropertyAsset[] = Array.isArray(nursingPropertiesData)
+    ? (nursingPropertiesData.filter(isValidPropertyData) as PropertyAsset[])
+    : [];
+
+// Merge all property types into a single array
+const properties: PropertyAsset[] = [
+    ...supportedLivingProperties,
+    ...residentialProperties,
+    ...nursingProperties
+];
 
 // Default saved views
 const defaultSavedViews: SavedView[] = [
@@ -726,17 +744,18 @@ const PropertyHubEnhanced: React.FC = () => {
                         else if (occupancyRate > 50) progressColor = 'bg-green-400';
                         else if (occupancyRate > 0) progressColor = 'bg-amber-500';
 
-                        const isRegisteredSite = asset.serviceType === 'Nursing Home' || asset.serviceType === 'Residential';
-                        const cardHoverBorder = isRegisteredSite ? 'hover:border-ivolve-blue' : 'hover:border-ivolve-mid';
-                        const cardHeaderBg = isRegisteredSite ? 'bg-ivolve-blue' : 'bg-ivolve-mid';
+                        const serviceColors = getServiceTypeColor(asset.serviceType);
                         const isSelected = selectedRows.has(asset.id);
 
                         return (
                             <div
                                 key={asset.id}
                                 onClick={() => setSelectedPropertyId(asset.id)}
-                                className={`bg-white rounded-2xl shadow-sm border-2 ${isSelected ? 'border-ivolve-mid ring-2 ring-ivolve-mid/20' : 'border-transparent'} ${cardHoverBorder} overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer animate-fade-in-up relative`}
-                                style={{ animationDelay: `${(index % 6) * 50}ms` }}
+                                className={`bg-white rounded-2xl shadow-sm border-2 ${isSelected ? `ring-2 ring-opacity-20` : 'border-transparent'} overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer animate-fade-in-up relative`}
+                                style={{
+                                    animationDelay: `${(index % 6) * 50}ms`,
+                                    borderColor: isSelected ? serviceColors.primary : 'transparent'
+                                }}
                             >
                                 {/* Selection checkbox */}
                                 <button
@@ -744,19 +763,21 @@ const PropertyHubEnhanced: React.FC = () => {
                                     className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 rounded-lg shadow-sm hover:bg-white transition-colors"
                                 >
                                     {isSelected ? (
-                                        <CheckSquare size={18} className="text-ivolve-mid" />
+                                        <CheckSquare size={18} style={{ color: serviceColors.primary }} />
                                     ) : (
                                         <Square size={18} className="text-gray-400" />
                                     )}
                                 </button>
 
-                                <div className={`p-4 flex justify-between items-start ${cardHeaderBg}`}>
+                                <div className="p-4 flex justify-between items-start" style={{ backgroundColor: serviceColors.primary }}>
                                     <div className="min-w-0 flex-1 pr-8">
                                         <h3 className="text-white font-bold text-lg truncate">{asset.address}</h3>
                                         <p className="text-white/80 text-sm">{asset.postcode}</p>
                                     </div>
                                     <div className="flex items-center gap-2 ml-2">
-                                        <StatusBadge status={asset.serviceType} size="sm" className="!bg-white/20 !text-white" />
+                                        <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+                                            {asset.serviceType}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="p-5 space-y-4">
@@ -872,22 +893,30 @@ const PropertyHubEnhanced: React.FC = () => {
         const isExpanded = expandedMasters.has(asset.id);
         const isSelected = selectedRows.has(asset.id);
 
-        const isRegisteredSite = asset.serviceType === 'Nursing Home' || asset.serviceType === 'Residential';
-        const borderColor = isRegisteredSite ? 'border-ivolve-blue' : 'border-ivolve-mid';
-        const hoverBg = isRegisteredSite ? 'hover:bg-ivolve-blue/5' : 'hover:bg-ivolve-mid/5';
+        const serviceColors = getServiceTypeColor(asset.serviceType);
 
         let rowClasses = "transition-all duration-200 cursor-pointer group/row";
         if (isMaster) {
-            rowClasses += ` border-l-4 ${borderColor} ${isSelected ? 'bg-ivolve-mid/10' : 'bg-white'} ${hoverBg} hover:shadow-sm`;
+            rowClasses += ` border-l-4 ${isSelected ? '' : 'bg-white'} hover:shadow-sm`;
         } else if (isUnit) {
             rowClasses += " bg-slate-50/80 border-l-4 border-transparent hover:bg-slate-100/80";
         }
         rowClasses += ` ${rowOpacity}`;
 
+        const rowStyle = isMaster ? {
+            borderLeftColor: serviceColors.primary,
+            backgroundColor: isSelected ? `${serviceColors.primary}10` : undefined
+        } : undefined;
+
+        const hoverStyle = isMaster ? {
+            ['--hover-bg' as string]: `${serviceColors.primary}05`
+        } : undefined;
+
         return (
             <tr
                 key={asset.id}
                 className={rowClasses}
+                style={rowStyle}
                 onClick={() => setSelectedPropertyId(isMaster ? asset.id : asset.parentId || asset.id)}
             >
                 {/* Selection Column */}
@@ -925,13 +954,19 @@ const PropertyHubEnhanced: React.FC = () => {
                                     {isUnit && <div className="w-7 mr-2" />}
 
                                     <div className="flex items-center gap-3">
-                                        <div className={`p-2 rounded-lg ${
-                                            isMaster
-                                                ? (isRegisteredSite ? 'bg-blue-100 text-ivolve-blue' : 'bg-green-100 text-ivolve-mid')
-                                                : (asset.status === 'Occupied' ? 'bg-green-50 text-green-600' :
-                                                    asset.status === 'Void' ? 'bg-amber-50 text-amber-600' :
-                                                        'bg-gray-100 text-gray-500')
-                                        }`}>
+                                        <div
+                                            className={`p-2 rounded-lg ${
+                                                !isMaster
+                                                    ? (asset.status === 'Occupied' ? 'bg-green-50 text-green-600' :
+                                                        asset.status === 'Void' ? 'bg-amber-50 text-amber-600' :
+                                                            'bg-gray-100 text-gray-500')
+                                                    : ''
+                                            }`}
+                                            style={isMaster ? {
+                                                backgroundColor: `${serviceColors.primary}15`,
+                                                color: serviceColors.primary
+                                            } : undefined}
+                                        >
                                             {isMaster ? <Home size={18} /> : <BedDouble size={18} />}
                                         </div>
                                         <div className="flex flex-col min-w-0">
@@ -979,7 +1014,22 @@ const PropertyHubEnhanced: React.FC = () => {
                             e.stopPropagation();
                             setSelectedPropertyId(isMaster ? asset.id : asset.parentId || asset.id);
                         }}
-                        className="px-3 py-1.5 text-sm font-medium text-ivolve-mid bg-transparent border border-transparent rounded-lg transition-all duration-200 hover:bg-ivolve-mid hover:text-white group-hover/row:border-ivolve-mid/30 active:scale-95"
+                        className="px-3 py-1.5 text-sm font-medium bg-transparent border border-transparent rounded-lg transition-all duration-200 hover:text-white active:scale-95"
+                        style={{
+                            color: isMaster ? serviceColors.primary : '#008C67',
+                            ['--hover-bg' as string]: isMaster ? serviceColors.primary : '#008C67',
+                            ['--border-color' as string]: isMaster ? `${serviceColors.primary}30` : '#008C6730'
+                        }}
+                        onMouseEnter={(e) => {
+                            if (isMaster) {
+                                e.currentTarget.style.backgroundColor = serviceColors.primary;
+                                e.currentTarget.style.borderColor = `${serviceColors.primary}30`;
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.borderColor = 'transparent';
+                        }}
                     >
                         View
                     </button>

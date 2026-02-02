@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import {
     Building2, Bed, User, Phone, Mail,
-    ShieldCheck, Wrench, X, ChevronRight, Grid, List,
+    Wrench, X, ChevronRight, Grid, List,
     AlertCircle, CheckCircle, Clock, Users, Calendar, Home, Heart, Search
 } from 'lucide-react';
 import { PropertyAsset, Tenant, TenancyStatus } from '../../../types';
 import StatusBadge from '../../shared/StatusBadge';
 import { formatDate } from '../../../utils';
 import { getTerminology } from '../../../utils/terminology';
+import UnitView from '../../UnitView';
 
 interface TabProps {
     asset: PropertyAsset;
@@ -86,6 +87,22 @@ const OccupancyBar: React.FC<{ occupied: number; total: number }> = ({ occupied,
     );
 };
 
+// Get status badge color based on unit status
+const getUnitStatusColor = (status: string) => {
+    switch (status) {
+        case 'Occupied':
+            return { bg: 'bg-green-100', text: 'text-green-600', icon: 'text-green-600' };
+        case 'Void':
+            return { bg: 'bg-amber-100', text: 'text-amber-600', icon: 'text-amber-600' };
+        case 'Under Offer':
+            return { bg: 'bg-blue-100', text: 'text-blue-600', icon: 'text-blue-600' };
+        case 'In Management':
+            return { bg: 'bg-purple-100', text: 'text-purple-600', icon: 'text-purple-600' };
+        default:
+            return { bg: 'bg-gray-100', text: 'text-gray-600', icon: 'text-gray-600' };
+    }
+};
+
 // Unit card component
 const UnitCard: React.FC<{
     unit: PropertyAsset;
@@ -96,54 +113,57 @@ const UnitCard: React.FC<{
 }> = ({ unit, parent, tenant, onClick }) => {
     const voidDays = getVoidDays(unit);
     const unitName = getUnitIdentifier(unit, parent);
+    const statusColors = getUnitStatusColor(unit.status);
 
     return (
         <div
             onClick={onClick}
-            className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:shadow-md hover:border-ivolve-mid/30 transition-all cursor-pointer"
+            className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-lg hover:border-ivolve-mid/40 transition-all cursor-pointer group"
         >
             <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        unit.status === 'Occupied' ? 'bg-green-100' : 'bg-amber-100'
-                    }`}>
-                        <Bed size={20} className={
-                            unit.status === 'Occupied' ? 'text-green-600' : 'text-amber-600'
-                        } />
+                <div className="flex items-center gap-3">
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${statusColors.bg} transition-transform group-hover:scale-105`}>
+                        <Bed size={22} className={statusColors.icon} />
                     </div>
                     <div>
-                        <p className="font-semibold text-gray-800">{unitName}</p>
-                        <StatusBadge status={unit.status} size="sm" />
+                        <p className="font-bold text-gray-800 text-base">{unitName}</p>
+                        <div className="mt-1">
+                            <StatusBadge status={unit.status} size="sm" />
+                        </div>
                     </div>
                 </div>
-                <ChevronRight size={18} className="text-gray-400" />
+                <ChevronRight size={20} className="text-gray-300 group-hover:text-ivolve-mid transition-colors" />
             </div>
 
             {unit.unitType && (
                 <div className="mb-3">
-                    <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                    <span className="text-xs px-2.5 py-1 bg-gray-50 text-gray-600 rounded-md font-medium border border-gray-200">
                         {unit.unitType}
                     </span>
                 </div>
             )}
 
             {unit.status === 'Void' && voidDays !== null && (
-                <div className={`text-xs mb-3 ${
-                    voidDays > 60 ? 'text-red-600' : voidDays > 30 ? 'text-amber-600' : 'text-gray-500'
+                <div className={`text-sm mb-3 font-medium flex items-center gap-1.5 ${
+                    voidDays > 60 ? 'text-red-600' : voidDays > 30 ? 'text-amber-600' : 'text-gray-600'
                 }`}>
-                    <Clock size={12} className="inline mr-1" />
-                    Void for {voidDays} days
+                    <Clock size={14} />
+                    <span>Void for {voidDays} day{voidDays !== 1 ? 's' : ''}</span>
                 </div>
             )}
 
-            {tenant && (
+            {tenant ? (
                 <div className="pt-3 border-t border-gray-100">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-ivolve-mid/10 flex items-center justify-center">
-                            <User size={14} className="text-ivolve-mid" />
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-ivolve-light to-ivolve-mid flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                            {tenant.photo ? (
+                                <img src={tenant.photo} alt={tenant.name} className="w-full h-full rounded-full object-cover" />
+                            ) : (
+                                (tenant.name || '').split(' ').filter(Boolean).map(n => n[0] || '').join('').slice(0, 2).toUpperCase() || '?'
+                            )}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-700 truncate">{tenant.name}</p>
+                            <p className="text-sm font-semibold text-gray-800 truncate">{tenant.name}</p>
                             {tenant.moveInDate && (
                                 <p className="text-xs text-gray-500">
                                     Since {formatDate(tenant.moveInDate)}
@@ -152,25 +172,32 @@ const UnitCard: React.FC<{
                         </div>
                     </div>
                 </div>
+            ) : (
+                <div className="pt-3 border-t border-gray-100">
+                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                        <User size={14} />
+                        <span>No current occupant</span>
+                    </div>
+                </div>
             )}
 
-            {/* Quick compliance indicator */}
+            {/* Quick actions and status */}
             <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
                 <div className="flex items-center gap-1 text-xs">
                     {unit.complianceStatus === 'Compliant' ? (
                         <>
-                            <CheckCircle size={12} className="text-green-500" />
-                            <span className="text-green-600">Compliant</span>
+                            <CheckCircle size={13} className="text-green-500" />
+                            <span className="text-green-600 font-medium">Compliant</span>
                         </>
                     ) : unit.complianceStatus === 'Pending' ? (
                         <>
-                            <Clock size={12} className="text-amber-500" />
-                            <span className="text-amber-600">Pending</span>
+                            <Clock size={13} className="text-amber-500" />
+                            <span className="text-amber-600 font-medium">Pending</span>
                         </>
                     ) : unit.complianceStatus ? (
                         <>
-                            <AlertCircle size={12} className="text-red-500" />
-                            <span className="text-red-600">Issues</span>
+                            <AlertCircle size={13} className="text-red-500" />
+                            <span className="text-red-600 font-medium">Issues</span>
                         </>
                     ) : (
                         <span className="text-gray-400">No data</span>
@@ -178,9 +205,9 @@ const UnitCard: React.FC<{
                 </div>
 
                 {unit.repairs && unit.repairs.filter(r => r.status === 'Open' || r.status === 'In Progress').length > 0 && (
-                    <div className="flex items-center gap-1 text-xs text-amber-600">
-                        <Wrench size={12} />
-                        <span>{unit.repairs.filter(r => r.status === 'Open' || r.status === 'In Progress').length} repairs</span>
+                    <div className="flex items-center gap-1 text-xs text-amber-600 font-medium">
+                        <Wrench size={13} />
+                        <span>{unit.repairs.filter(r => r.status === 'Open' || r.status === 'In Progress').length} repair{unit.repairs.filter(r => r.status === 'Open' || r.status === 'In Progress').length !== 1 ? 's' : ''}</span>
                     </div>
                 )}
             </div>
@@ -254,157 +281,6 @@ const ResidentCard: React.FC<{
                             {tenant.supportProvider}
                             {tenant.careHours && ` (${tenant.careHours}h/week)`}
                         </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// Unit detail modal/panel
-const UnitDetailPanel: React.FC<{
-    unit: PropertyAsset;
-    parent: PropertyAsset;
-    tenant?: Tenant;
-    onClose: () => void;
-    onViewProfile?: () => void;
-    terminology: { singular: string; plural: string };
-}> = ({ unit, parent, tenant, onClose, onViewProfile, terminology }) => {
-    const voidDays = getVoidDays(unit);
-    const unitName = getUnitIdentifier(unit, parent);
-
-    return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex justify-end" onClick={onClose}>
-            <div
-                className="w-full max-w-md bg-white h-full overflow-y-auto shadow-xl animate-slide-in-right"
-                onClick={e => e.stopPropagation()}
-            >
-                {/* Header */}
-                <div className="sticky top-0 bg-white border-b border-gray-100 p-4 flex items-center justify-between">
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-800">{unitName}</h2>
-                        <p className="text-sm text-gray-500">{unit.address}</p>
-                    </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                    >
-                        <X size={20} className="text-gray-500" />
-                    </button>
-                </div>
-
-                <div className="p-4 space-y-6">
-                    {/* Status Section */}
-                    <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="flex items-center justify-between mb-3">
-                            <StatusBadge status={unit.status} size="md" />
-                            {unit.unitType && (
-                                <span className="text-xs px-2 py-1 bg-white text-gray-600 rounded border">
-                                    {unit.unitType}
-                                </span>
-                            )}
-                        </div>
-                        {unit.status === 'Void' && voidDays !== null && (
-                            <div className={`text-sm ${
-                                voidDays > 60 ? 'text-red-600' : voidDays > 30 ? 'text-amber-600' : 'text-gray-600'
-                            }`}>
-                                Void since {formatDate(unit.statusDate)} ({voidDays} days)
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Tenant Details */}
-                    {tenant ? (
-                        <div className="bg-white rounded-xl border border-gray-100 p-4">
-                            <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">
-                                Current {terminology.singular}
-                            </h3>
-                            <div className="flex items-start gap-3">
-                                <div className="w-12 h-12 rounded-full bg-ivolve-mid/10 flex items-center justify-center">
-                                    <User size={20} className="text-ivolve-mid" />
-                                </div>
-                                <div className="flex-1">
-                                    <p className="font-semibold text-gray-800">{tenant.name}</p>
-                                    {tenant.moveInDate && (
-                                        <p className="text-sm text-gray-500 mt-1">
-                                            Move-in: {formatDate(tenant.moveInDate)}
-                                        </p>
-                                    )}
-                                    {tenant.supportProvider && (
-                                        <p className="text-sm text-gray-500">
-                                            Support: {tenant.supportProvider}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Contact info */}
-                            <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
-                                {tenant.phone && (
-                                    <a
-                                        href={`tel:${tenant.phone}`}
-                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-ivolve-mid"
-                                    >
-                                        <Phone size={14} />
-                                        {tenant.phone}
-                                    </a>
-                                )}
-                                {tenant.email && (
-                                    <a
-                                        href={`mailto:${tenant.email}`}
-                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-ivolve-mid"
-                                    >
-                                        <Mail size={14} />
-                                        {tenant.email}
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="bg-gray-50 rounded-xl p-6 text-center">
-                            <User size={32} className="mx-auto text-gray-300 mb-2" />
-                            <p className="text-sm text-gray-500">No current {terminology.singular.toLowerCase()}</p>
-                        </div>
-                    )}
-
-                    {/* Quick Stats */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-2">
-                                <ShieldCheck size={16} className="text-ivolve-mid" />
-                                <span className="text-xs font-medium text-gray-500">Compliance</span>
-                            </div>
-                            {unit.complianceItems?.length ? (
-                                <p className="text-sm font-semibold text-gray-800">
-                                    {unit.complianceItems.filter(c => c.status === 'Compliant').length} of {unit.complianceItems.length} items
-                                </p>
-                            ) : (
-                                <p className="text-sm text-gray-400">No data</p>
-                            )}
-                        </div>
-                        <div className="bg-gray-50 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Wrench size={16} className="text-ivolve-mid" />
-                                <span className="text-xs font-medium text-gray-500">Repairs</span>
-                            </div>
-                            {unit.repairs?.length ? (
-                                <p className="text-sm font-semibold text-gray-800">
-                                    {unit.repairs.filter(r => r.status === 'Open' || r.status === 'In Progress').length} open
-                                </p>
-                            ) : (
-                                <p className="text-sm text-gray-400">None</p>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* View Full Profile Button */}
-                    {onViewProfile && (
-                        <button
-                            onClick={onViewProfile}
-                            className="w-full py-3 bg-ivolve-mid text-white rounded-lg font-medium hover:bg-ivolve-dark transition-colors"
-                        >
-                            View Full Profile
-                        </button>
                     )}
                 </div>
             </div>
@@ -570,7 +446,7 @@ const ResidentDetailPanel: React.FC<{
     );
 };
 
-const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units, onSelectUnit }) => {
+const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units }) => {
     const [viewMode, setViewMode] = useState<ViewMode>('units');
     const [gridViewMode, setGridViewMode] = useState<'grid' | 'list'>('grid');
     const [statusFilter, setStatusFilter] = useState<'all' | 'Occupied' | 'Void'>('all');
@@ -578,6 +454,7 @@ const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units, onSelectUnit }) =
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedUnit, setSelectedUnit] = useState<PropertyAsset | null>(null);
     const [selectedResident, setSelectedResident] = useState<Tenant | null>(null);
+    const [unitViewOpen, setUnitViewOpen] = useState(false);
 
     // Get terminology based on service type
     const terminology = getTerminology(asset.serviceType);
@@ -773,7 +650,10 @@ const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units, onSelectUnit }) =
                                         unit={unit}
                                         parent={asset}
                                         tenant={getTenantForUnit(unit, asset.tenants || [])}
-                                        onClick={() => setSelectedUnit(unit)}
+                                        onClick={() => {
+                                            setSelectedUnit(unit);
+                                            setUnitViewOpen(true);
+                                        }}
                                         terminology={terminology}
                                     />
                                 ))}
@@ -797,7 +677,10 @@ const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units, onSelectUnit }) =
                                             return (
                                                 <tr
                                                     key={unit.id}
-                                                    onClick={() => setSelectedUnit(unit)}
+                                                    onClick={() => {
+                                                        setSelectedUnit(unit);
+                                                        setUnitViewOpen(true);
+                                                    }}
                                                     className="hover:bg-gray-50 cursor-pointer"
                                                 >
                                                     <td className="px-4 py-3">
@@ -930,18 +813,16 @@ const UnitsOccupancyTab: React.FC<TabProps> = ({ asset, units, onSelectUnit }) =
                 </>
             )}
 
-            {/* Unit Detail Panel */}
-            {selectedUnit && (
-                <UnitDetailPanel
+            {/* Unit View Modal */}
+            {selectedUnit && unitViewOpen && (
+                <UnitView
                     unit={selectedUnit}
-                    parent={asset}
+                    parentProperty={asset}
                     tenant={getTenantForUnit(selectedUnit, asset.tenants || [])}
-                    onClose={() => setSelectedUnit(null)}
-                    onViewProfile={onSelectUnit ? () => {
-                        onSelectUnit(selectedUnit);
+                    onClose={() => {
+                        setUnitViewOpen(false);
                         setSelectedUnit(null);
-                    } : undefined}
-                    terminology={terminology}
+                    }}
                 />
             )}
 

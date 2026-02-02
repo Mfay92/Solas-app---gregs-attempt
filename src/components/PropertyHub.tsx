@@ -101,7 +101,7 @@ const PropertyHub: React.FC = () => {
     }
 
     return (
-        <div className="p-4 space-y-4 bg-ivolve-paper min-h-screen">
+        <div className="space-y-4 bg-ivolve-paper min-h-screen">
 
             {/* Header & Controls */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">

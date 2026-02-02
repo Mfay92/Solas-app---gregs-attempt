@@ -66,7 +66,7 @@ const ColumnSelector: React.FC<ColumnSelectorProps> = ({
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-fade-in">
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-[100] overflow-hidden animate-fade-in">
                     {/* Header */}
                     <div className="p-3 border-b border-gray-100 bg-gray-50">
                         <div className="flex items-center justify-between">

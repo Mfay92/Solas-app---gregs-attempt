@@ -233,7 +233,7 @@ export const DashboardLayout: React.FC = () => {
 
             <div className="flex flex-1 overflow-hidden relative">
                 {/* Main Content Area */}
-                <div className="flex-1 p-4 pt-4 overflow-y-auto">
+                <div className="flex-1 overflow-y-auto">
                     <div className="max-w-[1600px] mx-auto">
 
                         {items.length === 0 ? (
