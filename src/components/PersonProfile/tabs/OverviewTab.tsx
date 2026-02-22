@@ -54,7 +54,7 @@ const InfoRow: React.FC<{
     );
 };
 
-const OverviewTab: React.FC<OverviewTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const OverviewTab: React.FC<OverviewTabProps> = ({ person, onJumpToTab, borderColor = 'border-gray-200' }) => {
     // Calculate age
     const calculateAge = (dob?: string) => {
         if (!dob) return null;

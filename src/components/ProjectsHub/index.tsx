@@ -15,8 +15,7 @@ import {
     Project,
     ProjectStatus,
     ProjectPriority,
-    calculateProjectHealth,
-    getOverdueTaskCount
+    calculateProjectHealth
 } from '../../types/projects';
 import AddProjectModal from './AddProjectModal';
 import ProjectCard from './ProjectCard';
@@ -221,14 +220,15 @@ export default function ProjectsHub() {
         });
     };
 
-    const handleSort = (field: SortField) => {
-        if (sortField === field) {
-            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-        } else {
-            setSortField(field);
-            setSortDirection('asc');
-        }
-    };
+    // Future feature: column sorting
+    // const handleSort = (field: SortField) => {
+    //     if (sortField === field) {
+    //         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    //     } else {
+    //         setSortField(field);
+    //         setSortDirection('asc');
+    //     }
+    // };
 
     // Get unique owners and departments for filter dropdowns
     const uniqueOwners = useMemo(() => {

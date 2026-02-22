@@ -9,7 +9,7 @@ interface SupportPlansTabProps {
     borderColor?: string;
 }
 
-export default function SupportPlansTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: SupportPlansTabProps) {
+export default function SupportPlansTab({ borderColor = 'border-gray-200' }: SupportPlansTabProps) {
     // Mock data - will be replaced with real data later
     const supportPlans: SupportPlan[] = [];
 

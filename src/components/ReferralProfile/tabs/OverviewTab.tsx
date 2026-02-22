@@ -82,7 +82,7 @@ export default function OverviewTab({ referral, onJumpToTab }: OverviewTabProps)
                     />
                     {/* Steps */}
                     <div className="relative flex justify-between">
-                        {statusSteps.map((step, index) => (
+                        {statusSteps.map((step) => (
                             <div key={step.key} className="flex flex-col items-center" style={{ flex: 1 }}>
                                 {/* Circle */}
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${step.completed

@@ -3,7 +3,7 @@ import {
     ArrowLeft, Phone, Mail, User, Users, CheckCircle,
     LayoutDashboard, Home, PoundSterling, FolderOpen, MessageSquare, ClipboardCheck
 } from 'lucide-react';
-import { Referral, ServiceType } from '../../types';
+import { Referral } from '../../types';
 import { ReferralTabId } from '../../types/tabs';
 export type { ReferralTabId };
 import StatusBadge from '../shared/StatusBadge';

@@ -37,9 +37,9 @@ interface FilterConfig {
  */
 export default function PeopleHub({ }: PeopleHubProps) {
     // Temporary helper for toasts until context is available
-    const showToast = (message: string, type: 'success' | 'error' | 'info') => {
-        console.log(`[${type.toUpperCase()}] ${message}`);
-        // In a real app, this would use a toast notification system
+    const showToast = (_message: string, _type: 'success' | 'error' | 'info') => {
+        // TODO: Integrate with toast notification system
+        // Placeholder for future toast implementation
     };
 
     // State

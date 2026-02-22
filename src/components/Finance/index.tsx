@@ -7,7 +7,6 @@ import {
     Calendar,
     Building2,
     Users,
-    Plus,
     ChevronRight
 } from 'lucide-react';
 import DocumentViewer from '../DocumentViewer';

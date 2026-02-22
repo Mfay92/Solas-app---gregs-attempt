@@ -75,7 +75,7 @@ const SupportLevelBadge: React.FC<{ level?: string }> = ({ level }) => {
     );
 };
 
-const SupportTab: React.FC<SupportTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const SupportTab: React.FC<SupportTabProps> = ({ person, borderColor = 'border-gray-200' }) => {
     const support = person.support;
 
     // Check if we have any support data

@@ -135,8 +135,8 @@ export default function LiveMeetingMode({
 
     const handleToggleDictation = () => {
         setIsRecording(!isRecording);
-        // Placeholder - in future this would connect to speech-to-text
-        console.log(isRecording ? 'Stopping dictation...' : 'Starting dictation...');
+        // TODO: Connect to speech-to-text API
+        // Future: Implement dictation feature
     };
 
     const completedAgendaItems = meeting.agenda.filter(a => a.completed).length;

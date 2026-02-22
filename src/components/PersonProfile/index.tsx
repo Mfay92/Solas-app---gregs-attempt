@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Person, ServiceType } from '../../types';
+import { Person } from '../../types';
 import { PersonTabId } from '../../types/tabs';
 import PersonHeroBanner from './PersonHeroBanner';
 import { getServiceTypeColor } from '../../utils/serviceTypeUtils';

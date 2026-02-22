@@ -94,7 +94,7 @@ const TimelineEvent: React.FC<{
     </div>
 );
 
-const TenancyTab: React.FC<TenancyTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const TenancyTab: React.FC<TenancyTabProps> = ({ person, onJumpToTab, borderColor = 'border-gray-200' }) => {
     // Calculate tenancy duration
     const getTenancyDuration = () => {
         if (!person.tenancy.moveInDate) return null;
@@ -196,7 +196,7 @@ const TenancyTab: React.FC<TenancyTabProps> = ({ person, onJumpToTab, serviceTyp
                             <button
                                 onClick={() => {
                                     // This would typically navigate to the property profile
-                                    console.log('Navigate to property:', person.tenancy.propertyId);
+                                    // TODO: Implement property navigation
                                 }}
                                 className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-ivolve-mid/5 hover:bg-ivolve-mid/10 rounded-lg text-sm text-ivolve-mid font-medium transition-colors"
                             >

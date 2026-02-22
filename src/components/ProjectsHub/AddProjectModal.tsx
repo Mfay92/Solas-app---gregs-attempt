@@ -8,8 +8,7 @@ import {
     Calendar,
     PoundSterling,
     Tag,
-    Building,
-    Users
+    Building
 } from 'lucide-react';
 import {
     Project,

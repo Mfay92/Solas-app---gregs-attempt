@@ -13,7 +13,7 @@ interface NotesTabProps {
     borderColor?: string;
 }
 
-export default function NotesTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: NotesTabProps) {
+export default function NotesTab({ borderColor = 'border-gray-200' }: NotesTabProps) {
     const [selectedType, setSelectedType] = useState<NoteType | 'All'>('All');
     const [expandedNotes, setExpandedNotes] = useState<Set<string>>(new Set());
 
@@ -177,7 +177,7 @@ export default function NotesTab({ person, onJumpToTab, serviceType, borderColor
 
                             {/* Notes */}
                             <div className="space-y-6">
-                                {sortedNotes.map((note, index) => {
+                                {sortedNotes.map((note) => {
                                     const isExpanded = expandedNotes.has(note.id);
                                     const contentPreview = note.content.length > 200
                                         ? note.content.substring(0, 200) + '...'

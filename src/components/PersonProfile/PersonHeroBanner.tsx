@@ -11,7 +11,7 @@ export type { PersonTabId };
 import QuickAccessToolbox from './QuickAccessToolbox';
 import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
 import AddNoteSidebar, { Note } from '../Notes/AddNoteSidebar';
-import WarningBannerModal, { Warning } from '../Forms/WarningBannerModal';
+import WarningBannerModal from '../Forms/WarningBannerModal';
 import AddWarningModal from '../Forms/AddWarningModal';
 import WarningIcon from '../shared/WarningIcon';
 
@@ -57,9 +57,9 @@ export default function PersonHeroBanner({
     }, [person.id]);
 
     // Notes handler
-    const handleSaveNote = (note: Omit<Note, 'id' | 'createdAt' | 'createdBy' | 'lastModifiedAt' | 'lastModifiedBy'>) => {
+    const handleSaveNote = (_note: Omit<Note, 'id' | 'createdAt' | 'createdBy' | 'lastModifiedAt' | 'lastModifiedBy'>) => {
         // TODO: Save note to state/backend
-        console.log('Saving note:', note);
+        // TODO: Implement note persistence
         setIsNotesSidebarOpen(false);
         // TODO: Show success toast
     };
@@ -77,25 +77,25 @@ export default function PersonHeroBanner({
 
     const handleRemoveWarning = () => {
         // TODO: Remove warning from person data
-        console.log('Removing warning for person:', person.id);
+        // TODO: Implement warning removal
         setShowWarningBanner(false);
         setHasAcknowledgedWarning(true);
         // TODO: Show success toast
     };
 
-    const handleSaveWarning = (content: string) => {
+    const handleSaveWarning = (_content: string) => {
         // TODO: Save warning to person data
-        const warningData: Warning = {
-            id: `warning-${Date.now()}`,
-            content,
-            createdAt: new Date().toISOString(),
-            createdBy: 'Matt Fay', // TODO: Get from auth system
-            ...(person.warning && {
-                lastUpdatedAt: new Date().toISOString(),
-                lastUpdatedBy: 'Matt Fay'
-            })
-        };
-        console.log('Saving warning:', warningData);
+        // Future: Create and persist warning object
+        // const warningData: Warning = {
+        //     id: `warning-${Date.now()}`,
+        //     content,
+        //     createdAt: new Date().toISOString(),
+        //     createdBy: 'Matt Fay', // TODO: Get from auth system
+        //     ...(person.warning && {
+        //         lastUpdatedAt: new Date().toISOString(),
+        //         lastUpdatedBy: 'Matt Fay'
+        //     })
+        // };
         setShowAddWarningModal(false);
         setHasAcknowledgedWarning(false); // Force re-acknowledgment after edit
         // TODO: Show success toast
@@ -282,7 +282,7 @@ export default function PersonHeroBanner({
                                 <button
                                     onClick={() => {
                                         // TODO: Open file picker for photo upload
-                                        console.log('Upload photo clicked');
+                                        // TODO: Implement photo upload
                                     }}
                                     className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-black/80 rounded-lg text-white shadow-lg transition-all"
                                     title="Upload or change photo"

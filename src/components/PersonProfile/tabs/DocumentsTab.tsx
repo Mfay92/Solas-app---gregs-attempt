@@ -32,7 +32,7 @@ interface MockDocument {
     fileType: 'pdf' | 'doc' | 'image' | 'other';
 }
 
-export default function DocumentsTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: DocumentsTabProps) {
+export default function DocumentsTab({ borderColor = 'border-gray-200' }: DocumentsTabProps) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
     const [selectedCategory, setSelectedCategory] = useState<DocumentCategory | 'All'>('All');
     const [searchQuery, setSearchQuery] = useState('');

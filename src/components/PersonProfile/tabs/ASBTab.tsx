@@ -164,7 +164,7 @@ const ASBCaseCard: React.FC<{ asbCase: ASBCase; borderColor?: string }> = ({ asb
     );
 };
 
-const ASBTab: React.FC<ASBTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const ASBTab: React.FC<ASBTabProps> = ({ borderColor = 'border-gray-200' }) => {
     // For now, mock empty state since person.cases?.asbCases will be empty
     // In future, we'll fetch actual cases from a backend
     const cases: ASBCase[] = [];

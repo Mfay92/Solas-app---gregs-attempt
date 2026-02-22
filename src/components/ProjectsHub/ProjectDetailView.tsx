@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     X,
-    Edit,
     Trash2,
     CheckCircle2,
     Circle,
@@ -17,7 +16,6 @@ import {
 import {
     Project,
     Task,
-    PROJECT_STATUSES,
     TEAM_MEMBERS,
     calculateProjectHealth,
     getHealthColor,
@@ -28,7 +26,6 @@ import {
     generateTaskId
 } from '../../types/projects';
 import { useToast } from '../ToastProvider';
-import AddProjectModal from './AddProjectModal';
 
 interface ProjectDetailViewProps {
     project: Project;
@@ -40,7 +37,7 @@ interface ProjectDetailViewProps {
 export default function ProjectDetailView({ project, onClose, onUpdate, onDelete }: ProjectDetailViewProps) {
     const { showToast } = useToast();
     const [showAddTask, setShowAddTask] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    // const [showEditModal, setShowEditModal] = useState(false); // Future feature
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     // Add Task form state
@@ -211,6 +208,7 @@ export default function ProjectDetailView({ project, onClose, onUpdate, onDelete
                         </div>
 
                         <div className="flex items-center gap-2">
+                            {/* Future feature: Edit project
                             <button
                                 onClick={() => setShowEditModal(true)}
                                 className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -218,6 +216,7 @@ export default function ProjectDetailView({ project, onClose, onUpdate, onDelete
                             >
                                 <Edit size={20} className="text-white" />
                             </button>
+                            */}
                             <button
                                 onClick={onClose}
                                 className="p-2 hover:bg-white/20 rounded-lg transition-colors"

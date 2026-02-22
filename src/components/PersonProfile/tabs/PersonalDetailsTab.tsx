@@ -127,7 +127,7 @@ const EmergencyContactCard: React.FC<{
     </div>
 );
 
-const PersonalDetailsTab: React.FC<PersonalDetailsTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const PersonalDetailsTab: React.FC<PersonalDetailsTabProps> = ({ person, borderColor = 'border-gray-200' }) => {
     // Calculate age
     const calculateAge = (dob?: string) => {
         if (!dob) return null;

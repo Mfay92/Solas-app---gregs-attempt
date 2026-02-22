@@ -321,7 +321,7 @@ const PropertyHubEnhanced: React.FC = () => {
 
     // Handle bulk action
     const handleBulkAction = useCallback((actionId: string) => {
-        console.log(`Bulk action: ${actionId} on ${selectedRows.size} items`);
+        // TODO: Implement bulk actions (export, archive, etc.)
         // Implement actual actions here
         if (actionId === 'delete') {
             // In a real app, this would call an API

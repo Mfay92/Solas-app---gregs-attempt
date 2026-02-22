@@ -23,7 +23,7 @@ interface PersonComplianceItem {
     notes?: string;
 }
 
-export default function ComplianceTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: ComplianceTabProps) {
+export default function ComplianceTab({ borderColor = 'border-gray-200' }: ComplianceTabProps) {
     // Mock data - will be replaced with real data later
     const complianceItems: PersonComplianceItem[] = [];
 

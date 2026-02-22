@@ -122,7 +122,7 @@ const SafeguardingCaseCard: React.FC<{ safeguardingCase: SafeguardingCase; borde
     );
 };
 
-const SafeguardingTab: React.FC<SafeguardingTabProps> = ({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }) => {
+const SafeguardingTab: React.FC<SafeguardingTabProps> = ({ borderColor = 'border-gray-200' }) => {
     // For now, mock empty state since person.cases?.safeguardingCases will be empty
     // In future, we'll fetch actual cases from a backend
     const cases: SafeguardingCase[] = [];

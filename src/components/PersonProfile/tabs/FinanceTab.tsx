@@ -9,7 +9,7 @@ interface FinanceTabProps {
     borderColor?: string;
 }
 
-export default function FinanceTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: FinanceTabProps) {
+export default function FinanceTab({ person, borderColor = 'border-gray-200' }: FinanceTabProps) {
     const { finance } = person;
 
     // Calculate totals

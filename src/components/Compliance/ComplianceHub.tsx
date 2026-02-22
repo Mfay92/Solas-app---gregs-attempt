@@ -15,30 +15,6 @@ import {
 
 type StatusFilter = 'all' | 'issues' | 'compliant';
 
-// Summary card component
-const SummaryCard: React.FC<{
-  label: string;
-  value: number;
-  icon: React.ReactNode;
-  bgColor: string;
-  textColor: string;
-  onClick?: () => void;
-  isActive?: boolean;
-}> = ({ label, value, icon, bgColor, textColor, onClick, isActive }) => (
-  <button
-    onClick={onClick}
-    className={`p-4 rounded-xl border-2 transition-all text-left ${bgColor} ${
-      isActive ? 'border-slate-400 shadow-lg scale-[1.02]' : 'border-transparent hover:border-slate-200'
-    }`}
-  >
-    <div className="flex items-center justify-between mb-2">
-      <span className={`text-sm font-medium ${textColor}`}>{label}</span>
-      <span className={textColor}>{icon}</span>
-    </div>
-    <p className={`text-3xl font-bold ${textColor}`}>{value}</p>
-  </button>
-);
-
 // Matrix cell component
 const MatrixCell: React.FC<{
   record: ComplianceRecord | undefined;

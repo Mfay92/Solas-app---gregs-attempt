@@ -285,7 +285,7 @@ export default function QuickAccessToolbox({ person, serviceType, className = ''
 
     const handleAddDocument = () => {
         // TODO: Open file picker or document selector
-        console.log('Add document clicked');
+        // TODO: Implement document upload
     };
 
     // Contacts handlers
@@ -756,7 +756,7 @@ export default function QuickAccessToolbox({ person, serviceType, className = ''
                                             handleAddContact();
                                         } else {
                                             // TODO: Open settings/edit modal for other tabs
-                                            console.log(`Settings clicked for ${activeTab}`);
+                                            // TODO: Implement settings panel
                                         }
                                     }}
                                     className="p-1.5 rounded-md bg-amber-600/30 hover:bg-amber-600/50 backdrop-blur-sm transition-all group"

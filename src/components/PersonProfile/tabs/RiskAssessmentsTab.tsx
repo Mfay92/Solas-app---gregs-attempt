@@ -9,7 +9,7 @@ interface RiskAssessmentsTabProps {
     borderColor?: string;
 }
 
-export default function RiskAssessmentsTab({ person, onJumpToTab, serviceType, borderColor = 'border-gray-200' }: RiskAssessmentsTabProps) {
+export default function RiskAssessmentsTab({ borderColor = 'border-gray-200' }: RiskAssessmentsTabProps) {
     // Mock data - will be replaced with real data later
     const riskAssessments: RiskAssessment[] = [];
 

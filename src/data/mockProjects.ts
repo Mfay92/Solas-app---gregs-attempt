@@ -585,7 +585,7 @@ export const mockProjects: Project[] = [
  */
 export function loadMockProjects(): void {
     localStorage.setItem('solas_projects', JSON.stringify(mockProjects));
-    console.log(`✅ Loaded ${mockProjects.length} mock projects into localStorage`);
+    // Mock data loaded successfully
 }
 
 /**
@@ -593,5 +593,5 @@ export function loadMockProjects(): void {
  */
 export function clearProjects(): void {
     localStorage.removeItem('solas_projects');
-    console.log('🗑️ Cleared all projects from localStorage');
+    // Projects cleared from storage
 }

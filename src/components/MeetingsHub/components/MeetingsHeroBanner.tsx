@@ -136,8 +136,8 @@ export default function MeetingsHeroBanner({
         // Find the meeting and update the action
         const meeting = meetings.find(m => m.id === action.meetingId);
         if (meeting) {
-            // This would typically update state through a callback
-            console.log('Toggle action complete:', action.id);
+            // TODO: Update meeting state through callback
+            // Future: Implement action state persistence
         }
     };
 
