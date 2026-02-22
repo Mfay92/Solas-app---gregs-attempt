@@ -4,7 +4,7 @@ import {
     ArrowRight, CheckCircle, XCircle, AlertCircle
 } from 'lucide-react';
 import { Person, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 import StatusBadge from '../../shared/StatusBadge';
 
 interface TenancyTabProps {

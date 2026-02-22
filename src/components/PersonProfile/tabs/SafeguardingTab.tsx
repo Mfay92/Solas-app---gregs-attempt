@@ -1,7 +1,7 @@
 import React from 'react';
 import { Shield, Plus, AlertCircle, Calendar, User } from 'lucide-react';
 import { Person, SafeguardingCase, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface SafeguardingTabProps {
     person: Person;

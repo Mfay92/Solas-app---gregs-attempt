@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import {
     X, User, Phone, Save, ChevronRight, ChevronLeft,
-    UserCircle, Building, LifeBuoy, AlertCircle
+    UserCircle, Building, LifeBuoy, AlertCircle,
+    type LucideIcon
 } from 'lucide-react';
 import {
     Person,
@@ -22,7 +23,7 @@ interface AddPersonModalProps {
 
 type FormStep = 'personal' | 'tenancy' | 'support' | 'emergency';
 
-const STEPS: { id: FormStep; label: string; icon: any }[] = [
+const STEPS: { id: FormStep; label: string; icon: LucideIcon }[] = [
     { id: 'personal', label: 'Personal Details', icon: UserCircle },
     { id: 'tenancy', label: 'Tenancy', icon: Building },
     { id: 'support', label: 'Support & Care', icon: LifeBuoy },

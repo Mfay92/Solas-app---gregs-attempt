@@ -1,5 +1,5 @@
 import { Referral } from '../../../types';
-import { ReferralTabId } from '../ReferralHeroBanner';
+import { ReferralTabId } from '../../../types/tabs';
 import { User, Calendar, Building2, Heart, PoundSterling, FileText, Clock, CheckCircle } from 'lucide-react';
 
 interface OverviewTabProps {

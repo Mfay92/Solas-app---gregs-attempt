@@ -1,6 +1,6 @@
 import { ShieldCheck, Plus, Calendar, FileText, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 import { Person, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface ComplianceTabProps {
     person: Person;

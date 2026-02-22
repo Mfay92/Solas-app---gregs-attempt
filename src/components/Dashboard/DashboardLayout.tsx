@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import { Layout as LayoutIcon, ArrowLeft, X, Package } from 'lucide-react';
+import { Layout as LayoutIcon, ArrowLeft, X, Package, Plus, Bell, CheckSquare } from 'lucide-react';
 import { WidgetWrapper } from './WidgetWrapper';
 import { WidgetCentre } from './WidgetCentre';
-import { DashboardHeader } from './DashboardHeader';
 import { useToast } from '../ToastProvider';
 import { DashboardItem, WidgetData } from './types';
 import { BatteryWidget } from './Widgets/BatteryWidget';
@@ -222,18 +221,80 @@ export const DashboardLayout: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden page-enter">
+        <div className="min-h-screen bg-ivolve-paper -m-6">
             <style>{gridStyles}</style>
 
-            {/* New Header */}
-            <DashboardHeader
-                onAddWidget={() => setIsWidgetCentreOpen(true)}
-                onToggleStorage={() => setIsStorageOpen(!isStorageOpen)}
-            />
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-ivolve-mid to-green-600 w-full shadow-md">
+                <div className="px-6 py-6">
+                    {/* Header Content */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                                <LayoutIcon size={28} className="text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-3xl font-bold text-white">My Dashboard</h1>
+                                <p className="text-white/80 mt-1">
+                                    Your personalised workspace for monitoring key metrics and quick access to important information
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => setIsStorageOpen(!isStorageOpen)}
+                                className="flex items-center gap-2 bg-white/10 border-2 border-white/30 text-white px-4 py-2 rounded-lg font-medium hover:bg-white/20 transition-colors"
+                            >
+                                <Package size={18} />
+                                Storage
+                            </button>
+                            <button
+                                onClick={() => setIsWidgetCentreOpen(true)}
+                                className="flex items-center gap-2 bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-white/90 transition-colors"
+                            >
+                                <Plus size={18} />
+                                Add Widget
+                            </button>
+                        </div>
+                    </div>
 
+                    {/* Quick Stats */}
+                    <div className="grid grid-cols-4 gap-4 mt-6">
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <CheckSquare size={14} />
+                                Active Tasks
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">0</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <Bell size={14} />
+                                Notifications
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">0</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <LayoutIcon size={14} />
+                                Active Widgets
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{items.length}</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <Package size={14} />
+                                In Storage
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{dockedItems.length}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
             <div className="flex flex-1 overflow-hidden relative">
-                {/* Main Content Area */}
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 overflow-y-auto p-6">
                     <div className="max-w-[1600px] mx-auto">
 
                         {items.length === 0 ? (

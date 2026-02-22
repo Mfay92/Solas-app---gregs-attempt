@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { PropertyAsset } from '../../types';
-import PropertyHeroBanner, { TabId } from './PropertyHeroBanner';
+import { PropertyTabId } from '../../types/tabs';
+import PropertyHeroBanner from './PropertyHeroBanner';
 import FloatingToolbar from './FloatingToolbar';
 
 // Tab content components
@@ -32,7 +33,7 @@ interface PropertyProfileProps {
 }
 
 const PropertyProfile: React.FC<PropertyProfileProps> = ({ asset, onBack, units }) => {
-    const [activeTab, setActiveTab] = useState<TabId>('service-overview');
+    const [activeTab, setActiveTab] = useState<PropertyTabId>('service-overview');
 
     // Sidebar states
     const [isDocumentsSidebarOpen, setIsDocumentsSidebarOpen] = useState(false);

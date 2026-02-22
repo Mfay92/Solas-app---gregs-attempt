@@ -1,6 +1,6 @@
 import { Activity, Plus, FileText, Calendar, AlertCircle, User, Shield } from 'lucide-react';
 import { Person, RiskAssessment, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface RiskAssessmentsTabProps {
     person: Person;

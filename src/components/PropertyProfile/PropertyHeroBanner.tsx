@@ -1,71 +1,23 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import {
     ArrowLeft, Building, Camera,
-    MapPin, Phone, Mail, Users, User, X,
+    MapPin, Phone, Mail, Users, User,
     LayoutDashboard, Building2, Wrench as WrenchIcon,
     Scale, PoundSterling, ShieldCheck
 } from 'lucide-react';
 import { PropertyAsset } from '../../types';
+import { PropertyTabId } from '../../types/tabs';
+export type { PropertyTabId };
 import StatusBadge from '../shared/StatusBadge';
 import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
-
-// Tab types
-export type TabId = 'service-overview' | 'property-details' | 'units-occupancy' | 'repairs-compliance' | 'compliance' | 'rps-landlords' | 'legal' | 'rents-finance';
+import ContactPopover from '../shared/ContactPopover';
 
 interface PropertyHeroBannerProps {
     asset: PropertyAsset;
     onBack: () => void;
     onGalleryClick: () => void;
-    activeTab: TabId;
-    onTabChange: (tab: TabId) => void;
-}
-
-// Contact popover component
-interface ContactPopoverProps {
-    isOpen: boolean;
-    onClose: () => void;
-    title: string;
-    children: React.ReactNode;
-    anchorRef: React.RefObject<HTMLButtonElement | null>;
-}
-
-function ContactPopover({ isOpen, onClose, title, children, anchorRef }: ContactPopoverProps) {
-    const popoverRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (
-                popoverRef.current &&
-                !popoverRef.current.contains(e.target as Node) &&
-                anchorRef.current &&
-                !anchorRef.current.contains(e.target as Node)
-            ) {
-                onClose();
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isOpen, onClose, anchorRef]);
-
-    if (!isOpen) return null;
-
-    return (
-        <div
-            ref={popoverRef}
-            className="absolute top-full left-0 mt-2 z-[100] bg-white rounded-xl shadow-xl border border-gray-100 p-3 min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200"
-        >
-            <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{title}</span>
-                <button onClick={onClose} className="p-0.5 hover:bg-gray-100 rounded transition-colors">
-                    <X size={12} className="text-gray-400" />
-                </button>
-            </div>
-            {children}
-        </div>
-    );
+    activeTab: PropertyTabId;
+    onTabChange: (tab: PropertyTabId) => void;
 }
 
 export default function PropertyHeroBanner({
@@ -92,14 +44,14 @@ export default function PropertyHeroBanner({
 
     // Tab configuration
     const tabs = [
-        { id: 'service-overview' as TabId, label: 'Overview', icon: LayoutDashboard },
-        { id: 'property-details' as TabId, label: 'Property', icon: Building },
-        { id: 'units-occupancy' as TabId, label: 'Units', icon: Building2 },
-        { id: 'repairs-compliance' as TabId, label: 'Repairs', icon: WrenchIcon },
-        { id: 'compliance' as TabId, label: 'Compliance', icon: ShieldCheck },
-        { id: 'rps-landlords' as TabId, label: 'RPs', icon: Users },
-        { id: 'legal' as TabId, label: 'Legal', icon: Scale },
-        { id: 'rents-finance' as TabId, label: 'Finance', icon: PoundSterling },
+        { id: 'service-overview' as PropertyTabId, label: 'Overview', icon: LayoutDashboard },
+        { id: 'property-details' as PropertyTabId, label: 'Property', icon: Building },
+        { id: 'units-occupancy' as PropertyTabId, label: 'Units', icon: Building2 },
+        { id: 'repairs-compliance' as PropertyTabId, label: 'Repairs', icon: WrenchIcon },
+        { id: 'compliance' as PropertyTabId, label: 'Compliance', icon: ShieldCheck },
+        { id: 'rps-landlords' as PropertyTabId, label: 'RPs', icon: Users },
+        { id: 'legal' as PropertyTabId, label: 'Legal', icon: Scale },
+        { id: 'rents-finance' as PropertyTabId, label: 'Finance', icon: PoundSterling },
     ];
 
     return (

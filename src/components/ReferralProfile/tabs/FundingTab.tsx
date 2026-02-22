@@ -1,5 +1,5 @@
 import { Referral } from '../../../types';
-import { ReferralTabId } from '../ReferralHeroBanner';
+import { ReferralTabId } from '../../../types/tabs';
 import { PoundSterling, CheckCircle, Clock, Building2 } from 'lucide-react';
 
 interface FundingTabProps {

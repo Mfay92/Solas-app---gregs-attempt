@@ -41,64 +41,65 @@ const FinancePage: React.FC = () => {
     const totalUnits = allRentSchedules.reduce((sum, s) => sum + s.header.occupancyLevel, 0);
 
     return (
-        <div className="p-6 space-y-6 animate-fade-in">
-            {/* Page Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-black text-ivolve-dark flex items-center gap-2">
-                        <PoundSterling className="w-7 h-7 text-ivolve-mid" />
-                        Finance
-                    </h1>
-                    <p className="text-gray-500 mt-1">
-                        Manage rent schedules, invoicing, and financial reporting
-                    </p>
+        <div className="min-h-screen bg-ivolve-paper -m-6 animate-fade-in">
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-emerald-600 to-green-600 px-4 md:px-8 py-8 mb-6">
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                        <PoundSterling size={32} className="text-white" />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-white">Finance Hub</h1>
+                        <p className="text-white/80">Manage rent schedules, invoicing, and financial reporting</p>
+                    </div>
                 </div>
-                <button className="inline-flex items-center space-x-2 px-4 py-2.5 bg-ivolve-mid text-white rounded-xl font-medium hover:bg-ivolve-dark transition-colors shadow-sm">
-                    <Plus size={18} />
-                    <span>Upload Schedule</span>
-                </button>
+
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Total Schedules</p>
+                                <p className="text-2xl font-bold text-white">{totalSchedules}</p>
+                            </div>
+                            <FileText className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Weekly Rent</p>
+                                <p className="text-2xl font-bold text-white">£{totalWeeklyRent.toFixed(2)}</p>
+                            </div>
+                            <PoundSterling className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Total Units</p>
+                                <p className="text-2xl font-bold text-white">{totalUnits}</p>
+                            </div>
+                            <Users className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Annual Income</p>
+                                <p className="text-2xl font-bold text-white">£{(totalWeeklyRent * 52).toFixed(0)}</p>
+                            </div>
+                            <Calendar className="text-white/70" size={28} />
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-gray-500">Total Schedules</p>
-                            <p className="text-3xl font-black text-ivolve-dark mt-1">{totalSchedules}</p>
-                        </div>
-                        <div className="w-12 h-12 rounded-xl bg-ivolve-mid/10 flex items-center justify-center">
-                            <FileText className="w-6 h-6 text-ivolve-mid" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-gray-500">Total Weekly Rent</p>
-                            <p className="text-3xl font-black text-ivolve-dark mt-1">
-                                £{totalWeeklyRent.toFixed(2)}
-                            </p>
-                        </div>
-                        <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
-                            <PoundSterling className="w-6 h-6 text-emerald-600" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-gray-500">Total Units</p>
-                            <p className="text-3xl font-black text-ivolve-dark mt-1">{totalUnits}</p>
-                        </div>
-                        <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-                            <Users className="w-6 h-6 text-blue-600" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/* Main Content Wrapper */}
+            <div className="p-6 space-y-6">
 
             {/* Rent Schedules Section */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -242,6 +243,7 @@ const FinancePage: React.FC = () => {
                         Income projections, void cost analysis, arrears tracking, and comprehensive financial dashboards.
                     </p>
                 </div>
+            </div>
             </div>
 
             {/* Document Viewer Modal */}

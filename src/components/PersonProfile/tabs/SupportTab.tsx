@@ -4,7 +4,7 @@ import {
     Pill, Utensils, Accessibility
 } from 'lucide-react';
 import { Person, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface SupportTabProps {
     person: Person;

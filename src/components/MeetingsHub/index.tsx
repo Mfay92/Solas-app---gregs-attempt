@@ -15,7 +15,10 @@ import {
     MapPin,
     Repeat,
     ChevronDown,
-    ChevronUp
+    ChevronUp,
+    Star,
+    Eye,
+    EyeOff
 } from 'lucide-react';
 
 interface ActionWithMeeting extends ActionItem {
@@ -63,6 +66,25 @@ export default function MeetingsHub() {
         recurrence: 'All'
     });
 
+    // Quick toggle states
+    const [hideCompleted, setHideCompleted] = useState(false);
+    const [showStarredOnly, setShowStarredOnly] = useState(false);
+    const [starredMeetings, setStarredMeetings] = useState<Set<string>>(new Set());
+
+    // Toggle star for a meeting
+    const toggleStar = (meetingId: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setStarredMeetings(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(meetingId)) {
+                newSet.delete(meetingId);
+            } else {
+                newSet.add(meetingId);
+            }
+            return newSet;
+        });
+    };
+
     // Filter and sort meetings
     const filteredAndSortedMeetings = useMemo(() => {
         // Apply filters first
@@ -78,6 +100,14 @@ export default function MeetingsHub() {
             }
             return true;
         });
+
+        // Apply quick toggles
+        if (hideCompleted) {
+            filtered = filtered.filter(meeting => meeting.status !== 'Completed');
+        }
+        if (showStarredOnly) {
+            filtered = filtered.filter(meeting => starredMeetings.has(meeting.id));
+        }
 
         // Then apply search query
         filtered = filtered.filter(meeting => {
@@ -131,7 +161,7 @@ export default function MeetingsHub() {
         });
 
         return filtered;
-    }, [meetings, searchQuery, sortConfig, filters]);
+    }, [meetings, searchQuery, sortConfig, filters, hideCompleted, showStarredOnly, starredMeetings]);
 
     // Clear all filters
     const handleClearFilters = () => {
@@ -263,6 +293,10 @@ export default function MeetingsHub() {
                 meeting={selectedMeeting}
                 onBack={() => setSelectedMeeting(null)}
                 onUpdate={handleUpdateMeeting}
+                onStartLiveMeeting={(meeting) => {
+                    setSelectedMeeting(null);
+                    setLiveMeetingMode(meeting);
+                }}
             />
         );
     }
@@ -326,11 +360,49 @@ export default function MeetingsHub() {
                             </button>
                         </div>
 
-                        {/* Results Count */}
-                        <p className="text-sm text-gray-500 mt-3">
-                            Showing {filteredAndSortedMeetings.length} of {meetings.length} meetings
-                            {searchQuery && ` matching "${searchQuery}"`}
-                        </p>
+                        {/* Results Count & Quick Toggles */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
+                            <p className="text-sm text-gray-500">
+                                Showing {filteredAndSortedMeetings.length} of {meetings.length} meetings
+                                {searchQuery && ` matching "${searchQuery}"`}
+                            </p>
+
+                            {/* Quick Toggle Buttons */}
+                            <div className="flex items-center gap-2">
+                                {/* Show Starred Only */}
+                                <button
+                                    onClick={() => setShowStarredOnly(!showStarredOnly)}
+                                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                                        showStarredOnly
+                                            ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                            : 'bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    <Star size={14} className={showStarredOnly ? 'fill-amber-500' : ''} />
+                                    Starred
+                                    {starredMeetings.size > 0 && (
+                                        <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                                            showStarredOnly ? 'bg-amber-200' : 'bg-gray-200'
+                                        }`}>
+                                            {starredMeetings.size}
+                                        </span>
+                                    )}
+                                </button>
+
+                                {/* Hide Completed */}
+                                <button
+                                    onClick={() => setHideCompleted(!hideCompleted)}
+                                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                                        hideCompleted
+                                            ? 'bg-green-100 text-green-800 border border-green-300'
+                                            : 'bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    {hideCompleted ? <EyeOff size={14} /> : <Eye size={14} />}
+                                    {hideCompleted ? 'Completed Hidden' : 'Hide Completed'}
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Filter Panel */}
@@ -476,16 +548,36 @@ export default function MeetingsHub() {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
-                                    {filteredAndSortedMeetings.map((meeting) => (
+                                    {filteredAndSortedMeetings.map((meeting) => {
+                                        const isStarred = starredMeetings.has(meeting.id);
+                                        const isCompleted = meeting.status === 'Completed';
+                                        return (
                                         <tr
                                             key={meeting.id}
-                                            className="hover:bg-ivolve-paper/50 transition-colors cursor-pointer"
+                                            className={`transition-colors cursor-pointer ${
+                                                isCompleted
+                                                    ? 'bg-green-50/50 hover:bg-green-100/50'
+                                                    : 'hover:bg-ivolve-paper/50'
+                                            }`}
                                             onClick={() => setSelectedMeeting(meeting)}
                                         >
                                             <td className="px-4 py-3">
-                                                <span className="text-sm font-mono text-gray-600">
-                                                    {meeting.meetingRef}
-                                                </span>
+                                                <div className="flex items-center gap-2">
+                                                    <button
+                                                        onClick={(e) => toggleStar(meeting.id, e)}
+                                                        className={`p-1 rounded transition-colors ${
+                                                            isStarred
+                                                                ? 'text-amber-500 hover:text-amber-600'
+                                                                : 'text-gray-300 hover:text-amber-400'
+                                                        }`}
+                                                        title={isStarred ? 'Remove from starred' : 'Add to starred'}
+                                                    >
+                                                        <Star size={16} className={isStarred ? 'fill-amber-500' : ''} />
+                                                    </button>
+                                                    <span className="text-sm font-mono text-gray-600">
+                                                        {meeting.meetingRef}
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td className="px-4 py-3">
                                                 <div className="flex items-center gap-2">
@@ -547,36 +639,56 @@ export default function MeetingsHub() {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
 
                         {/* Mobile Cards */}
                         <div className="md:hidden divide-y divide-gray-100">
-                            {filteredAndSortedMeetings.map((meeting) => (
+                            {filteredAndSortedMeetings.map((meeting) => {
+                                const isStarred = starredMeetings.has(meeting.id);
+                                const isCompleted = meeting.status === 'Completed';
+                                return (
                                 <div
                                     key={meeting.id}
-                                    className="p-4 hover:bg-ivolve-paper/50 transition-colors cursor-pointer"
+                                    className={`p-4 transition-colors cursor-pointer ${
+                                        isCompleted
+                                            ? 'bg-green-50/50 hover:bg-green-100/50'
+                                            : 'hover:bg-ivolve-paper/50'
+                                    }`}
                                     onClick={() => setSelectedMeeting(meeting)}
                                 >
                                     <div className="flex items-start justify-between gap-3 mb-2">
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <span className="font-medium text-gray-800">
-                                                    {meeting.title}
-                                                </span>
-                                                {meeting.recurrence !== 'One-off' && (
-                                                    <Repeat size={14} className="text-gray-400" />
-                                                )}
+                                        <div className="flex items-start gap-2">
+                                            <button
+                                                onClick={(e) => toggleStar(meeting.id, e)}
+                                                className={`p-1 rounded transition-colors ${
+                                                    isStarred
+                                                        ? 'text-amber-500 hover:text-amber-600'
+                                                        : 'text-gray-300 hover:text-amber-400'
+                                                }`}
+                                            >
+                                                <Star size={16} className={isStarred ? 'fill-amber-500' : ''} />
+                                            </button>
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className="font-medium text-gray-800">
+                                                        {meeting.title}
+                                                    </span>
+                                                    {meeting.recurrence !== 'One-off' && (
+                                                        <Repeat size={14} className="text-gray-400" />
+                                                    )}
+                                                </div>
+                                                <p className="text-xs font-mono text-gray-500">{meeting.meetingRef}</p>
                                             </div>
-                                            <p className="text-xs font-mono text-gray-500">{meeting.meetingRef}</p>
                                         </div>
                                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(meeting.status)}`}>
                                             {meeting.status}
                                         </span>
                                     </div>
-                                    <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-3">
+                                    <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-3 ml-8">
                                         <span className="flex items-center gap-1">
                                             <Calendar size={14} className="text-gray-400" />
                                             {formatDate(meeting.scheduledDate)} at {formatTime(meeting.scheduledTime)}
@@ -586,7 +698,7 @@ export default function MeetingsHub() {
                                             {meeting.location || 'TBC'}
                                         </span>
                                     </div>
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex items-center justify-between ml-8">
                                         <div className="flex items-center gap-2">
                                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getMeetingTypeColor(meeting.meetingType)}`}>
                                                 {meeting.meetingType}
@@ -607,7 +719,8 @@ export default function MeetingsHub() {
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 ) : (

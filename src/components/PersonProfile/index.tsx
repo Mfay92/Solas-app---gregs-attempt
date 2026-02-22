@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Person, ServiceType } from '../../types';
-import PersonHeroBanner, { PersonTabId } from './PersonHeroBanner';
+import { PersonTabId } from '../../types/tabs';
+import PersonHeroBanner from './PersonHeroBanner';
 import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
 
 // Tab content components

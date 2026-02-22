@@ -1,6 +1,6 @@
 import { ClipboardList, Plus, FileText, Calendar, AlertCircle, User } from 'lucide-react';
 import { Person, SupportPlan, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface SupportPlansTabProps {
     person: Person;

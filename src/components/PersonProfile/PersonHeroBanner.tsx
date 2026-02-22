@@ -1,32 +1,19 @@
 import { useState, useEffect } from 'react';
 import {
-    ArrowLeft, Camera, Phone, Mail, MapPin, User, Users, X,
+    ArrowLeft, Camera, MapPin, User,
     LayoutDashboard, Home, Heart, Shield, AlertTriangle,
     ClipboardList, Activity, ShieldCheck, PoundSterling, FolderOpen, MessageSquare,
-    Edit3, PlusCircle, Wrench
+    Edit3, PlusCircle
 } from 'lucide-react';
 import { Person } from '../../types';
+import { PersonTabId } from '../../types/tabs';
+export type { PersonTabId };
 import QuickAccessToolbox from './QuickAccessToolbox';
 import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
 import AddNoteSidebar, { Note } from '../Notes/AddNoteSidebar';
 import WarningBannerModal, { Warning } from '../Forms/WarningBannerModal';
 import AddWarningModal from '../Forms/AddWarningModal';
 import WarningIcon from '../shared/WarningIcon';
-
-// Tab types (unchanged)
-export type PersonTabId =
-    | 'overview'
-    | 'personal-details'
-    | 'tenancy'
-    | 'support'
-    | 'safeguarding'
-    | 'asb'
-    | 'support-plans'
-    | 'risk-assessments'
-    | 'compliance'
-    | 'finance'
-    | 'documents'
-    | 'notes';
 
 interface PersonHeroBannerProps {
     person: Person;
@@ -120,7 +107,6 @@ export default function PersonHeroBanner({
 
     const hasPhoto = !!person.personal.photo;
     const displayName = `${person.personal.firstName} ${person.personal.lastName}`;
-    const preferredName = person.personal.preferredName;
 
     // Get service type colors
     // Default to 'Supported Living' if serviceType is not set
@@ -324,11 +310,11 @@ export default function PersonHeroBanner({
                                 className="w-full text-white py-1.5 px-3 rounded-lg text-center font-bold text-xs shadow-md uppercase tracking-wider backdrop-blur-sm border-2"
                                 style={{
                                     backgroundColor: serviceType === 'Supported Living' ? '#6BD052' :
-                                                    serviceType === 'Residential Care' ? '#60A5FA' :
-                                                    '#FB7185',
+                                        serviceType === 'Residential Care' ? '#60A5FA' :
+                                            '#FB7185',
                                     borderColor: serviceType === 'Supported Living' ? '#4ade80' :
-                                                serviceType === 'Residential Care' ? '#3b82f6' :
-                                                '#f43f5e'
+                                        serviceType === 'Residential Care' ? '#3b82f6' :
+                                            '#f43f5e'
                                 }}
                             >
                                 {serviceType}

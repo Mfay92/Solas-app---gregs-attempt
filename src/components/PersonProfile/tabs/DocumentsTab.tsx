@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Person, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 import {
     FolderOpen, Upload, FileText, FileImage, File,
     Download, Eye, Trash2, Search, Grid3x3, List, Filter

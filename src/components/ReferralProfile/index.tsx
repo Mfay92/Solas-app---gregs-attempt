@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Referral } from '../../types';
-import ReferralHeroBanner, { ReferralTabId } from './ReferralHeroBanner';
+import { ReferralTabId } from '../../types/tabs';
+import ReferralHeroBanner from './ReferralHeroBanner';
 import { useToast } from '../ToastProvider';
 import { convertReferralToPerson, savePersonToLocalStorage, markReferralAsMovedIn } from '../../utils/referralConversion';
 

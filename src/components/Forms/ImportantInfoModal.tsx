@@ -23,37 +23,37 @@ const INFO_TYPES = [
     {
         value: 'allergy' as const,
         label: 'Allergy Warning',
-        colors: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-800' },
+        colors: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-800', textDark: 'text-orange-900' },
         colorValues: { bg: 'orange-100', border: 'orange-500', text: 'orange-800' }
     },
     {
         value: 'communication' as const,
         label: 'Communication',
-        colors: { bg: 'bg-sky-100', border: 'border-sky-500', text: 'text-sky-800' },
+        colors: { bg: 'bg-sky-100', border: 'border-sky-500', text: 'text-sky-800', textDark: 'text-sky-900' },
         colorValues: { bg: 'sky-100', border: 'sky-500', text: 'sky-800' }
     },
     {
         value: 'medical' as const,
         label: 'Medical',
-        colors: { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800' },
+        colors: { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800', textDark: 'text-red-900' },
         colorValues: { bg: 'red-100', border: 'red-500', text: 'red-800' }
     },
     {
         value: 'dietary' as const,
         label: 'Dietary',
-        colors: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800' },
+        colors: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800', textDark: 'text-green-900' },
         colorValues: { bg: 'green-100', border: 'green-500', text: 'green-800' }
     },
     {
         value: 'mobility' as const,
         label: 'Mobility',
-        colors: { bg: 'bg-purple-100', border: 'border-purple-500', text: 'text-purple-800' },
+        colors: { bg: 'bg-purple-100', border: 'border-purple-500', text: 'text-purple-800', textDark: 'text-purple-900' },
         colorValues: { bg: 'purple-100', border: 'purple-500', text: 'purple-800' }
     },
     {
         value: 'other' as const,
         label: 'Other',
-        colors: { bg: 'bg-gray-100', border: 'border-gray-500', text: 'text-gray-800' },
+        colors: { bg: 'bg-gray-100', border: 'border-gray-500', text: 'text-gray-800', textDark: 'text-gray-900' },
         colorValues: { bg: 'gray-100', border: 'gray-500', text: 'gray-800' }
     }
 ];
@@ -217,12 +217,12 @@ export default function ImportantInfoModal({ info, onSave, onClose }: ImportantI
                         </label>
                         <div className={`p-3 rounded-md border-l-4 ${selectedType.colors.bg} ${selectedType.colors.border} shadow-md`}>
                             <div className="flex items-start gap-2">
-                                <AlertCircle size={14} className={`${selectedType.colors.text.replace('text-', 'text-')} mt-0.5 shrink-0`} />
+                                <AlertCircle size={14} className={`${selectedType.colors.text} mt-0.5 shrink-0`} />
                                 <div>
                                     <p className={`text-[10px] font-bold ${selectedType.colors.text} uppercase tracking-wide mb-0.5`}>
                                         {title || 'Title will appear here'}
                                     </p>
-                                    <p className={`text-xs ${selectedType.colors.text.replace('800', '900')}`}>
+                                    <p className={`text-xs ${selectedType.colors.textDark}`}>
                                         {description || 'Description will appear here'}
                                     </p>
                                 </div>

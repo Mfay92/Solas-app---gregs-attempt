@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertTriangle, Plus, AlertCircle, Calendar, FileText } from 'lucide-react';
 import { Person, ASBCase, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 
 interface ASBTabProps {
     person: Person;

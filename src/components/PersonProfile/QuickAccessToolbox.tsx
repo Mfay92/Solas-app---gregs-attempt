@@ -616,7 +616,7 @@ export default function QuickAccessToolbox({ person, serviceType, className = ''
                             <div className="space-y-2">
                                 <div>
                                     <p className="text-[9px] text-green-600 uppercase font-bold tracking-wide">Weekly Rent</p>
-                                    <p className="text-lg text-green-900 font-bold">£{person.tenancy.rentAmount || '0.00'}</p>
+                                    <p className="text-lg text-green-900 font-bold">£{person.finance.rentAmount || '0.00'}</p>
                                 </div>
                                 <div className="flex justify-between text-[10px]">
                                     <span className="text-green-700">Payment Status:</span>

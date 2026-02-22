@@ -4,9 +4,9 @@ import {
     ExternalLink, MapPin, Users
 } from 'lucide-react';
 import { PropertyAsset } from '../../../types';
+import { PropertyTabId as TabId } from '../../../types/tabs';
 import StatusBadge from '../../shared/StatusBadge';
 import { formatDate } from '../../../utils';
-import { TabId } from '../TabNavigation';
 
 interface TabProps {
     asset: PropertyAsset;

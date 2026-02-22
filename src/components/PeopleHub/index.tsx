@@ -6,7 +6,7 @@ import PersonProfile from '../PersonProfile';
 import StatusBadge from '../shared/StatusBadge';
 import { PersonAvatar } from '../../utils/avatarUtils';
 import { usePopOut } from '../../context/PopOutContext';
-import { Users, Search, UserPlus, ArrowUpDown, AlertCircle, X, ExternalLink, Filter, Download, UserCheck, CheckSquare, Square } from 'lucide-react';
+import { Users, Search, UserPlus, ArrowUpDown, AlertCircle, X, ExternalLink, Filter, Download, UserCheck, CheckSquare, Square, FileText } from 'lucide-react';
 
 interface PeopleHubProps {
     onNavigateAway?: () => void;
@@ -373,98 +373,94 @@ export default function PeopleHub({ }: PeopleHubProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-ivolve-paper via-white to-ivolve-paper">
-            {/* Header Section */}
-            <div className="bg-white border-b border-gray-100 sticky top-0 z-40">
-                <div className="">
-                    {/* Title */}
-                    <div className="px-4 py-4 md:px-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="min-h-screen bg-ivolve-paper -m-6">
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-teal-600 to-cyan-600 w-full shadow-md">
+                <div className="px-6 py-6">
+                    {/* Header Content */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                                <Users size={28} className="text-white" />
+                            </div>
                             <div>
-                                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
-                                    <Users className="text-ivolve-mid" size={28} />
-                                    People We Support
-                                </h1>
-                                <p className="text-gray-500 text-sm mt-1">
-                                    {filteredAndSortedPeople.length} of {people.length} people
-                                    {searchQuery && ` (filtered by "${searchQuery}")`}
-                                    {hasActiveFilters && ' (filters active)'}
+                                <h1 className="text-3xl font-bold text-white">People Hub</h1>
+                                <p className="text-white/80 mt-1">
+                                    View and manage all people we support across all properties
                                 </p>
                             </div>
-
-                            {/* Search & Actions Bar - Moved up for better density */}
-                            <div className="flex flex-col md:flex-row gap-2">
-                                {/* Search Input */}
-                                <div className="relative">
-                                    <Search
-                                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                                        size={18}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Search..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full md:w-64 pl-9 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ivolve-mid focus:border-transparent text-sm"
-                                    />
-                                    {searchQuery && (
-                                        <button
-                                            onClick={() => setSearchQuery('')}
-                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 p-0.5 hover:bg-gray-100 rounded-full"
-                                        >
-                                            <X size={14} className="text-gray-400" />
-                                        </button>
-                                    )}
-                                </div>
-
-                                <button
-                                    onClick={() => navigate('/referrals')}
-                                    className="px-3 py-2 bg-ivolve-mid text-white rounded-lg hover:bg-ivolve-dark transition-all flex items-center justify-center gap-2 font-medium text-sm shadow-sm"
-                                >
-                                    <UserPlus size={18} />
-                                    <span>New Referral</span>
-                                </button>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <Search
+                                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60"
+                                    size={18}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Search people..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-64 pl-9 pr-8 py-2 bg-white/10 border-2 border-white/30 text-white placeholder-white/60 rounded-lg focus:bg-white/20 focus:border-white/50 transition-all text-sm"
+                                />
+                                {searchQuery && (
+                                    <button
+                                        onClick={() => setSearchQuery('')}
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 p-0.5 hover:bg-white/20 rounded-full"
+                                    >
+                                        <X size={14} className="text-white/60" />
+                                    </button>
+                                )}
                             </div>
+                            <button
+                                onClick={() => navigate('/referrals')}
+                                className="flex items-center gap-2 bg-white text-teal-600 px-4 py-2 rounded-lg font-medium hover:bg-white/90 transition-colors"
+                            >
+                                <UserPlus size={18} />
+                                New Referral
+                            </button>
                         </div>
                     </div>
 
-                    {/* Quick Stats Cards - Compact Row */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 border-t border-gray-100 divide-x divide-gray-100">
-                        {/* Total People */}
-                        <div className="p-3 flex items-center justify-between bg-green-50/30">
-                            <div>
-                                <p className="text-[10px] font-bold text-green-700 uppercase tracking-wider">Total People</p>
-                                <p className="text-xl font-bold text-green-800">{stats.totalPeople}</p>
+                    {/* Quick Stats */}
+                    <div className="grid grid-cols-4 gap-4 mt-6">
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <Users size={14} />
+                                Total People
                             </div>
+                            <p className="text-2xl font-bold text-white mt-1">{stats.totalPeople}</p>
                         </div>
-
-                        {/* People in Arrears */}
-                        <div className="p-3 flex items-center justify-between bg-red-50/30">
-                            <div>
-                                <p className="text-[10px] font-bold text-red-700 uppercase tracking-wider">In Arrears</p>
-                                <p className="text-xl font-bold text-red-800">{stats.peopleInArrears}</p>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <AlertCircle size={14} />
+                                In Arrears
                             </div>
+                            <p className="text-2xl font-bold text-white mt-1">{stats.peopleInArrears}</p>
                         </div>
-
-                        {/* Overdue Support Plans */}
-                        <div className="p-3 flex items-center justify-between bg-amber-50/30">
-                            <div>
-                                <p className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">Overdue Plans</p>
-                                <p className="text-xl font-bold text-amber-800">{stats.overdueSupportPlans}</p>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <FileText size={14} />
+                                Overdue Plans
                             </div>
+                            <p className="text-2xl font-bold text-white mt-1">{stats.overdueSupportPlans}</p>
                         </div>
-
-                        {/* Occupancy Percentage */}
-                        <div className="p-3 flex items-center justify-between bg-blue-50/30">
-                            <div>
-                                <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">Occupancy</p>
-                                <p className="text-xl font-bold text-blue-800">{stats.occupancyPercentage}%</p>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <UserCheck size={14} />
+                                Occupancy
                             </div>
+                            <p className="text-2xl font-bold text-white mt-1">{stats.occupancyPercentage}%</p>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    {/* Advanced Filters Panel - Compact */}
-                    <div className="px-4 py-2 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+            {/* Main Content Area */}
+            <div className="p-6">
+                {/* Advanced Filters Panel */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-4">
+                    <div className="px-4 py-3 flex items-center justify-between">
                         <button
                             onClick={() => setShowFilters(!showFilters)}
                             className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-medium border transition-all ${hasActiveFilters
@@ -979,7 +975,7 @@ export default function PeopleHub({ }: PeopleHubProps) {
             )}
 
             {/* Footer Info */}
-            <div className={`px-4 md:px-8 py-6 border-t border-gray-100 text-center text-gray-500 text-sm ${selectedPeopleIds.size > 0 ? 'mb-16' : ''}`}>
+            <div className="py-6 border-t border-gray-100 text-center text-gray-500 text-sm">
                 {filteredAndSortedPeople.length > 0 && (
                     <p>
                         Showing {filteredAndSortedPeople.length} of {people.length} people

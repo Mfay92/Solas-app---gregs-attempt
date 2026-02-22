@@ -142,66 +142,65 @@ export const ComplianceHub: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-ivolve-paper p-6 page-enter">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-ivolve-mid/10 rounded-lg">
-            <ShieldCheck size={24} className="text-ivolve-mid" />
+    <div className="min-h-screen bg-ivolve-paper -m-6 page-enter">
+      {/* Hero Banner */}
+      <div className="bg-gradient-to-r from-red-600 to-rose-600 px-4 md:px-8 py-8 mb-6">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+            <ShieldCheck size={32} className="text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Compliance Hub</h1>
-            <p className="text-sm text-slate-500">Portfolio-wide compliance overview</p>
+            <h1 className="text-3xl font-bold text-white">Compliance Hub</h1>
+            <p className="text-white/80">Portfolio-wide compliance overview</p>
+          </div>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Compliant</p>
+                <p className="text-2xl font-bold text-white">{stats.compliant}</p>
+              </div>
+              <Check className="text-white/70" size={28} />
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Due Soon</p>
+                <p className="text-2xl font-bold text-white">{stats.dueSoon}</p>
+              </div>
+              <AlertTriangle className="text-white/70" size={28} />
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Overdue</p>
+                <p className="text-2xl font-bold text-white">{stats.overdue}</p>
+              </div>
+              <XCircle className="text-white/70" size={28} />
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Remedials</p>
+                <p className="text-2xl font-bold text-white">{stats.remedials}</p>
+              </div>
+              <Wrench className="text-white/70" size={28} />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <SummaryCard
-          label="Compliance Rate"
-          value={stats.complianceRate}
-          icon={<span className="text-lg">%</span>}
-          bgColor={stats.complianceRate >= 90 ? 'bg-green-50' : stats.complianceRate >= 70 ? 'bg-amber-50' : 'bg-red-50'}
-          textColor={stats.complianceRate >= 90 ? 'text-green-700' : stats.complianceRate >= 70 ? 'text-amber-700' : 'text-red-700'}
-        />
-        <SummaryCard
-          label="Compliant"
-          value={stats.compliant}
-          icon={<Check size={20} />}
-          bgColor="bg-green-50"
-          textColor="text-green-700"
-          onClick={() => setStatusFilter(statusFilter === 'compliant' ? 'all' : 'compliant')}
-          isActive={statusFilter === 'compliant'}
-        />
-        <SummaryCard
-          label="Due Soon"
-          value={stats.dueSoon}
-          icon={<AlertTriangle size={20} />}
-          bgColor="bg-amber-50"
-          textColor="text-amber-700"
-          onClick={() => setStatusFilter(statusFilter === 'issues' ? 'all' : 'issues')}
-          isActive={statusFilter === 'issues'}
-        />
-        <SummaryCard
-          label="Overdue"
-          value={stats.overdue}
-          icon={<XCircle size={20} />}
-          bgColor="bg-red-50"
-          textColor="text-red-700"
-          onClick={() => setStatusFilter(statusFilter === 'issues' ? 'all' : 'issues')}
-          isActive={statusFilter === 'issues'}
-        />
-        <SummaryCard
-          label="Remedials"
-          value={stats.remedials}
-          icon={<Wrench size={20} />}
-          bgColor="bg-orange-50"
-          textColor="text-orange-700"
-          onClick={() => setStatusFilter(statusFilter === 'issues' ? 'all' : 'issues')}
-          isActive={statusFilter === 'issues'}
-        />
-      </div>
+      {/* Main Content Wrapper */}
+      <div className="p-6">
 
       {/* Filter Bar */}
       <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6 flex items-center justify-between flex-wrap gap-4">
@@ -348,6 +347,7 @@ export const ComplianceHub: React.FC = () => {
           <ComplianceStatusIcon status="not-applicable" />
           <span>N/A</span>
         </div>
+      </div>
       </div>
     </div>
   );

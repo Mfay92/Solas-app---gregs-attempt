@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronRight, Home, BedDouble, FileQuestion, ArrowUpDown, ArrowUp, ArrowDown, Square, CheckSquare } from 'lucide-react';
 import propertiesData from '../../data/properties.json';
 import residentialPropertiesData from '../../data/residential-properties.json';
@@ -143,7 +144,26 @@ const PropertyHubEnhanced: React.FC = () => {
     const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
 
     // Property profile view
+    const { propertyId } = useParams<{ propertyId: string }>();
+    const navigate = useNavigate();
     const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
+
+    // Sync selectedPropertyId with URL param
+    useEffect(() => {
+        if (propertyId) {
+            setSelectedPropertyId(propertyId);
+        } else {
+            setSelectedPropertyId(null);
+        }
+    }, [propertyId]);
+
+    const handleSelectProperty = (id: string | null) => {
+        if (id) {
+            navigate(`/properties/${id}`);
+        } else {
+            navigate('/properties');
+        }
+    };
 
     // Keyboard shortcuts
     useEffect(() => {
@@ -550,7 +570,7 @@ const PropertyHubEnhanced: React.FC = () => {
             <PropertyProfile
                 asset={selectedProperty}
                 units={selectedPropertyUnits}
-                onBack={() => setSelectedPropertyId(null)}
+                onBack={() => handleSelectProperty(null)}
             />
         );
     }
@@ -571,316 +591,363 @@ const PropertyHubEnhanced: React.FC = () => {
     const isAllSelected = selectedRows.size === filteredAssets.filter(a => a.type === 'Master').length && selectedRows.size > 0;
 
     return (
-        <div className="p-6 md:p-8 space-y-4 bg-ivolve-paper min-h-screen page-enter">
-            {/* Page Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
-                <div>
-                    <h1 className="text-2xl font-black text-ivolve-dark font-rounded">Property Hub</h1>
-                    <p className="text-sm text-ivolve-slate">Manage your portfolio, units, and assets</p>
+        <div className="min-h-screen bg-ivolve-paper -m-6">
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-full shadow-md">
+                <div className="px-6 py-6">
+                    {/* Header Content */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                                <Home size={28} className="text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-3xl font-bold text-white">Property Hub</h1>
+                                <p className="text-white/80 mt-1">
+                                    Manage your portfolio, units, and assets across all properties
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Stats */}
+                    <div className="grid grid-cols-4 gap-4 mt-6">
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <Home size={14} />
+                                Total Properties
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{masterCount}</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <BedDouble size={14} />
+                                Total Units
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{toolbarStats.totalUnits}</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <CheckSquare size={14} />
+                                Occupancy Rate
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{toolbarStats.occupancyRate}%</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4">
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                                <FileQuestion size={14} />
+                                Void Units
+                            </div>
+                            <p className="text-2xl font-bold text-white mt-1">{toolbarStats.voidCount}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Enhanced Toolbar */}
-            <EnhancedToolbar
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                filters={filters}
-                onFiltersChange={setFilters}
-                activeQuickFilter={activeQuickFilter}
-                onQuickFilterChange={setActiveQuickFilter}
-                onOpenAdvancedFilters={() => setShowAdvancedFilters(true)}
-                visibleColumns={visibleColumns}
-                onVisibleColumnsChange={setVisibleColumns}
-                pinnedColumns={pinnedColumns}
-                onPinnedColumnsChange={setPinnedColumns}
-                viewMode={viewMode}
-                onViewModeChange={handleViewModeChange}
-                density={density}
-                onDensityChange={setDensity}
-                groupBy={groupBy}
-                onGroupByChange={setGroupBy}
-                savedViews={savedViews}
-                activeViewId={activeViewId}
-                onOpenSavedViews={() => setShowSavedViews(true)}
-                onViewSelect={applyView}
-                totalProperties={masterCount}
-                filteredProperties={filteredMasterCount}
-                totalUnits={toolbarStats.totalUnits}
-                occupancyRate={toolbarStats.occupancyRate}
-                voidCount={toolbarStats.voidCount}
-                totalRent={toolbarStats.totalRent}
-                compliantCount={toolbarStats.compliantCount}
-                pendingCount={toolbarStats.pendingCount}
-                nonCompliantCount={toolbarStats.nonCompliantCount}
-                onOpenKeyboardShortcuts={() => setShowKeyboardShortcuts(true)}
-            />
+            {/* Main Content Area */}
+            <div className="p-6 space-y-4">
+                {/* Enhanced Toolbar */}
+                <EnhancedToolbar
+                    searchQuery={searchQuery}
+                    onSearchChange={setSearchQuery}
+                    filters={filters}
+                    onFiltersChange={setFilters}
+                    activeQuickFilter={activeQuickFilter}
+                    onQuickFilterChange={setActiveQuickFilter}
+                    onOpenAdvancedFilters={() => setShowAdvancedFilters(true)}
+                    visibleColumns={visibleColumns}
+                    onVisibleColumnsChange={setVisibleColumns}
+                    pinnedColumns={pinnedColumns}
+                    onPinnedColumnsChange={setPinnedColumns}
+                    viewMode={viewMode}
+                    onViewModeChange={handleViewModeChange}
+                    density={density}
+                    onDensityChange={setDensity}
+                    groupBy={groupBy}
+                    onGroupByChange={setGroupBy}
+                    savedViews={savedViews}
+                    activeViewId={activeViewId}
+                    onOpenSavedViews={() => setShowSavedViews(true)}
+                    onViewSelect={applyView}
+                    totalProperties={masterCount}
+                    filteredProperties={filteredMasterCount}
+                    totalUnits={toolbarStats.totalUnits}
+                    occupancyRate={toolbarStats.occupancyRate}
+                    voidCount={toolbarStats.voidCount}
+                    totalRent={toolbarStats.totalRent}
+                    compliantCount={toolbarStats.compliantCount}
+                    pendingCount={toolbarStats.pendingCount}
+                    nonCompliantCount={toolbarStats.nonCompliantCount}
+                    onOpenKeyboardShortcuts={() => setShowKeyboardShortcuts(true)}
+                />
 
-            {/* Content Area */}
-            {isLoading ? (
-                <div className="flex justify-center items-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
-                    <LoadingSpinner size="lg" />
-                </div>
-            ) : filteredAssets.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-24 text-center bg-white rounded-xl shadow-sm border border-gray-200">
-                    <div className="bg-gray-100 p-4 rounded-full mb-4">
-                        <FileQuestion size={48} className="text-gray-400" />
+                {/* Content Area */}
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+                        <LoadingSpinner size="lg" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">No properties found</h3>
-                    <p className="text-gray-500 mb-6">Try adjusting your search or filters</p>
-                    <button
-                        onClick={() => {
-                            setSearchQuery('');
-                            setFilters([]);
-                            setActiveQuickFilter('all');
-                        }}
-                        className="px-6 py-2.5 bg-ivolve-mid text-white rounded-lg hover:bg-ivolve-dark transition-colors font-medium"
-                    >
-                        Clear all filters
-                    </button>
-                </div>
-            ) : viewMode === 'table' ? (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse" role="table">
-                            <thead className="bg-gradient-to-r from-ivolve-dark to-ivolve-mid sticky top-0 z-10">
-                                <tr>
-                                    {/* Selection Column */}
-                                    <th scope="col" className="p-3 w-10">
-                                        <button
-                                            onClick={isAllSelected ? deselectAll : selectAll}
-                                            className="p-1 text-white/70 hover:text-white rounded transition-colors"
-                                        >
-                                            {isAllSelected ? <CheckSquare size={18} /> : <Square size={18} />}
-                                        </button>
-                                    </th>
-                                    {visibleColumnDefs.map((column) => {
-                                        const isSorted = sortConfig?.columnId === column.id;
-                                        const sortDirection = isSorted ? sortConfig.direction : null;
-                                        const isPinned = pinnedColumns.includes(column.id);
-                                        const isDragging = draggedColumn === column.id;
-                                        const isDragOver = dragOverColumn === column.id;
-                                        const isAddressColumn = column.id === 'address';
-
-                                        return (
-                                            <th
-                                                key={column.id}
-                                                scope="col"
-                                                draggable={!isAddressColumn}
-                                                onDragStart={() => !isAddressColumn && handleColumnDragStart(column.id)}
-                                                onDragOver={(e) => !isAddressColumn && handleColumnDragOver(e, column.id)}
-                                                onDragEnd={handleColumnDragEnd}
-                                                onDragLeave={() => setDragOverColumn(null)}
-                                                className={`${cellPadding} text-white font-bold text-xs uppercase tracking-wider ${column.width || ''} ${column.align === 'right' ? 'text-right' : column.align === 'center' ? 'text-center' : 'text-left'} ${isPinned ? 'bg-ivolve-dark/50' : ''} ${!isAddressColumn ? 'cursor-grab' : ''} ${isDragging ? 'opacity-50' : ''} ${isDragOver ? 'bg-white/20 border-l-2 border-white' : ''} transition-all`}
+                ) : filteredAssets.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-24 text-center bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div className="bg-gray-100 p-4 rounded-full mb-4">
+                            <FileQuestion size={48} className="text-gray-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">No properties found</h3>
+                        <p className="text-gray-500 mb-6">Try adjusting your search or filters</p>
+                        <button
+                            onClick={() => {
+                                setSearchQuery('');
+                                setFilters([]);
+                                setActiveQuickFilter('all');
+                            }}
+                            className="px-6 py-2.5 bg-ivolve-mid text-white rounded-lg hover:bg-ivolve-dark transition-colors font-medium"
+                        >
+                            Clear all filters
+                        </button>
+                    </div>
+                ) : viewMode === 'table' ? (
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse" role="table">
+                                <thead className="bg-gradient-to-r from-ivolve-dark to-ivolve-mid sticky top-0 z-10">
+                                    <tr>
+                                        {/* Selection Column */}
+                                        <th scope="col" className="p-3 w-10">
+                                            <button
+                                                onClick={isAllSelected ? deselectAll : selectAll}
+                                                className="p-1 text-white/70 hover:text-white rounded transition-colors"
                                             >
-                                                {column.sortable ? (
-                                                    <button
-                                                        onClick={() => handleSort(column.id)}
-                                                        className="flex items-center gap-1.5 hover:text-white/80 transition-colors group"
-                                                    >
+                                                {isAllSelected ? <CheckSquare size={18} /> : <Square size={18} />}
+                                            </button>
+                                        </th>
+                                        {visibleColumnDefs.map((column) => {
+                                            const isSorted = sortConfig?.columnId === column.id;
+                                            const sortDirection = isSorted ? sortConfig.direction : null;
+                                            const isPinned = pinnedColumns.includes(column.id);
+                                            const isDragging = draggedColumn === column.id;
+                                            const isDragOver = dragOverColumn === column.id;
+                                            const isAddressColumn = column.id === 'address';
+
+                                            return (
+                                                <th
+                                                    key={column.id}
+                                                    scope="col"
+                                                    draggable={!isAddressColumn}
+                                                    onDragStart={() => !isAddressColumn && handleColumnDragStart(column.id)}
+                                                    onDragOver={(e) => !isAddressColumn && handleColumnDragOver(e, column.id)}
+                                                    onDragEnd={handleColumnDragEnd}
+                                                    onDragLeave={() => setDragOverColumn(null)}
+                                                    className={`${cellPadding} text-white font-bold text-xs uppercase tracking-wider ${column.width || ''} ${column.align === 'right' ? 'text-right' : column.align === 'center' ? 'text-center' : 'text-left'} ${isPinned ? 'bg-ivolve-dark/50' : ''} ${!isAddressColumn ? 'cursor-grab' : ''} ${isDragging ? 'opacity-50' : ''} ${isDragOver ? 'bg-white/20 border-l-2 border-white' : ''} transition-all`}
+                                                >
+                                                    {column.sortable ? (
+                                                        <button
+                                                            onClick={() => handleSort(column.id)}
+                                                            className="flex items-center gap-1.5 hover:text-white/80 transition-colors group"
+                                                        >
+                                                            <span>{column.shortLabel || column.label}</span>
+                                                            <span className="opacity-60 group-hover:opacity-100 transition-opacity">
+                                                                {sortDirection === 'asc' ? (
+                                                                    <ArrowUp size={14} />
+                                                                ) : sortDirection === 'desc' ? (
+                                                                    <ArrowDown size={14} />
+                                                                ) : (
+                                                                    <ArrowUpDown size={14} />
+                                                                )}
+                                                            </span>
+                                                        </button>
+                                                    ) : (
                                                         <span>{column.shortLabel || column.label}</span>
-                                                        <span className="opacity-60 group-hover:opacity-100 transition-opacity">
-                                                            {sortDirection === 'asc' ? (
-                                                                <ArrowUp size={14} />
-                                                            ) : sortDirection === 'desc' ? (
-                                                                <ArrowDown size={14} />
-                                                            ) : (
-                                                                <ArrowUpDown size={14} />
-                                                            )}
-                                                        </span>
-                                                    </button>
-                                                ) : (
-                                                    <span>{column.shortLabel || column.label}</span>
-                                                )}
-                                            </th>
-                                        );
-                                    })}
-                                    <th scope="col" className={`${cellPadding} text-white font-bold text-xs uppercase tracking-wider text-right w-[80px]`}>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
-                                {groupBy && groupedData ? (
-                                    // Grouped view
-                                    groupedData.map((group) => (
-                                        <React.Fragment key={group.value}>
-                                            {/* Group Header */}
-                                            <tr
-                                                className="bg-gray-100 cursor-pointer hover:bg-gray-150"
-                                                onClick={() => toggleGroup(group.value)}
-                                            >
-                                                <td colSpan={visibleColumnDefs.length + 2} className="p-3">
-                                                    <div className="flex items-center gap-3">
-                                                        <ChevronRight
-                                                            size={18}
-                                                            className={`text-gray-500 transition-transform ${group.isExpanded ? 'rotate-90' : ''}`}
-                                                        />
-                                                        <span className="font-semibold text-gray-900">{group.value}</span>
-                                                        <span className="px-2 py-0.5 bg-gray-200 text-gray-600 text-xs font-medium rounded-full">
-                                                            {group.count}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {/* Group Items */}
-                                            {group.isExpanded && group.items.map((asset) => renderTableRow(asset))}
-                                        </React.Fragment>
-                                    ))
-                                ) : (
-                                    // Non-grouped view
-                                    tableData.map((asset) => renderTableRow(asset))
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            ) : (
-                /* Card View */
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredAssets.filter(a => a.type === 'Master').map((asset, index) => {
-                        const occupancyRate = (asset.totalUnits || 0) > 0 ? ((asset.occupiedUnits || 0) / (asset.totalUnits || 1)) * 100 : 0;
-                        let progressColor = 'bg-red-500';
-                        if (occupancyRate === 100) progressColor = 'bg-green-500';
-                        else if (occupancyRate > 50) progressColor = 'bg-green-400';
-                        else if (occupancyRate > 0) progressColor = 'bg-amber-500';
-
-                        const serviceColors = getServiceTypeColor(asset.serviceType);
-                        const isSelected = selectedRows.has(asset.id);
-
-                        return (
-                            <div
-                                key={asset.id}
-                                onClick={() => setSelectedPropertyId(asset.id)}
-                                className={`bg-white rounded-2xl shadow-sm border-2 ${isSelected ? `ring-2 ring-opacity-20` : 'border-transparent'} overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer animate-fade-in-up relative`}
-                                style={{
-                                    animationDelay: `${(index % 6) * 50}ms`,
-                                    borderColor: isSelected ? serviceColors.primary : 'transparent'
-                                }}
-                            >
-                                {/* Selection checkbox */}
-                                <button
-                                    onClick={(e) => toggleRowSelection(asset.id, e)}
-                                    className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 rounded-lg shadow-sm hover:bg-white transition-colors"
-                                >
-                                    {isSelected ? (
-                                        <CheckSquare size={18} style={{ color: serviceColors.primary }} />
+                                                    )}
+                                                </th>
+                                            );
+                                        })}
+                                        <th scope="col" className={`${cellPadding} text-white font-bold text-xs uppercase tracking-wider text-right w-[80px]`}>
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {groupBy && groupedData ? (
+                                        // Grouped view
+                                        groupedData.map((group) => (
+                                            <React.Fragment key={group.value}>
+                                                {/* Group Header */}
+                                                <tr
+                                                    className="bg-gray-100 cursor-pointer hover:bg-gray-150"
+                                                    onClick={() => toggleGroup(group.value)}
+                                                >
+                                                    <td colSpan={visibleColumnDefs.length + 2} className="p-3">
+                                                        <div className="flex items-center gap-3">
+                                                            <ChevronRight
+                                                                size={18}
+                                                                className={`text-gray-500 transition-transform ${group.isExpanded ? 'rotate-90' : ''}`}
+                                                            />
+                                                            <span className="font-semibold text-gray-900">{group.value}</span>
+                                                            <span className="px-2 py-0.5 bg-gray-200 text-gray-600 text-xs font-medium rounded-full">
+                                                                {group.count}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {/* Group Items */}
+                                                {group.isExpanded && group.items.map((asset) => renderTableRow(asset))}
+                                            </React.Fragment>
+                                        ))
                                     ) : (
-                                        <Square size={18} className="text-gray-400" />
+                                        // Non-grouped view
+                                        tableData.map((asset) => renderTableRow(asset))
                                     )}
-                                </button>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                ) : (
+                    /* Card View */
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredAssets.filter(a => a.type === 'Master').map((asset, index) => {
+                            const occupancyRate = (asset.totalUnits || 0) > 0 ? ((asset.occupiedUnits || 0) / (asset.totalUnits || 1)) * 100 : 0;
+                            let progressColor = 'bg-red-500';
+                            if (occupancyRate === 100) progressColor = 'bg-green-500';
+                            else if (occupancyRate > 50) progressColor = 'bg-green-400';
+                            else if (occupancyRate > 0) progressColor = 'bg-amber-500';
 
-                                <div className="p-4 flex justify-between items-start" style={{ backgroundColor: serviceColors.primary }}>
-                                    <div className="min-w-0 flex-1 pr-8">
-                                        <h3 className="text-white font-bold text-lg truncate">{asset.address}</h3>
-                                        <p className="text-white/80 text-sm">{asset.postcode}</p>
-                                    </div>
-                                    <div className="flex items-center gap-2 ml-2">
-                                        <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
-                                            {asset.serviceType}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-5 space-y-4">
-                                    <div className="grid grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <span className="text-gray-500 block text-xs mb-0.5">Region</span>
-                                            <span className="font-medium text-gray-900">{asset.region || '-'}</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-gray-500 block text-xs mb-0.5">Units</span>
-                                            <span className="font-bold text-gray-900">{asset.totalUnits}</span>
-                                        </div>
-                                    </div>
+                            const serviceColors = getServiceTypeColor(asset.serviceType);
+                            const isSelected = selectedRows.has(asset.id);
 
-                                    <div className="space-y-1.5">
-                                        <div className="flex justify-between text-xs">
-                                            <span className="text-gray-500">Occupancy</span>
-                                            <span className={`font-medium ${occupancyRate === 100 ? 'text-green-600' : 'text-gray-700'}`}>
-                                                {asset.occupiedUnits} / {asset.totalUnits}
+                            return (
+                                <div
+                                    key={asset.id}
+                                    onClick={() => handleSelectProperty(asset.id)}
+                                    className={`bg-white rounded-2xl shadow-sm border-2 ${isSelected ? `ring-2 ring-opacity-20` : 'border-transparent'} overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer animate-fade-in-up relative`}
+                                    style={{
+                                        animationDelay: `${(index % 6) * 50}ms`,
+                                        borderColor: isSelected ? serviceColors.primary : 'transparent'
+                                    }}
+                                >
+                                    {/* Selection checkbox */}
+                                    <button
+                                        onClick={(e) => toggleRowSelection(asset.id, e)}
+                                        className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 rounded-lg shadow-sm hover:bg-white transition-colors"
+                                    >
+                                        {isSelected ? (
+                                            <CheckSquare size={18} style={{ color: serviceColors.primary }} />
+                                        ) : (
+                                            <Square size={18} className="text-gray-400" />
+                                        )}
+                                    </button>
+
+                                    <div className="p-4 flex justify-between items-start" style={{ backgroundColor: serviceColors.primary }}>
+                                        <div className="min-w-0 flex-1 pr-8">
+                                            <h3 className="text-white font-bold text-lg truncate">{asset.address}</h3>
+                                            <p className="text-white/80 text-sm">{asset.postcode}</p>
+                                        </div>
+                                        <div className="flex items-center gap-2 ml-2">
+                                            <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+                                                {asset.serviceType}
                                             </span>
                                         </div>
-                                        <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                                            <div
-                                                className={`h-full rounded-full ${progressColor} transition-all duration-500`}
-                                                style={{ width: `${occupancyRate}%` }}
-                                            />
+                                    </div>
+                                    <div className="p-5 space-y-4">
+                                        <div className="grid grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <span className="text-gray-500 block text-xs mb-0.5">Region</span>
+                                                <span className="font-medium text-gray-900">{asset.region || '-'}</span>
+                                            </div>
+                                            <div>
+                                                <span className="text-gray-500 block text-xs mb-0.5">Units</span>
+                                                <span className="font-bold text-gray-900">{asset.totalUnits}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-1.5">
+                                            <div className="flex justify-between text-xs">
+                                                <span className="text-gray-500">Occupancy</span>
+                                                <span className={`font-medium ${occupancyRate === 100 ? 'text-green-600' : 'text-gray-700'}`}>
+                                                    {asset.occupiedUnits} / {asset.totalUnits}
+                                                </span>
+                                            </div>
+                                            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full rounded-full ${progressColor} transition-all duration-500`}
+                                                    style={{ width: `${occupancyRate}%` }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center justify-between text-sm">
+                                            <span className="text-gray-500">Compliance</span>
+                                            {asset.complianceStatus ? (
+                                                <StatusBadge status={asset.complianceStatus} size="sm" />
+                                            ) : (
+                                                <span className="text-gray-400">-</span>
+                                            )}
+                                        </div>
+
+                                        <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                                            <span className="truncate">{asset.housingManager || 'No manager'}</span>
+                                            <span>{asset.registeredProvider || '-'}</span>
                                         </div>
                                     </div>
-
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-500">Compliance</span>
-                                        {asset.complianceStatus ? (
-                                            <StatusBadge status={asset.complianceStatus} size="sm" />
-                                        ) : (
-                                            <span className="text-gray-400">-</span>
-                                        )}
-                                    </div>
-
-                                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                                        <span className="truncate">{asset.housingManager || 'No manager'}</span>
-                                        <span>{asset.registeredProvider || '-'}</span>
-                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
+                            );
+                        })}
+                    </div>
+                )}
 
-            {/* Bulk Actions Bar */}
-            <BulkActionsBar
-                selectedCount={selectedRows.size}
-                totalCount={filteredAssets.filter(a => a.type === 'Master').length}
-                onSelectAll={selectAll}
-                onDeselectAll={deselectAll}
-                onBulkAction={handleBulkAction}
-                onExport={handleExport}
-                isAllSelected={isAllSelected}
-            />
+                {/* Bulk Actions Bar */}
+                <BulkActionsBar
+                    selectedCount={selectedRows.size}
+                    totalCount={filteredAssets.filter(a => a.type === 'Master').length}
+                    onSelectAll={selectAll}
+                    onDeselectAll={deselectAll}
+                    onBulkAction={handleBulkAction}
+                    onExport={handleExport}
+                    isAllSelected={isAllSelected}
+                />
 
-            {/* Advanced Filter Modal */}
-            {showAdvancedFilters && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <AdvancedFilterBuilder
-                        filters={filters}
-                        onFiltersChange={(newFilters) => {
-                            setFilters(newFilters);
-                            setActiveQuickFilter(null);
-                        }}
-                        onClose={() => setShowAdvancedFilters(false)}
-                    />
-                </div>
-            )}
+                {/* Advanced Filter Modal */}
+                {showAdvancedFilters && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                        <AdvancedFilterBuilder
+                            filters={filters}
+                            onFiltersChange={(newFilters) => {
+                                setFilters(newFilters);
+                                setActiveQuickFilter(null);
+                            }}
+                            onClose={() => setShowAdvancedFilters(false)}
+                        />
+                    </div>
+                )}
 
-            {/* Saved Views Modal */}
-            {showSavedViews && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <SavedViewsPanel
-                        views={savedViews}
-                        activeViewId={activeViewId}
-                        onViewSelect={(view) => {
-                            applyView(view);
-                            setShowSavedViews(false);
-                        }}
-                        onViewCreate={saveNewView}
-                        onViewUpdate={updateView}
-                        onViewDelete={deleteView}
-                        onClose={() => setShowSavedViews(false)}
-                        currentState={{
-                            visibleColumns,
-                            filters,
-                            sortConfig,
-                            groupBy,
-                            density,
-                        }}
-                    />
-                </div>
-            )}
+                {/* Saved Views Modal */}
+                {showSavedViews && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                        <SavedViewsPanel
+                            views={savedViews}
+                            activeViewId={activeViewId}
+                            onViewSelect={(view) => {
+                                applyView(view);
+                                setShowSavedViews(false);
+                            }}
+                            onViewCreate={saveNewView}
+                            onViewUpdate={updateView}
+                            onViewDelete={deleteView}
+                            onClose={() => setShowSavedViews(false)}
+                            currentState={{
+                                visibleColumns,
+                                filters,
+                                sortConfig,
+                                groupBy,
+                                density,
+                            }}
+                        />
+                    </div>
+                )}
 
-            {/* Keyboard Shortcuts Modal */}
-            {showKeyboardShortcuts && (
-                <KeyboardShortcutsModal onClose={() => setShowKeyboardShortcuts(false)} />
-            )}
+                {/* Keyboard Shortcuts Modal */}
+                {showKeyboardShortcuts && (
+                    <KeyboardShortcutsModal onClose={() => setShowKeyboardShortcuts(false)} />
+                )}
+            </div>
         </div>
     );
 
@@ -908,16 +975,12 @@ const PropertyHubEnhanced: React.FC = () => {
             backgroundColor: isSelected ? `${serviceColors.primary}10` : undefined
         } : undefined;
 
-        const hoverStyle = isMaster ? {
-            ['--hover-bg' as string]: `${serviceColors.primary}05`
-        } : undefined;
-
         return (
             <tr
                 key={asset.id}
                 className={rowClasses}
                 style={rowStyle}
-                onClick={() => setSelectedPropertyId(isMaster ? asset.id : asset.parentId || asset.id)}
+                onClick={() => handleSelectProperty(isMaster ? asset.id : asset.parentId || asset.id)}
             >
                 {/* Selection Column */}
                 <td className="p-3 w-10">
@@ -955,13 +1018,12 @@ const PropertyHubEnhanced: React.FC = () => {
 
                                     <div className="flex items-center gap-3">
                                         <div
-                                            className={`p-2 rounded-lg ${
-                                                !isMaster
-                                                    ? (asset.status === 'Occupied' ? 'bg-green-50 text-green-600' :
-                                                        asset.status === 'Void' ? 'bg-amber-50 text-amber-600' :
-                                                            'bg-gray-100 text-gray-500')
-                                                    : ''
-                                            }`}
+                                            className={`p-2 rounded-lg ${!isMaster
+                                                ? (asset.status === 'Occupied' ? 'bg-green-50 text-green-600' :
+                                                    asset.status === 'Void' ? 'bg-amber-50 text-amber-600' :
+                                                        'bg-gray-100 text-gray-500')
+                                                : ''
+                                                }`}
                                             style={isMaster ? {
                                                 backgroundColor: `${serviceColors.primary}15`,
                                                 color: serviceColors.primary
@@ -1012,7 +1074,7 @@ const PropertyHubEnhanced: React.FC = () => {
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedPropertyId(isMaster ? asset.id : asset.parentId || asset.id);
+                            handleSelectProperty(isMaster ? asset.id : asset.parentId || asset.id);
                         }}
                         className="px-3 py-1.5 text-sm font-medium bg-transparent border border-transparent rounded-lg transition-all duration-200 hover:text-white active:scale-95"
                         style={{

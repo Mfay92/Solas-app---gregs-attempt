@@ -1,5 +1,5 @@
 import { Person, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 import { PoundSterling, TrendingDown, TrendingUp, CreditCard, FileText } from 'lucide-react';
 
 interface FinanceTabProps {

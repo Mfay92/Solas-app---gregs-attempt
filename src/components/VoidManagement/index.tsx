@@ -165,57 +165,65 @@ const VoidManagement: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-ivolve-paper p-6">
-            {/* Header */}
-            <div className="mb-6">
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-red-500 flex items-center justify-center">
-                        <AlertTriangle size={24} className="text-white" />
+        <div className="min-h-screen bg-ivolve-paper -m-6">
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-amber-600 to-orange-600 px-4 md:px-8 py-8 mb-6">
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                        <AlertTriangle size={32} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">Void Management</h1>
-                        <p className="text-gray-500">Track and manage all vacant units across your portfolio</p>
+                        <h1 className="text-3xl font-bold text-white">Void Management</h1>
+                        <p className="text-white/80">Track and manage all vacant units across your portfolio</p>
+                    </div>
+                </div>
+
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Total Voids</p>
+                                <p className="text-2xl font-bold text-white">{stats.totalVoids}</p>
+                            </div>
+                            <Home className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Avg Days Void</p>
+                                <p className="text-2xl font-bold text-white">{stats.avgDaysVoid}</p>
+                            </div>
+                            <Clock className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Lost Income</p>
+                                <p className="text-2xl font-bold text-white">£{stats.totalCost.toFixed(0)}</p>
+                            </div>
+                            <TrendingDown className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Longest Void</p>
+                                <p className="text-2xl font-bold text-white">{stats.longestVoid}</p>
+                            </div>
+                            <AlertTriangle className="text-white/70" size={28} />
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Home size={18} className="text-amber-500" />
-                        <span className="text-sm font-semibold text-gray-600">Total Voids</span>
-                    </div>
-                    <p className="text-3xl font-bold text-gray-800">{stats.totalVoids}</p>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Clock size={18} className="text-amber-500" />
-                        <span className="text-sm font-semibold text-gray-600">Avg Days Void</span>
-                    </div>
-                    <p className="text-3xl font-bold text-gray-800">{stats.avgDaysVoid}</p>
-                    <p className="text-xs text-gray-500 mt-1">days</p>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                        <TrendingDown size={18} className="text-red-500" />
-                        <span className="text-sm font-semibold text-gray-600">Lost Income</span>
-                    </div>
-                    <p className="text-3xl font-bold text-red-600">£{stats.totalCost.toFixed(0)}</p>
-                    <p className="text-xs text-gray-500 mt-1">total</p>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                        <AlertTriangle size={18} className="text-red-500" />
-                        <span className="text-sm font-semibold text-gray-600">Longest Void</span>
-                    </div>
-                    <p className="text-3xl font-bold text-gray-800">{stats.longestVoid}</p>
-                    <p className="text-xs text-gray-500 mt-1">days</p>
-                </div>
-            </div>
+            {/* Main Content Wrapper */}
+            <div className="p-6">
 
             {/* Filters and Search */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 mb-6">
@@ -392,6 +400,7 @@ const VoidManagement: React.FC = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
     );

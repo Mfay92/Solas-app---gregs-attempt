@@ -2,7 +2,7 @@ import { Referral, Person } from '../types';
 
 /**
  * Converts a Referral to a Person record when move-in is processed
- *
+ * 
  * Maps all relevant referral data to the Person structure:
  * - Personal details (name, DOB, contact info)
  * - Tenancy information (property, service type, move-in date)
@@ -31,14 +31,14 @@ export function convertReferralToPerson(referral: Referral): Person {
 
         // Personal Information from Referral
         personal: {
-            title: referral.personal.title,
+            title: referral.personal.title || 'Mr', // Default title if missing
             firstName: referral.personal.firstName,
             lastName: referral.personal.lastName,
             preferredName: referral.personal.preferredName,
             dateOfBirth: referral.personal.dateOfBirth,
-            age: calculateAge(referral.personal.dateOfBirth),
+            age: referral.personal.age || calculateAge(referral.personal.dateOfBirth),
             niNumber: referral.personal.niNumber,
-            occupantType: 'Tenant', // Default - can be updated based on service type
+            occupantType: 'Main Tenant', // Default
             email: referral.personal.email,
             phone: referral.personal.phone,
             mobile: referral.personal.mobile,
@@ -49,115 +49,65 @@ export function convertReferralToPerson(referral: Referral): Person {
         tenancy: {
             propertyId: referral.linkedProperty?.propertyId || '',
             unitId: referral.linkedProperty?.unitId,
-            propertyAddress: referral.linkedProperty?.address || 'To be assigned',
-            room: referral.linkedProperty?.unit,
+            propertyAddress: referral.linkedProperty?.propertyAddress || 'To be assigned',
+            room: referral.linkedProperty?.room,
             serviceType: referral.serviceType,
-            tenancyType: 'Assured Shorthold Tenancy (AST)', // Default for Supported Living
+            tenancyType: 'Assured Shorthold', // Default for Supported Living
             tenancyStatus: 'Current',
             moveInDate: today // Move-in date is today when processing
         },
 
         // Support & Care
         support: {
-            careProvider: referral.assessmentData?.careProvider,
-            socialWorker: referral.assessmentData?.socialWorker,
-            keyWorker: undefined, // Assigned after move-in
-            caseManager: referral.assessmentData?.socialWorker, // Often same as social worker initially
-            careHours: referral.assessmentData?.requiredCareHours,
-            supportLevel: referral.assessmentData?.supportLevel,
-            medicationNeeds: referral.assessmentData?.medicalConditions?.join('; '),
-            mobilityNeeds: referral.assessmentData?.mobilityNeeds?.join('; '),
-            dietaryRequirements: referral.assessmentData?.dietaryRequirements?.join('; ')
+            careProvider: referral.source === 'Care Provider' ? referral.referrerOrganization : undefined,
+            socialWorker: referral.source === 'Social Worker' ? referral.referrerName : undefined,
+            keyWorker: referral.keyWorker,
+            caseManager: undefined,
+            careHours: undefined,
+            supportLevel: referral.supportLevel,
+            medicationNeeds: referral.medicalNeeds,
+            mobilityNeeds: referral.mobilityNeeds,
+            dietaryRequirements: referral.dietaryRequirements
         },
 
-        // Emergency Contact
-        emergencyContact: referral.personal.emergencyContact ? {
-            name: referral.personal.emergencyContact.name,
-            relationship: referral.personal.emergencyContact.relationship,
-            phone: referral.personal.emergencyContact.phone,
-            email: referral.personal.emergencyContact.email,
-            address: referral.personal.emergencyContact.address
-        } : undefined,
+        // Emergency Contact - Person expectation is an array
+        emergencyContacts: referral.personal.phone || referral.personal.mobile ? [
+            {
+                id: `ec_${Date.now()}`,
+                name: 'Referrer (Backup)',
+                relationship: 'Referrer',
+                phone: referral.referrerContact.phone || '',
+                email: referral.referrerContact.email,
+                isPrimary: true
+            }
+        ] : [],
 
-        // Safeguarding
-        safeguarding: {
-            hasCases: false,
-            totalCases: 0,
-            activeCases: 0,
-            lastIncidentDate: undefined,
-            riskLevel: referral.assessmentData?.riskLevel || 'Low'
-        },
-
-        // ASB
-        asb: {
-            hasCases: false,
-            totalCases: 0,
-            activeCases: 0,
-            lastIncidentDate: undefined
-        },
-
-        // Support Plans
-        supportPlan: {
-            hasActivePlan: false,
-            lastReviewDate: undefined,
-            nextReviewDate: undefined,
-            status: 'Pending' // Plan to be created post-move-in
-        },
-
-        // Risk Assessments
-        riskAssessment: {
-            hasActiveAssessment: false,
-            lastAssessmentDate: undefined,
-            nextReviewDate: undefined,
-            overallRiskLevel: referral.assessmentData?.riskLevel || 'Low'
-        },
-
-        // Finance - Initialize with zeros, updated post-move-in
+        // Finance
         finance: {
-            rentAccount: {
-                weeklyRent: 0,
-                serviceCharge: 0,
-                totalWeeklyCharge: 0,
-                currentBalance: 0,
-                inArrears: false,
-                arrearsAmount: 0
-            },
-            housingBenefit: {
-                receiving: false,
-                weeklyAmount: 0,
-                eligible: true // Assumed eligible, verify post-move-in
-            },
-            lastPaymentDate: undefined,
-            paymentMethod: undefined
+            rentAmount: referral.weeklyBudget,
+            serviceCharge: 0,
+            supportCharge: 0,
+            totalCharges: referral.weeklyBudget || 0,
+            currentBalance: 0,
+            housingBenefit: referral.fundingSource?.toLowerCase().includes('benefit'),
+            housingBenefitAmount: 0,
+            paymentMethod: 'Direct Debit'
         },
 
-        // Documents
-        documents: {
-            total: 0,
-            categories: {
-                'Tenancy Agreement': 0,
-                'ID Documents': 0,
-                'Medical Records': 0,
-                'Support Plans': 0,
-                'Risk Assessments': 0,
-                'Other': 0
-            },
-            lastUploaded: undefined
+        // Case Records
+        cases: {
+            safeguardingCases: [],
+            asbCases: [],
+            supportPlans: [],
+            riskAssessments: []
         },
 
         // Notes
-        notes: {
-            total: 1,
-            lastNoteDate: today,
-            lastNotePreview: `Referral converted to Person record. Original referral: ${referral.referralRef}. Referred by ${referral.referrerName} from ${referral.referrerOrganization || 'external source'}.`
-        },
+        notes: `Referral converted to Person record on ${today}. Original reference: ${referral.referralRef}. Referred by ${referral.referrerName} (${referral.referrerOrganization}). ${referral.assessmentNotes || ''}`,
 
-        // Status and metadata
-        status: 'Active',
-        createdDate: today,
-        lastUpdated: today,
-        source: `Referral: ${referral.referralRef}`,
-        tags: ['new-move-in', referral.serviceType.toLowerCase().replace(' ', '-')]
+        tags: ['new-move-in', referral.serviceType.toLowerCase().replace(' ', '-')],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     };
 
     return person;

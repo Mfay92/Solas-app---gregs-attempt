@@ -120,6 +120,18 @@ export default function MeetingsHeroBanner({
         return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
     };
 
+    // Simplify location display
+    const formatLocation = (location?: string) => {
+        if (!location) return null;
+        // If it mentions Teams/Zoom/Virtual, simplify it
+        const lower = location.toLowerCase();
+        if (lower.includes('teams') || lower.includes('zoom') || lower.includes('virtual')) {
+            return 'Virtual';
+        }
+        // Truncate long locations
+        return location.length > 20 ? location.substring(0, 20) + '...' : location;
+    };
+
     const handleToggleComplete = (action: ActionWithMeeting) => {
         // Find the meeting and update the action
         const meeting = meetings.find(m => m.id === action.meetingId);
@@ -221,7 +233,7 @@ export default function MeetingsHeroBanner({
                             >
                                 <div className="flex items-start gap-4">
                                     {/* Date Badge */}
-                                    <div className="bg-white rounded-lg p-2 text-center shadow-lg">
+                                    <div className="bg-white rounded-lg p-2 text-center shadow-lg min-w-[70px]">
                                         <p className="text-xs font-bold text-ivolve-mid uppercase">
                                             {formatRelativeDate(nextMeeting.scheduledDate)}
                                         </p>
@@ -233,28 +245,28 @@ export default function MeetingsHeroBanner({
                                     {/* Meeting Details */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Sparkles size={14} className="text-ivolve-bright" />
-                                            <span className="text-xs text-ivolve-bright font-semibold uppercase">
+                                            <Sparkles size={14} className="text-amber-300" />
+                                            <span className="text-xs text-amber-300 font-semibold uppercase tracking-wide">
                                                 Next Up
                                             </span>
                                         </div>
-                                        <h3 className="text-white font-bold text-lg truncate group-hover:text-ivolve-bright transition-colors">
+                                        <h3 className="text-white font-bold text-lg truncate group-hover:text-amber-200 transition-colors">
                                             {nextMeeting.title}
                                         </h3>
-                                        <div className="flex items-center gap-4 mt-2 text-white/60 text-sm">
+                                        <div className="flex items-center gap-3 mt-2 text-white/70 text-sm">
                                             <span className="flex items-center gap-1">
                                                 <Users size={14} />
-                                                {nextMeeting.participants.length}
+                                                {nextMeeting.participants.length} attendees
                                             </span>
-                                            {nextMeeting.location && (
+                                            {formatLocation(nextMeeting.location) && (
                                                 <span className="flex items-center gap-1">
                                                     <MapPin size={14} />
-                                                    {nextMeeting.location}
+                                                    {formatLocation(nextMeeting.location)}
                                                 </span>
                                             )}
                                             <span className="flex items-center gap-1">
                                                 <Clock size={14} />
-                                                {nextMeeting.duration} min
+                                                {nextMeeting.duration} mins
                                             </span>
                                         </div>
                                     </div>
@@ -262,7 +274,7 @@ export default function MeetingsHeroBanner({
                                     {/* Arrow */}
                                     <ChevronRight
                                         size={24}
-                                        className="text-white/30 group-hover:text-white group-hover:translate-x-1 transition-all"
+                                        className="text-white/30 group-hover:text-white group-hover:translate-x-1 transition-all self-center"
                                     />
                                 </div>
                             </button>

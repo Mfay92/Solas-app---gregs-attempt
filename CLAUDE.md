@@ -1,270 +1,48 @@
-# CLAUDE.md — Solas CRM Project Context
+# CLAUDE.md — Solas CRM
 
-> This file maintains persistent context for Claude Code sessions. It ensures continuity across conversations and tracks project knowledge, decisions, and permissions.
+## Domain Lens (Read First — Non-Negotiable)
 
-**Last Updated:** 2 February 2026 (Session 3)
-**Primary Advisor:** Amy (CRM Development Expert persona)
-**Developer:** Matt Fay (Housing Partnerships & Operations Manager, ivolve)
+Everything in this project serves **UK adult social care**. Users are housing managers, support workers, and commissioners working with **vulnerable adults** (learning disabilities, autism, complex needs, mental health). Solas is the connective tissue between care providers, Registered Providers (housing associations), local authority commissioners, and the people they support.
 
----
+**Language rules:** "people we support" (not tenants), "units" (not beds), "colleagues" (not staff). Plain English, no jargon. If unsure about sector context, **read `docs/PROJECT_VISION.md` before building anything.**
 
-## Quick Context
+## Compaction Rule
 
-**What is Solas?** A "calm, truth-holding" CRM for housing operations in the care/support sector. See [PROJECT_VISION.md](PROJECT_VISION.md) for the full mission and long-term vision.
+If this session compacts or context is summarised, **immediately re-read this file and `docs/PROJECT_VISION.md`** to restore domain context. The sector lens above must survive any compaction. Do not build anything generic — every feature should make sense to a housing manager in a UK care provider.
 
-**Why does it matter?** Vulnerable people fall through gaps because services don't communicate. Solas is the connective tissue that's missing.
+## Project Summary
 
-**Who is Matt?** Domain expert with 10 years in supported housing (BeST → ivolve). Self-diagnosed ADHD — prefers structured, phased work.
+| | |
+|---|---|
+| **What** | CRM for housing operations in care/support sector |
+| **Who** | Matt Fay — Housing Partnerships & Operations Manager, ivolve Care & Support |
+| **Stack** | React 19 + TypeScript + Vite + Tailwind CSS 3.4 |
+| **State** | Context API + localStorage (no backend yet) |
+| **Backend (planned)** | Supabase (SSH key integration — Firebase dependency to be removed) |
+| **Data** | Mock JSON with real property structure, fictional people |
+| **Branch** | `feature/code-quality-fixes` |
+| **Repo** | github.com/Mfay92/Solas-app---gregs-attempt (rename to `solas-crm` pending) |
 
----
+## Current State (February 2026)
 
-## Tech Stack
+**Working:** Dashboard (drag-drop widgets), Property Hub (master/unit hierarchy, search, filters), Property Profile (all tabs), PersonProfile (12 tabs, service type colour coding), ReferralsHub (11-stage workflow), ReferralProfile (8 tabs), Development Hub (full kanban pipeline), Notice Board, Void Management, Finance (basic), 16-item sidebar navigation, Developer Settings.
 
-- **Frontend:** React 19 + TypeScript + Vite
-- **Styling:** Tailwind CSS 3.4.17 (custom ivolve brand palette)
-- **Dashboard:** React Grid Layout (drag-and-drop widgets)
-- **State:** Context API + localStorage persistence
-- **Backend:** Firebase (installed, not yet integrated)
-- **Data:** Mock JSON (real ivolve property structure, fake people for demo)
+**Placeholder hubs (built but generic — need sector-specific content):** Projects Hub, Report Centre, Repairs Hub, Legal Hub, The Library, Address Book.
 
----
+**Not started:** Backend/auth, testing, mobile responsiveness, Compliance Hub (paused, plan exists).
 
-## Current State (2 Feb 2026)
+**Known issues:** None critical. Development Hub and Projects Hub need sector-specific fields and workflows — they currently feel too generic for supported housing use.
 
-| Metric | Status |
-|--------|--------|
-| Core Infrastructure | 90% complete |
-| Features Functional | 65% |
-| Backend Integration | 0% (deferred to Phase 3) |
-| Test Coverage | 0% |
-| Production Readiness | 55% |
+## Working With Matt
 
-**Branch:** `feature/code-quality-fixes`
+- **Self-taught with AI** — not a developer, but strong domain expert with clear vision
+- **ADHD** — prefers structured phases, clear checkpoints, tables over paragraphs
+- **Phase-gated work** — complete and verify each phase before moving to next. Do NOT jump ahead.
+- **Check in between phases** — after completing work, review CLAUDE.md, TODO.md, and code quality before starting next phase
+- **Matt reviews outputs, not files** — build it and show it working rather than explaining in docs he won't read
+- **British English** — always. "colour" not "color" in comments and UI text.
 
-**Working:**
-- Dashboard with drag-and-drop widgets ✓
-- Property Hub with Master/Unit hierarchy ✓
-- Property Profile (all tabs loading correctly) ✓
-- PersonProfile with 12 tabs, service type color coding ✓
-- ReferralsHub with 11-stage workflow ✓
-- ReferralProfile with 8 tabs ✓
-- Notice Board component (redesigned Quick Access Toolbox) ✓
-- Service type theming (Green/Blue/Rose) throughout ✓
-- Colored borders on all cards matching service type ✓
-- Developer Settings with feature toggles ✓
-- Void Management hub ✓
-- Finance page (basic) ✓
-- **16-item sidebar navigation with 2-column collapsed grid** ✓
-- **7 new hub placeholder pages** (Projects, Report Centre, Development, Repairs, Legal, Library, Address Book) ✓
-
-**Broken:**
-- None currently — all P0 issues resolved
-
-**Recent Improvements (Phase 2.7 - Navigation Overhaul):**
-- Complete sidebar redesign: 16 hubs, 2-column grid when collapsed
-- Fixed z-index (z-50) so sidebar overlays hero banners
-- Removed Sidekick button
-- Added 7 new hub pages with hero banners (placeholder content)
-- Renamed nav items for consistency (Dashboard→My Dashboard, etc.)
-
----
-
-## Permissions Granted
-
-| Permission | Granted By | Date | Notes |
-|------------|-----------|------|-------|
-| Full codebase review | Matt | 30 Nov 2025 | Initial review completed |
-| Write feedback/TODO files | Matt | 30 Nov 2025 | FEEDBACK.md, TODO.md created |
-| Advise on agent selection | Matt | 30 Nov 2025 | Claude vs Gemini, model choice |
-| Execute plans with approval | Matt | 30 Nov 2025 | Detail plan + reasoning, Matt approves |
-
----
-
-## Decisions Made
-
-### Architecture Decisions
-1. **React Router implemented** — Routes: `/`, `/properties`, `/properties/:id`, `/finance`, `/settings`. Browser back/forward works.
-2. **Tailwind CSS v3** — Downgraded from v4 for stability.
-
-### Data Governance (Confirmed 30 Nov 2025)
-- **Real data allowed**: Properties, stakeholders, staff, offices, day centres, training facilities (public/low-risk)
-- **Fictional only**: People we support (residents) — always use mock data for privacy
-- **Property types to include**: Supported living, residential, nursing, offices, day centres, training facilities
-- **Legal sign-off**: Colleague confirmed approach is compliant
-
-### Workflow Decisions
-1. **Phase-gated development** — Complete and verify each phase before moving to next.
-2. **Amy persona active** — Candid, structured advice. British English. No buzzwords.
-3. **TODO.md as source of truth** — All tasks tracked there with phases.
-
----
-
-## Session Log
-
-### Session 1 — 30 November 2025
-**Actions Taken:**
-1. Full codebase exploration via Explore agent
-2. Updated `FEEDBACK.md` with comprehensive review (P0-P3 priorities)
-3. Rewrote `TODO.md` with phased development roadmap
-4. Reviewed existing `BEST_CRM_PRACTICES.md` (by Antigravity)
-5. Created this `CLAUDE.md` for persistent context
-
-**Findings:**
-- 50+ components, 20+ TypeScript interfaces
-- PropertyProfile crash is P0 blocker
-- PropertyHub has advanced features built but not wired (EnhancedToolbar, AdvancedFilterBuilder, etc.)
-- Dashboard widget system is sophisticated and working
-
-**Outcome:**
-- Property Profile crash **FIXED** (confirmed by Matt — loads fine)
-- Ready to proceed to Phase 2 (P1 priorities)
-
-**Next Priority:** React Router integration (Phase 2.1)
-
-### Session 2 — 2 February 2026
-**Actions Taken:**
-1. UI polish pass on PersonProfile based on user feedback
-2. Redesigned QuickAccessToolbox → Notice Board (tabs left, content right)
-3. Implemented service type color coding for PersonProfile hero banners
-4. Applied colored borders to ALL cards in ALL 12 PersonProfile tabs
-5. Improved spacing and alignment throughout hero banners
-6. Updated CHANGELOG.md with Phase 2.6 section
-7. Updated this CLAUDE.md file with current progress
-
-**User Feedback Addressed:**
-- "Notice Board" naming (renamed from "Quick Access Tool Box")
-- Layout flip (tabs LEFT, content RIGHT, scrollbar on far right)
-- Bigger size (430px × 360px)
-- Service type color bug fix (all profiles were blue, now dynamically colored)
-- Colored borders on all cards matching service type
-- Reduced padding (profiles closer to sidebar)
-- Consistent "People Hub" terminology
-
-**Findings:**
-- All 12 PersonProfile tabs successfully updated with colored borders
-- Service type utility (getServiceTypeColor) working perfectly
-- Notice Board layout vastly improved with new side-by-side design
-- User feedback resulted in significant visual polish improvements
-
-**Outcome:**
-- Phase 2.6 (UI Polish & Service Type Theming) **COMPLETE** ✓
-- PersonProfile now has consistent service type theming throughout
-- Ready for user review and testing
-- Next priority: Apply same theming to ReferralProfile, implement forms (Add Referral, Edit Person, Notes system)
-
-### Session 3 — 2 February 2026 (Navigation Overhaul)
-**Actions Taken:**
-1. Major sidebar navigation overhaul — now 16 hub areas
-2. Created 7 new hub placeholder pages with hero banners
-3. Redesigned sidebar: 2-column grid when collapsed, single column expanded
-4. Fixed z-index (z-30→z-50) so sidebar overlays content
-5. Removed Sidekick button from Layout
-6. Added sensitive folders to .gitignore
-
-**New Hubs Created:**
-| Hub | Route | Icon | Purpose |
-|-----|-------|------|---------|
-| Projects Hub | `/projects` | FolderKanban | Personal/company projects |
-| Report Centre | `/reports` | BarChart3 | Business reporting |
-| Development Hub | `/development` | HousePlus | New business pipeline |
-| Repairs Hub | `/repairs` | Wrench | CAFM system (placeholder) |
-| Legal Hub | `/legal` | Gavel | Contracts, leases, SLAs |
-| The Library | `/library` | BookOpen | Knowledge base, articles |
-| Address Book | `/address-book` | Contact | Staff & external contacts |
-
-**Navigation Renames:**
-- Dashboard → My Dashboard
-- People → People Hub
-- Referrals → Referrals Hub
-- Voids → Void Hub
-- Compliance → Compliance Hub
-- Finance → Finance Hub
-- Library → The Library
-
-**Final Nav Order (8 rows × 2 columns when collapsed):**
-1. My Dashboard + My Meetings
-2. Projects Hub + Report Centre
-3. Development Hub + Property Hub
-4. Referrals Hub + People Hub
-5. Void Hub + Legal Hub
-6. Repairs Hub + Compliance Hub
-7. Finance Hub + The Library
-8. Address Book + Settings
-
-**Commits:**
-- `8043d2c` feat: Major navigation overhaul - 16 hub areas with redesigned sidebar
-- `491967e` chore: Add sensitive data folders to .gitignore
-
-**Outcome:**
-- Phase 2.7 (Navigation Overhaul) **COMPLETE** ✓
-- All 16 navigation areas accessible and working
-- Sidebar scales well with 2-column collapsed layout
-- Ready to build out individual hub features
-
----
-
-## Working Patterns
-
-### How Amy Works
-1. **Reviews before acting** — Always reads code before suggesting changes
-2. **Details plans with reasoning** — Matt approves before execution
-3. **Tracks everything** — Updates this file and TODO.md as we progress
-4. **Phase gates** — Won't move to next phase until current phase is verified working
-5. **Candid feedback** — Tells Matt what he needs to hear, not just what he wants to hear
-
-### Agent Usage Guidelines
-- **Claude Code Opus** — Complex reasoning, architecture decisions, debugging crashes
-- **Claude Code Sonnet** — Standard implementation tasks, refactoring
-- **Claude Code Haiku** — Quick lookups, simple fixes, file searches
-- **Gemini** — Alternative for very large context windows (1M tokens)
-
-### Agent Session Notes
-- Each Task tool invocation is **stateless** — agents don't retain memory between calls
-- Can give agents **multi-part prompts** in a single call
-- For sequential dependent tasks, call agents in sequence (not parallel)
-- Always specify expected outputs and success criteria in prompts
-
----
-
-## Key Files Reference
-
-| Purpose | File |
-|---------|------|
-| Type definitions | `src/types.ts` |
-| Mock property data | `src/data/properties.json` |
-| App state | `src/context/AppContext.tsx` |
-| Main layout | `src/components/Layout.tsx` |
-| **Sidebar nav (16 items)** | `src/components/Sidebar.tsx` |
-| **Routes config** | `src/App.tsx` |
-| Dashboard | `src/components/Dashboard/DashboardLayout.tsx` |
-| Property list | `src/components/PropertyHub/PropertyHubEnhanced.tsx` |
-| Property detail | `src/components/PropertyProfile/index.tsx` |
-| Error handling | `src/components/ErrorBoundary.tsx` |
-
-**New Hub Pages (Session 3):**
-| Hub | File |
-|-----|------|
-| Projects Hub | `src/components/ProjectsHub/index.tsx` |
-| Report Centre | `src/components/ReportCentre/index.tsx` |
-| Development Hub | `src/components/DevelopmentHub/index.tsx` |
-| Repairs Hub | `src/components/RepairsHub/index.tsx` |
-| Legal Hub | `src/components/LegalHub/index.tsx` |
-| The Library | `src/components/Library/index.tsx` |
-| Address Book | `src/components/AddressBook/index.tsx` |
-
-## Project Documentation
-
-| File | Purpose |
-|------|---------|
-| `CLAUDE.md` | This file — session context, permissions, decisions |
-| `PROJECT_VISION.md` | Mission, Matt's background, long-term vision |
-| `TODO.md` | Phased development roadmap with tasks |
-| `FEEDBACK.md` | Codebase review with P0-P3 priorities |
-| `BEST_CRM_PRACTICES.md` | Sector knowledge, what good CRMs do |
-
----
-
-## Communication Preferences
+### Communication Style
 
 | Do | Don't |
 |----|-------|
@@ -276,29 +54,56 @@
 | Candid feedback | Sycophancy |
 | Phase-gated work | Overwhelming scope |
 
-**Avoid these words:** navigate, embark, unlock, elevate, game-changer, synergy, leverage, tapestry
+**Banned words:** navigate, embark, unlock, elevate, game-changer, synergy, leverage, tapestry
+
+## Permissions
+
+- Full codebase read/write ✓
+- Git add, commit, push ✓
+- npm install, build, dev ✓
+- Create/update documentation ✓
+- Execute plans after detailing reasoning — Matt approves before major changes
+
+## File Maintenance Rules
+
+After completing any significant work:
+
+1. **Update this file's "Current State" section** if anything has changed
+2. **Update `docs/TODO.md`** — check off completed items, add new ones
+3. **Log the session** in `docs/SESSION_LOG.md` (date, what was done, outcome)
+4. **Check for stale references** — dead links, missing files, outdated status
+5. **Before starting a new phase**, re-read this file to confirm you have the right context
+6. If you notice a repeated task you're solving inline, **consider building a reusable utility in `src/utils/`** instead
+
+## Key Files
+
+| Purpose | File |
+|---------|------|
+| **This file** | `CLAUDE.md` — current state, working patterns |
+| **Vision & mission** | `docs/PROJECT_VISION.md` — the "why" behind Solas |
+| **Development roadmap** | `docs/TODO.md` — phased tasks with checkboxes |
+| **Session history** | `docs/SESSION_LOG.md` — what happened in each session |
+| **Architecture decisions** | `docs/DECISIONS.md` — why we chose what we chose |
+| **Codebase review** | `docs/FEEDBACK.md` — P0-P3 priorities from initial audit |
+| **Hero banner patterns** | `docs/HERO_BANNER_GUIDE.md` — design system for profile pages |
+| **Hub build briefs** | `docs/*_PROMPT.md` — sector-specific briefs for each hub |
+
+## Tech Notes
+
+- **Tailwind v3** (downgraded from v4 for stability) — do NOT use dynamic class construction (e.g., `bg-${color}-500`). Use full class names via lookup objects.
+- **Service type theming:** Green = Supported Living, Blue = Residential Care, Rose = Nursing Care. Use `src/utils/serviceTypeUtils.ts`.
+- **Type definitions** split across `src/types.ts` (core) and `src/types/*.ts` (module-specific).
+- **Firebase is installed but NOT in use** — will be replaced with Supabase. Do not build Firebase integrations.
+- **Mock data** in `src/data/` — real property structures, fictional people for privacy.
+
+## Subagent Guidance
+
+When spawning subagents for parallel tasks:
+- Always include the domain lens: "This project is for UK adult social care — supported living, learning disabilities, vulnerable adults."
+- Point them to specific files they need, don't make them read everything.
+- Subagents are good for: research tasks, running tests, reviewing code, writing documentation.
+- Subagents should NOT make architectural decisions — flag those for the main session.
 
 ---
 
-## Notes for Future Sessions
-
-If starting a new session, read this file first to understand:
-1. Current project state and what's working/broken
-2. Permissions already granted
-3. Decisions already made
-4. What was done in previous sessions
-5. What the next priority is
-
-The active persona is **Amy** — see `.claude/plans/zesty-gathering-petal.md` for full persona definition.
-
----
-
-## Questions to Ask Matt
-
-(Record any pending questions here for continuity)
-
-- None currently
-
----
-
-*This file is maintained by Claude Code and should be updated at the end of each significant session.*
+*For full session history, see `docs/SESSION_LOG.md`. For architecture decisions, see `docs/DECISIONS.md`.*

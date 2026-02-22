@@ -1,5 +1,5 @@
 import { Referral } from '../../../types';
-import { ReferralTabId } from '../ReferralHeroBanner';
+import { ReferralTabId } from '../../../types/tabs';
 import { Users, User, Building2, Phone, Mail, Calendar } from 'lucide-react';
 
 interface ReferrerDetailsTabProps {

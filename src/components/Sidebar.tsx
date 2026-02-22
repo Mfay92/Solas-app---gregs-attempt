@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Calendar, FolderKanban, BarChart3, HousePlus, Building2, UserPlus, Users, AlertTriangle, Gavel, Wrench, ShieldCheck, PoundSterling, BookOpen, Contact, Settings, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
+import { Home, Calendar, FolderKanban, BarChart3, HousePlus, Building2, UserPlus, Users, DoorOpen, Scale, Wrench, ShieldCheck, PoundSterling, BookOpen, Contact, Settings, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
 import clsx from 'clsx';
 import { useApp } from '../context/AppContext';
 
@@ -17,8 +17,8 @@ const Sidebar: React.FC = () => {
         { path: '/properties', icon: Building2, label: 'Property Hub' },
         { path: '/referrals', icon: UserPlus, label: 'Referrals Hub' },
         { path: '/people', icon: Users, label: 'People Hub' },
-        { path: '/voids', icon: AlertTriangle, label: 'Void Hub' },
-        { path: '/legal', icon: Gavel, label: 'Legal Hub' },
+        { path: '/voids', icon: DoorOpen, label: 'Void Hub' },
+        { path: '/legal', icon: Scale, label: 'Legal Hub' },
         { path: '/repairs', icon: Wrench, label: 'Repairs Hub' },
         { path: '/compliance', icon: ShieldCheck, label: 'Compliance Hub' },
         { path: '/finance', icon: PoundSterling, label: 'Finance Hub' },

@@ -1,5 +1,5 @@
 import { Referral } from '../../../types';
-import { ReferralTabId } from '../ReferralHeroBanner';
+import { ReferralTabId } from '../../../types/tabs';
 import { ClipboardCheck, Heart, Utensils, Activity, Calendar, User, FileText } from 'lucide-react';
 
 interface AssessmentTabProps {

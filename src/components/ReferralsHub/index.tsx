@@ -3,7 +3,7 @@ import { Referral, ServiceType } from '../../types';
 import referralsData from '../../data/referrals.json';
 import ReferralProfile from '../ReferralProfile';
 import StatusBadge from '../shared/StatusBadge';
-import { UserPlus, Search, Plus, X, Filter, FileText, Clock, CheckCircle, Users } from 'lucide-react';
+import { UserPlus, Search, Plus, X, Filter, FileText, Clock, CheckCircle, Users, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface SortConfig {
     key: 'referralRef' | 'name' | 'referralDate' | 'status' | 'serviceType';
@@ -156,10 +156,18 @@ export default function ReferralsHub() {
         });
     };
 
+    // Handle sort
+    const handleSort = (key: SortConfig['key']) => {
+        setSortConfig(prev => ({
+            key,
+            direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+        }));
+    };
+
     // Check if any filters are active
     const hasActiveFilters = filters.status !== 'All' ||
-                            filters.serviceType !== 'All' ||
-                            filters.source !== 'All';
+        filters.serviceType !== 'All' ||
+        filters.source !== 'All';
 
     // Get service type color
     const getServiceTypeColor = (serviceType: ServiceType) => {
@@ -196,79 +204,84 @@ export default function ReferralsHub() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-ivolve-paper via-white to-ivolve-paper">
-            {/* Header Section */}
-            <div className="bg-white border-b border-gray-100 sticky top-0 z-40">
-                <div className="px-4 md:px-8 py-6">
-                    {/* Title */}
-                    <div className="mb-6">
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 flex items-center gap-3 mb-2">
-                            <UserPlus className="text-ivolve-mid" size={32} />
-                            Referrals & Applications
-                        </h1>
-                        <p className="text-gray-500 text-sm md:text-base">
+        <div className="min-h-screen bg-ivolve-paper -m-6">
+            {/* Hero Banner */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-4 md:px-8 py-8 mb-6">
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
+                        <UserPlus className="text-white" size={32} />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-white">Referrals & Applications</h1>
+                        <p className="text-white/80">
                             {filteredAndSortedReferrals.length} of {referrals.length} referrals
                             {searchQuery && ` (filtered by "${searchQuery}")`}
                             {hasActiveFilters && ' (filters active)'}
                         </p>
                     </div>
+                </div>
 
-                    {/* Quick Stats Cards */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                        {/* New Referrals */}
-                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold text-blue-700 uppercase mb-1">New Referrals</p>
-                                    <p className="text-2xl font-bold text-blue-800">{stats.newReferrals}</p>
-                                </div>
-                                <FileText className="text-blue-600 opacity-70" size={28} />
+                {/* Quick Stats Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* New Referrals */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">New Referrals</p>
+                                <p className="text-2xl font-bold text-white">{stats.newReferrals}</p>
                             </div>
-                        </div>
-
-                        {/* Under Assessment */}
-                        <div className="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-lg p-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold text-amber-700 uppercase mb-1">Under Assessment</p>
-                                    <p className="text-2xl font-bold text-amber-800">{stats.underAssessment}</p>
-                                </div>
-                                <Users className="text-amber-600 opacity-70" size={28} />
-                            </div>
-                        </div>
-
-                        {/* Awaiting Funding */}
-                        <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold text-purple-700 uppercase mb-1">Awaiting Funding</p>
-                                    <p className="text-2xl font-bold text-purple-800">{stats.awaitingFunding}</p>
-                                </div>
-                                <Clock className="text-purple-600 opacity-70" size={28} />
-                            </div>
-                        </div>
-
-                        {/* Ready to Move In */}
-                        <div className="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold text-green-700 uppercase mb-1">Ready to Move In</p>
-                                    <p className="text-2xl font-bold text-green-800">{stats.readyToMoveIn}</p>
-                                </div>
-                                <CheckCircle className="text-green-600 opacity-70" size={28} />
-                            </div>
+                            <FileText className="text-white/70" size={28} />
                         </div>
                     </div>
+
+                    {/* Under Assessment */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Under Assessment</p>
+                                <p className="text-2xl font-bold text-white">{stats.underAssessment}</p>
+                            </div>
+                            <Users className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    {/* Awaiting Funding */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Awaiting Funding</p>
+                                <p className="text-2xl font-bold text-white">{stats.awaitingFunding}</p>
+                            </div>
+                            <Clock className="text-white/70" size={28} />
+                        </div>
+                    </div>
+
+                    {/* Ready to Move In */}
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold text-white/80 uppercase mb-1">Ready to Move In</p>
+                                <p className="text-2xl font-bold text-white">{stats.readyToMoveIn}</p>
+                            </div>
+                            <CheckCircle className="text-white/70" size={28} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content Wrapper */}
+            <div className="p-6">
+                {/* Header Section */}
+                <div className="bg-white border-b border-gray-100 sticky top-0 z-40 -mx-6 px-4 md:px-8 py-6 mb-6">
 
                     {/* Advanced Filters Panel */}
                     <div className="mb-4">
                         <button
                             onClick={() => setShowFilters(!showFilters)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 ${
-                                hasActiveFilters
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 ${hasActiveFilters
                                     ? 'bg-ivolve-mid text-white border-ivolve-mid shadow-sm'
                                     : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                            }`}
+                                }`}
                         >
                             <Filter size={18} />
                             <span className="font-medium">
@@ -396,230 +409,260 @@ export default function ReferralsHub() {
                         </button>
                     </div>
                 </div>
-            </div>
 
-            {/* Main Content - Referrals Table */}
-            <div className="px-4 md:px-8 py-6">
-                {filteredAndSortedReferrals.length > 0 ? (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                        {/* Desktop Table View */}
-                        <div className="hidden md:block overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b border-gray-100">
-                                    <tr>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Reference
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Person
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Service Type
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Status
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Referrer
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Referral Date
-                                        </th>
-                                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                                            Linked Property
-                                        </th>
-                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100">
+                {/* Main Content - Referrals Table */}
+                <div>
+                    {filteredAndSortedReferrals.length > 0 ? (
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            {/* Desktop Table View */}
+                            <div className="hidden md:block overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50 border-b border-gray-100">
+                                        <tr>
+                                            <th
+                                                className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase cursor-pointer hover:text-ivolve-mid transition-colors"
+                                                onClick={() => handleSort('referralRef')}
+                                            >
+                                                <div className="flex items-center gap-1">
+                                                    Reference
+                                                    {sortConfig.key === 'referralRef' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                                                </div>
+                                            </th>
+                                            <th
+                                                className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase cursor-pointer hover:text-ivolve-mid transition-colors"
+                                                onClick={() => handleSort('name')}
+                                            >
+                                                <div className="flex items-center gap-1">
+                                                    Person
+                                                    {sortConfig.key === 'name' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                                                </div>
+                                            </th>
+                                            <th
+                                                className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase cursor-pointer hover:text-ivolve-mid transition-colors"
+                                                onClick={() => handleSort('serviceType')}
+                                            >
+                                                <div className="flex items-center gap-1">
+                                                    Service Type
+                                                    {sortConfig.key === 'serviceType' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                                                </div>
+                                            </th>
+                                            <th
+                                                className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase cursor-pointer hover:text-ivolve-mid transition-colors"
+                                                onClick={() => handleSort('status')}
+                                            >
+                                                <div className="flex items-center gap-1">
+                                                    Status
+                                                    {sortConfig.key === 'status' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
+                                                Referrer
+                                            </th>
+                                            <th
+                                                className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase cursor-pointer hover:text-ivolve-mid transition-colors"
+                                                onClick={() => handleSort('referralDate')}
+                                            >
+                                                <div className="flex items-center gap-1">
+                                                    Referral Date
+                                                    {sortConfig.key === 'referralDate' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />)}
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
+                                                Linked Property
+                                            </th>
+                                            <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-100">
+                                        {filteredAndSortedReferrals.map((referral) => (
+                                            <tr
+                                                key={referral.id}
+                                                onClick={() => setSelectedReferral(referral)}
+                                                className="hover:bg-ivolve-paper/50 cursor-pointer transition-colors"
+                                            >
+                                                {/* Reference */}
+                                                <td className="px-4 py-4">
+                                                    <span className="font-mono text-sm font-semibold text-gray-800">
+                                                        {referral.referralRef}
+                                                    </span>
+                                                </td>
+
+                                                {/* Person Name */}
+                                                <td className="px-4 py-4">
+                                                    <div>
+                                                        <div className="font-semibold text-gray-800">
+                                                            {referral.personal.firstName} {referral.personal.lastName}
+                                                        </div>
+                                                        {referral.personal.preferredName &&
+                                                            referral.personal.preferredName !== referral.personal.firstName && (
+                                                                <div className="text-xs text-gray-500">
+                                                                    Prefers: {referral.personal.preferredName}
+                                                                </div>
+                                                            )}
+                                                    </div>
+                                                </td>
+
+                                                {/* Service Type */}
+                                                <td className="px-4 py-4">
+                                                    <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getServiceTypeColor(referral.serviceType)}`}>
+                                                        {referral.serviceType}
+                                                    </span>
+                                                </td>
+
+                                                {/* Status */}
+                                                <td className="px-4 py-4">
+                                                    <StatusBadge status={referral.status} size="sm" />
+                                                </td>
+
+                                                {/* Referrer */}
+                                                <td className="px-4 py-4 text-gray-700 text-sm max-w-xs">
+                                                    <div className="truncate" title={referral.referrerName}>
+                                                        {referral.referrerName}
+                                                    </div>
+                                                    {referral.referrerOrganization && (
+                                                        <div className="text-xs text-gray-500 truncate" title={referral.referrerOrganization}>
+                                                            {referral.referrerOrganization}
+                                                        </div>
+                                                    )}
+                                                </td>
+
+                                                {/* Referral Date */}
+                                                <td className="px-4 py-4 text-gray-700 text-sm">
+                                                    {formatDate(referral.referralDate)}
+                                                </td>
+
+                                                {/* Linked Property */}
+                                                <td className="px-4 py-4 text-gray-700 text-sm max-w-xs">
+                                                    {referral.linkedProperty ? (
+                                                        <div className="truncate" title={referral.linkedProperty.propertyAddress}>
+                                                            {referral.linkedProperty.propertyAddress}
+                                                            {referral.linkedProperty.room && (
+                                                                <div className="text-xs text-gray-500">
+                                                                    {referral.linkedProperty.room}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-gray-400 text-sm">Not yet assigned</span>
+                                                    )}
+                                                </td>
+
+                                                {/* Actions */}
+                                                <td className="px-4 py-4 text-center">
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setSelectedReferral(referral);
+                                                        }}
+                                                        className="px-3 py-1 text-sm text-ivolve-mid hover:text-white hover:bg-ivolve-mid rounded transition-all duration-200 font-medium border border-ivolve-mid/30 hover:border-ivolve-mid"
+                                                    >
+                                                        View
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Mobile Card View */}
+                            <div className="md:hidden">
+                                <div className="divide-y divide-gray-100">
                                     {filteredAndSortedReferrals.map((referral) => (
-                                        <tr
+                                        <div
                                             key={referral.id}
                                             onClick={() => setSelectedReferral(referral)}
-                                            className="hover:bg-ivolve-paper/50 cursor-pointer transition-colors"
+                                            className="p-4 hover:bg-ivolve-paper/50 cursor-pointer transition-colors"
                                         >
-                                            {/* Reference */}
-                                            <td className="px-4 py-4">
-                                                <span className="font-mono text-sm font-semibold text-gray-800">
-                                                    {referral.referralRef}
-                                                </span>
-                                            </td>
-
-                                            {/* Person Name */}
-                                            <td className="px-4 py-4">
+                                            {/* Header with name and service type */}
+                                            <div className="flex items-start justify-between mb-3">
                                                 <div>
-                                                    <div className="font-semibold text-gray-800">
+                                                    <h3 className="font-semibold text-gray-800">
                                                         {referral.personal.firstName} {referral.personal.lastName}
-                                                    </div>
-                                                    {referral.personal.preferredName &&
-                                                        referral.personal.preferredName !== referral.personal.firstName && (
-                                                            <div className="text-xs text-gray-500">
-                                                                Prefers: {referral.personal.preferredName}
-                                                            </div>
-                                                        )}
+                                                    </h3>
+                                                    <p className="text-xs text-gray-500 font-mono">
+                                                        {referral.referralRef}
+                                                    </p>
                                                 </div>
-                                            </td>
-
-                                            {/* Service Type */}
-                                            <td className="px-4 py-4">
                                                 <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getServiceTypeColor(referral.serviceType)}`}>
                                                     {referral.serviceType}
                                                 </span>
-                                            </td>
+                                            </div>
 
-                                            {/* Status */}
-                                            <td className="px-4 py-4">
-                                                <StatusBadge status={referral.status} size="sm" />
-                                            </td>
-
-                                            {/* Referrer */}
-                                            <td className="px-4 py-4 text-gray-700 text-sm max-w-xs">
-                                                <div className="truncate" title={referral.referrerName}>
-                                                    {referral.referrerName}
+                                            {/* Key Info Grid */}
+                                            <div className="grid grid-cols-1 gap-2 text-sm mb-3">
+                                                <div>
+                                                    <p className="text-gray-500 text-xs uppercase mb-1">Status</p>
+                                                    <StatusBadge status={referral.status} size="sm" />
                                                 </div>
-                                                {referral.referrerOrganization && (
-                                                    <div className="text-xs text-gray-500 truncate" title={referral.referrerOrganization}>
-                                                        {referral.referrerOrganization}
-                                                    </div>
-                                                )}
-                                            </td>
+                                                <div>
+                                                    <p className="text-gray-500 text-xs uppercase mb-1">Referrer</p>
+                                                    <p className="text-gray-800 text-sm">{referral.referrerName}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-gray-500 text-xs uppercase mb-1">Referral Date</p>
+                                                    <p className="text-gray-800 text-sm">{formatDate(referral.referralDate)}</p>
+                                                </div>
+                                            </div>
 
-                                            {/* Referral Date */}
-                                            <td className="px-4 py-4 text-gray-700 text-sm">
-                                                {formatDate(referral.referralDate)}
-                                            </td>
-
-                                            {/* Linked Property */}
-                                            <td className="px-4 py-4 text-gray-700 text-sm max-w-xs">
-                                                {referral.linkedProperty ? (
-                                                    <div className="truncate" title={referral.linkedProperty.propertyAddress}>
-                                                        {referral.linkedProperty.propertyAddress}
-                                                        {referral.linkedProperty.room && (
-                                                            <div className="text-xs text-gray-500">
-                                                                {referral.linkedProperty.room}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                ) : (
-                                                    <span className="text-gray-400 text-sm">Not yet assigned</span>
-                                                )}
-                                            </td>
-
-                                            {/* Actions */}
-                                            <td className="px-4 py-4 text-center">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setSelectedReferral(referral);
-                                                    }}
-                                                    className="px-3 py-1 text-sm text-ivolve-mid hover:text-white hover:bg-ivolve-mid rounded transition-all duration-200 font-medium border border-ivolve-mid/30 hover:border-ivolve-mid"
-                                                >
-                                                    View
-                                                </button>
-                                            </td>
-                                        </tr>
+                                            {/* Action Button */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedReferral(referral);
+                                                }}
+                                                className="w-full px-3 py-2 text-sm text-ivolve-mid hover:text-white hover:bg-ivolve-mid rounded transition-all duration-200 font-medium border border-ivolve-mid/30 hover:border-ivolve-mid"
+                                            >
+                                                View Referral
+                                            </button>
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
                         </div>
-
-                        {/* Mobile Card View */}
-                        <div className="md:hidden">
-                            <div className="divide-y divide-gray-100">
-                                {filteredAndSortedReferrals.map((referral) => (
-                                    <div
-                                        key={referral.id}
-                                        onClick={() => setSelectedReferral(referral)}
-                                        className="p-4 hover:bg-ivolve-paper/50 cursor-pointer transition-colors"
-                                    >
-                                        {/* Header with name and service type */}
-                                        <div className="flex items-start justify-between mb-3">
-                                            <div>
-                                                <h3 className="font-semibold text-gray-800">
-                                                    {referral.personal.firstName} {referral.personal.lastName}
-                                                </h3>
-                                                <p className="text-xs text-gray-500 font-mono">
-                                                    {referral.referralRef}
-                                                </p>
-                                            </div>
-                                            <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getServiceTypeColor(referral.serviceType)}`}>
-                                                {referral.serviceType}
-                                            </span>
-                                        </div>
-
-                                        {/* Key Info Grid */}
-                                        <div className="grid grid-cols-1 gap-2 text-sm mb-3">
-                                            <div>
-                                                <p className="text-gray-500 text-xs uppercase mb-1">Status</p>
-                                                <StatusBadge status={referral.status} size="sm" />
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-500 text-xs uppercase mb-1">Referrer</p>
-                                                <p className="text-gray-800 text-sm">{referral.referrerName}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-500 text-xs uppercase mb-1">Referral Date</p>
-                                                <p className="text-gray-800 text-sm">{formatDate(referral.referralDate)}</p>
-                                            </div>
-                                        </div>
-
-                                        {/* Action Button */}
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setSelectedReferral(referral);
-                                            }}
-                                            className="w-full px-3 py-2 text-sm text-ivolve-mid hover:text-white hover:bg-ivolve-mid rounded transition-all duration-200 font-medium border border-ivolve-mid/30 hover:border-ivolve-mid"
-                                        >
-                                            View Referral
-                                        </button>
+                    ) : (
+                        // Empty State
+                        <div className="flex items-center justify-center min-h-96">
+                            <div className="text-center">
+                                <div className="mb-4 flex justify-center">
+                                    <div className="p-4 bg-ivolve-paper rounded-full">
+                                        <UserPlus className="text-ivolve-mid" size={48} />
                                     </div>
-                                ))}
+                                </div>
+                                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                                    No referrals found
+                                </h2>
+                                <p className="text-gray-500 mb-6">
+                                    {searchQuery || hasActiveFilters
+                                        ? 'No referrals match your current filters and search criteria'
+                                        : 'No referrals have been added to the system yet'}
+                                </p>
+                                {(searchQuery || hasActiveFilters) && (
+                                    <div className="flex gap-3 justify-center">
+                                        {searchQuery && (
+                                            <button
+                                                onClick={() => setSearchQuery('')}
+                                                className="px-4 py-2 text-ivolve-mid border border-ivolve-mid rounded-lg hover:bg-ivolve-paper transition-colors"
+                                            >
+                                                Clear Search
+                                            </button>
+                                        )}
+                                        {hasActiveFilters && (
+                                            <button
+                                                onClick={handleClearFilters}
+                                                className="px-4 py-2 text-ivolve-mid border border-ivolve-mid rounded-lg hover:bg-ivolve-paper transition-colors"
+                                            >
+                                                Clear Filters
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    </div>
-                ) : (
-                    // Empty State
-                    <div className="flex items-center justify-center min-h-96">
-                        <div className="text-center">
-                            <div className="mb-4 flex justify-center">
-                                <div className="p-4 bg-ivolve-paper rounded-full">
-                                    <UserPlus className="text-ivolve-mid" size={48} />
-                                </div>
-                            </div>
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                                No referrals found
-                            </h2>
-                            <p className="text-gray-500 mb-6">
-                                {searchQuery || hasActiveFilters
-                                    ? 'No referrals match your current filters and search criteria'
-                                    : 'No referrals have been added to the system yet'}
-                            </p>
-                            {(searchQuery || hasActiveFilters) && (
-                                <div className="flex gap-3 justify-center">
-                                    {searchQuery && (
-                                        <button
-                                            onClick={() => setSearchQuery('')}
-                                            className="px-4 py-2 text-ivolve-mid border border-ivolve-mid rounded-lg hover:bg-ivolve-paper transition-colors"
-                                        >
-                                            Clear Search
-                                        </button>
-                                    )}
-                                    {hasActiveFilters && (
-                                        <button
-                                            onClick={handleClearFilters}
-                                            className="px-4 py-2 text-ivolve-mid border border-ivolve-mid rounded-lg hover:bg-ivolve-paper transition-colors"
-                                        >
-                                            Clear Filters
-                                        </button>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

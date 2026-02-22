@@ -1,22 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import {
-    ArrowLeft, Phone, Mail, User, Users, X, CheckCircle,
+    ArrowLeft, Phone, Mail, User, Users, CheckCircle,
     LayoutDashboard, Home, PoundSterling, FolderOpen, MessageSquare, ClipboardCheck
 } from 'lucide-react';
 import { Referral, ServiceType } from '../../types';
+import { ReferralTabId } from '../../types/tabs';
+export type { ReferralTabId };
 import StatusBadge from '../shared/StatusBadge';
 import { InitialsAvatar } from '../../utils/avatarUtils';
-
-// Tab types
-export type ReferralTabId =
-    | 'overview'
-    | 'personal-details'
-    | 'assessment'
-    | 'referrer'
-    | 'linked-property'
-    | 'funding'
-    | 'documents'
-    | 'notes';
+import { getServiceTypeColor } from '../../utils/serviceTypeUtils';
+import ContactPopover from '../shared/ContactPopover';
 
 interface ReferralHeroBannerProps {
     referral: Referral;
@@ -24,54 +17,6 @@ interface ReferralHeroBannerProps {
     activeTab: ReferralTabId;
     onTabChange: (tab: ReferralTabId) => void;
     onProcessMoveIn?: () => void;
-}
-
-// Contact popover component
-interface ContactPopoverProps {
-    isOpen: boolean;
-    onClose: () => void;
-    title: string;
-    children: React.ReactNode;
-    anchorRef: React.RefObject<HTMLButtonElement | null>;
-}
-
-function ContactPopover({ isOpen, onClose, title, children, anchorRef }: ContactPopoverProps) {
-    const popoverRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (
-                popoverRef.current &&
-                !popoverRef.current.contains(e.target as Node) &&
-                anchorRef.current &&
-                !anchorRef.current.contains(e.target as Node)
-            ) {
-                onClose();
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isOpen, onClose, anchorRef]);
-
-    if (!isOpen) return null;
-
-    return (
-        <div
-            ref={popoverRef}
-            className="absolute top-full left-0 mt-2 z-[100] bg-white rounded-xl shadow-xl border border-gray-100 p-3 min-w-[200px] animate-in fade-in slide-in-from-top-2 duration-200"
-        >
-            <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{title}</span>
-                <button onClick={onClose} className="p-0.5 hover:bg-gray-100 rounded transition-colors">
-                    <X size={12} className="text-gray-400" />
-                </button>
-            </div>
-            {children}
-        </div>
-    );
 }
 
 export default function ReferralHeroBanner({
@@ -92,20 +37,6 @@ export default function ReferralHeroBanner({
 
     const togglePopover = (id: string) => {
         setActivePopover(activePopover === id ? null : id);
-    };
-
-    // Get service type color for banner
-    const getServiceTypeColor = (serviceType: ServiceType): { bg: string; text: string; border: string } => {
-        switch (serviceType) {
-            case 'Supported Living':
-                return { bg: 'bg-green-500', text: 'text-green-50', border: 'border-green-600' };
-            case 'Residential Care':
-                return { bg: 'bg-ivolve-blue', text: 'text-white', border: 'border-ivolve-blue' };
-            case 'Nursing Care':
-                return { bg: 'bg-rose-500', text: 'text-rose-50', border: 'border-rose-600' };
-            default:
-                return { bg: 'bg-gray-500', text: 'text-gray-50', border: 'border-gray-600' };
-        }
     };
 
     const serviceTypeColors = getServiceTypeColor(referral.serviceType);

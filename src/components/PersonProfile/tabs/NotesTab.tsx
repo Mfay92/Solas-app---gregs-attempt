@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Person, Note, NoteType, ServiceType } from '../../../types';
-import { PersonTabId } from '../PersonHeroBanner';
+import { PersonTabId } from '../../../types/tabs';
 import {
     MessageSquare, Plus, Phone, Mail, Home as HomeIcon, Heart,
     Stethoscope, AlertTriangle, FileText, Pin, PinOff, ChevronDown, ChevronUp, Paperclip

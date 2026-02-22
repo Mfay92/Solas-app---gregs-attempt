@@ -6,6 +6,15 @@ interface PanelOption {
     description: string;
     icon: React.ComponentType<{ size?: number; className?: string }>;
     color: string;
+    colorClasses: {
+        bg: string;
+        bgHover: string;
+        border: string;
+        borderHover: string;
+        text: string;
+        iconBg: string;
+        iconBgHover: string;
+    };
 }
 
 interface SelectPanelModalProps {
@@ -19,21 +28,48 @@ const AVAILABLE_PANELS: PanelOption[] = [
         label: 'Support Plan',
         description: 'View current support plan details and review dates',
         icon: FileText,
-        color: 'blue'
+        color: 'blue',
+        colorClasses: {
+            bg: 'bg-white',
+            bgHover: 'hover:bg-blue-50',
+            border: 'border-gray-200',
+            borderHover: 'hover:border-blue-500',
+            text: 'text-blue-600',
+            iconBg: 'bg-blue-100',
+            iconBgHover: 'group-hover:bg-blue-200'
+        }
     },
     {
         id: 'rent-details',
         label: 'Rent Details',
         description: 'Quick access to rent amount, payment status, and arrears',
         icon: PoundSterling,
-        color: 'green'
+        color: 'green',
+        colorClasses: {
+            bg: 'bg-white',
+            bgHover: 'hover:bg-green-50',
+            border: 'border-gray-200',
+            borderHover: 'hover:border-green-500',
+            text: 'text-green-600',
+            iconBg: 'bg-green-100',
+            iconBgHover: 'group-hover:bg-green-200'
+        }
     },
     {
         id: 'landlord-details',
         label: 'Landlord Details',
         description: 'Landlord contact information and property manager details',
         icon: Home,
-        color: 'purple'
+        color: 'purple',
+        colorClasses: {
+            bg: 'bg-white',
+            bgHover: 'hover:bg-purple-50',
+            border: 'border-gray-200',
+            borderHover: 'hover:border-purple-500',
+            text: 'text-purple-600',
+            iconBg: 'bg-purple-100',
+            iconBgHover: 'group-hover:bg-purple-200'
+        }
     }
 ];
 
@@ -71,15 +107,14 @@ export default function SelectPanelModal({ onSelect, onClose }: SelectPanelModal
                                 key={panel.id}
                                 onClick={() => onSelect(panel.id)}
                                 className={`
-                                    w-full p-4 rounded-lg border-2 transition-all text-left
-                                    hover:border-${panel.color}-500 hover:bg-${panel.color}-50
-                                    border-gray-200 bg-white
-                                    group
+                                    w-full p-4 rounded-lg border-2 transition-all text-left group
+                                    ${panel.colorClasses.bg} ${panel.colorClasses.bgHover}
+                                    ${panel.colorClasses.border} ${panel.colorClasses.borderHover}
                                 `}
                             >
                                 <div className="flex items-start gap-3">
-                                    <div className={`p-2 rounded-lg bg-${panel.color}-100 group-hover:bg-${panel.color}-200 transition-colors`}>
-                                        <Icon size={20} className={`text-${panel.color}-600`} />
+                                    <div className={`p-2 rounded-lg transition-colors ${panel.colorClasses.iconBg} ${panel.colorClasses.iconBgHover}`}>
+                                        <Icon size={20} className={panel.colorClasses.text} />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-bold text-gray-800 text-sm mb-1">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Meeting, MeetingStatus, MeetingType } from '../../types';
 import OverviewTab from './tabs/OverviewTab';
 import AttendeesTab from './tabs/AttendeesTab';
@@ -21,13 +21,18 @@ import {
     Edit,
     Download,
     Mail,
-    MoreVertical
+    MoreVertical,
+    Play,
+    AlertTriangle,
+    Info,
+    X
 } from 'lucide-react';
 
 interface MeetingProfileProps {
     meeting: Meeting;
     onBack: () => void;
     onUpdate: (meeting: Meeting) => void;
+    onStartLiveMeeting: (meeting: Meeting) => void;
 }
 
 type TabKey = 'overview' | 'attendees' | 'agenda' | 'minutes' | 'actions' | 'timeline' | 'linked';
@@ -39,9 +44,92 @@ interface TabConfig {
     show?: boolean;
 }
 
-export default function MeetingProfile({ meeting, onBack, onUpdate }: MeetingProfileProps) {
+type StartMeetingWarning = {
+    type: 'none' | 'early' | 'completed' | 'cancelled' | 'far_future';
+    message: string;
+    subMessage?: string;
+    canProceed: boolean;
+};
+
+export default function MeetingProfile({ meeting, onBack, onUpdate, onStartLiveMeeting }: MeetingProfileProps) {
     const [activeTab, setActiveTab] = useState<TabKey>('overview');
     const [showActions, setShowActions] = useState(false);
+    const [showStartConfirm, setShowStartConfirm] = useState(false);
+
+    // Determine meeting timing status for smart warnings
+    const meetingWarning = useMemo((): StartMeetingWarning => {
+        const now = new Date();
+        const meetingDateTime = new Date(`${meeting.scheduledDate}T${meeting.scheduledTime}`);
+        const diffMinutes = Math.round((meetingDateTime.getTime() - now.getTime()) / (1000 * 60));
+        const diffDays = Math.round(diffMinutes / (60 * 24));
+
+        // Meeting is cancelled
+        if (meeting.status === 'Cancelled') {
+            return {
+                type: 'cancelled',
+                message: 'This meeting has been cancelled',
+                subMessage: 'Are you sure you want to start it anyway?',
+                canProceed: true
+            };
+        }
+
+        // Meeting is already completed
+        if (meeting.status === 'Completed') {
+            return {
+                type: 'completed',
+                message: 'This meeting has been marked as completed',
+                subMessage: 'Are you sure you want to re-open it?',
+                canProceed: true
+            };
+        }
+
+        // Meeting is more than a day in the future
+        if (diffMinutes > 60 * 24) {
+            return {
+                type: 'far_future',
+                message: `This meeting isn't scheduled for another ${diffDays} day${diffDays > 1 ? 's' : ''}`,
+                subMessage: 'Are you sure you want to start it now?',
+                canProceed: true
+            };
+        }
+
+        // Meeting is more than 30 minutes in the future
+        if (diffMinutes > 30) {
+            const hours = Math.floor(diffMinutes / 60);
+            const mins = diffMinutes % 60;
+            const timeStr = hours > 0
+                ? `${hours} hour${hours > 1 ? 's' : ''} ${mins > 0 ? `${mins} min${mins > 1 ? 's' : ''}` : ''}`
+                : `${mins} minutes`;
+            return {
+                type: 'early',
+                message: `Meeting starts in ${timeStr}`,
+                subMessage: 'Would you like to start early?',
+                canProceed: true
+            };
+        }
+
+        // Meeting is within 30 minutes or in progress - all good
+        return {
+            type: 'none',
+            message: '',
+            canProceed: true
+        };
+    }, [meeting]);
+
+    // Handle start meeting click
+    const handleStartMeetingClick = () => {
+        if (meetingWarning.type === 'none') {
+            onStartLiveMeeting(meeting);
+        } else {
+            setShowStartConfirm(true);
+        }
+    };
+
+    // Confirm start meeting
+    const handleConfirmStart = () => {
+        setShowStartConfirm(false);
+        onStartLiveMeeting(meeting);
+    };
 
     // Get status color
     const getStatusColor = (status: MeetingStatus) => {
@@ -143,6 +231,17 @@ export default function MeetingProfile({ meeting, onBack, onUpdate }: MeetingPro
                             <span className="font-medium">Back to Meetings</span>
                         </button>
                         <div className="flex items-center gap-2">
+                            {/* Start Meeting Button - Prominent */}
+                            <button
+                                onClick={handleStartMeetingClick}
+                                className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-lg"
+                            >
+                                <Play size={18} />
+                                <span>Start Meeting</span>
+                            </button>
+
+                            <div className="w-px h-6 bg-white/20 mx-1" />
+
                             <button
                                 className="p-2 hover:bg-white/10 rounded-lg transition-colors"
                                 title="Edit Meeting"
@@ -281,6 +380,64 @@ export default function MeetingProfile({ meeting, onBack, onUpdate }: MeetingPro
             <div className="px-4 md:px-8 py-6">
                 {renderTabContent()}
             </div>
+
+            {/* Start Meeting Confirmation Dialog */}
+            {showStartConfirm && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+                        {/* Header */}
+                        <div className={`px-6 py-4 flex items-center gap-3 ${
+                            meetingWarning.type === 'cancelled' ? 'bg-red-500' :
+                            meetingWarning.type === 'completed' ? 'bg-amber-500' :
+                            'bg-blue-500'
+                        } text-white`}>
+                            {meetingWarning.type === 'cancelled' ? (
+                                <AlertTriangle size={24} />
+                            ) : meetingWarning.type === 'completed' ? (
+                                <AlertTriangle size={24} />
+                            ) : (
+                                <Info size={24} />
+                            )}
+                            <h3 className="text-lg font-bold">Start Meeting?</h3>
+                            <button
+                                onClick={() => setShowStartConfirm(false)}
+                                className="ml-auto p-1 hover:bg-white/20 rounded-lg transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6">
+                            <p className="text-lg font-semibold text-gray-800 mb-2">
+                                {meetingWarning.message}
+                            </p>
+                            {meetingWarning.subMessage && (
+                                <p className="text-gray-600">
+                                    {meetingWarning.subMessage}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Actions */}
+                        <div className="px-6 pb-6 flex gap-3 justify-end">
+                            <button
+                                onClick={() => setShowStartConfirm(false)}
+                                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleConfirmStart}
+                                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
+                            >
+                                <Play size={18} />
+                                Start Anyway
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
