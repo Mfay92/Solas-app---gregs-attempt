@@ -4,7 +4,11 @@ import {
     AlertCircle,
     CheckCircle2,
     AlertTriangle,
-    Tag
+    Tag,
+    Home,
+    Users,
+    PoundSterling,
+    ShieldAlert
 } from 'lucide-react';
 import {
     Project,
@@ -15,8 +19,14 @@ import {
     getTaskCompletionPercentage,
     getOverdueTaskCount,
     formatDate,
-    getDaysUntilDue
+    getDaysUntilDue,
+    PROJECT_CATEGORY_LABELS
 } from '../../types/projects';
+import {
+    getCategoryColor,
+    getProjectVisualFlags,
+    formatBudgetDisplay
+} from '../../utils/projectUtils';
 
 interface ProjectCardProps {
     project: Project;
@@ -28,11 +38,14 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
     const healthColors = getHealthColor(health);
     const priorityColors = getPriorityColor(project.priority);
     const statusColors = getStatusColor(project.status);
+    const categoryColors = getCategoryColor(project.category);
     const completionPercentage = getTaskCompletionPercentage(project);
     const overdueTaskCount = getOverdueTaskCount(project);
     const daysUntilDue = getDaysUntilDue(project.targetCompletionDate);
+    const visualFlags = getProjectVisualFlags(project);
+    const budgetDisplay = formatBudgetDisplay(project);
 
-    // Determine due date color
+    // Determine due date colour
     let dueDateColor = 'text-gray-600';
     if (daysUntilDue !== null) {
         if (daysUntilDue < 0) {
@@ -47,8 +60,21 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
     return (
         <div
             onClick={onClick}
-            className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-all duration-200 cursor-pointer hover:border-indigo-300"
+            className={`bg-white border rounded-lg p-4 hover:shadow-lg transition-all duration-200 cursor-pointer relative ${
+                visualFlags.isOverdue
+                    ? 'border-red-500 shadow-red-100'
+                    : 'border-gray-200 hover:border-indigo-300'
+            }`}
         >
+            {/* Overdue indicator - red border glow */}
+            {visualFlags.isOverdue && (
+                <div className="absolute inset-0 border-2 border-red-500 rounded-lg pointer-events-none animate-pulse" />
+            )}
+
+            {/* Decant indicator - amber left stripe */}
+            {visualFlags.requiresDecant && (
+                <div className="absolute top-0 left-0 w-2 h-full bg-amber-400 rounded-l-lg" />
+            )}
             {/* Header */}
             <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
@@ -72,6 +98,11 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
             {/* Badges Row */}
             <div className="flex items-center gap-2 mb-3 flex-wrap">
+                {/* Category Badge */}
+                <span className={`px-2 py-1 rounded text-xs font-medium ${categoryColors.bg} ${categoryColors.text} border ${categoryColors.border}`}>
+                    {PROJECT_CATEGORY_LABELS[project.category]}
+                </span>
+
                 {/* Status Badge */}
                 <span className={`px-2 py-1 rounded text-xs font-medium ${statusColors.bg} ${statusColors.text} border ${statusColors.border}`}>
                     {project.status}
@@ -81,6 +112,14 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                 <span className={`px-2 py-1 rounded text-xs font-medium ${priorityColors.bg} ${priorityColors.text} border ${priorityColors.border}`}>
                     {project.priority}
                 </span>
+
+                {/* Safety Critical Badge */}
+                {visualFlags.isSafetyCritical && (
+                    <span className="px-2 py-1 rounded text-xs font-medium bg-red-600 text-white border border-red-700 flex items-center gap-1">
+                        <ShieldAlert size={12} />
+                        Safety Critical
+                    </span>
+                )}
 
                 {/* Department Badge (if present) */}
                 {project.department && (
@@ -108,6 +147,37 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                     </span>
                 </div>
             )}
+
+            {/* Housing Impact - Properties & Residents */}
+            <div className="flex items-center gap-4 mb-3 text-sm text-gray-600">
+                {/* Properties affected */}
+                {project.linkedProperties && project.linkedProperties.length > 0 && (
+                    <div className="flex items-center gap-1">
+                        <Home size={14} />
+                        <span>
+                            {project.linkedProperties.length} {project.linkedProperties.length === 1 ? 'property' : 'properties'}
+                        </span>
+                    </div>
+                )}
+
+                {/* Residents impacted */}
+                {project.linkedPeople && project.linkedPeople.length > 0 && (
+                    <div className="flex items-center gap-1">
+                        <Users size={14} />
+                        <span>
+                            {project.linkedPeople.length} {project.linkedPeople.length === 1 ? 'person' : 'people'}
+                        </span>
+                    </div>
+                )}
+
+                {/* Budget */}
+                {project.budget && (
+                    <div className="flex items-center gap-1">
+                        <PoundSterling size={14} />
+                        <span>{budgetDisplay}</span>
+                    </div>
+                )}
+            </div>
 
             {/* Progress Bar */}
             {project.tasks.length > 0 && (

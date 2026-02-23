@@ -8,7 +8,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_1',
         name: 'Achieve CQC Outstanding Rating',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'Critical',
         status: 'In Progress',
         owner: 'Matt Fay',
@@ -65,7 +66,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_2',
         name: 'Refurbish Oakwood House',
-        type: 'Team',
+        category: 'major-works',
+        type: 'planned-maintenance',
         priority: 'High',
         status: 'In Progress',
         owner: 'Sarah Johnson',
@@ -133,7 +135,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_3',
         name: 'Reduce Voids by 20% (Q1 2026)',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'High',
         status: 'In Progress',
         owner: 'Matt Fay',
@@ -190,7 +193,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_4',
         name: 'Implement New Safeguarding Procedures',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'Critical',
         status: 'Planning',
         owner: 'James Wilson',
@@ -236,7 +240,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_5',
         name: 'Expand Services in Manchester (3 New Properties)',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'High',
         status: 'In Progress',
         owner: 'Matt Fay',
@@ -306,7 +311,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_6',
         name: 'Migrate to New Compliance Tracking System',
-        type: 'Team',
+        category: 'major-works',
+        type: 'planned-maintenance',
         priority: 'Medium',
         status: 'On Hold',
         owner: 'Emma Thompson',
@@ -356,7 +362,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_7',
         name: 'Update Fire Safety Plans (All Properties)',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'Critical',
         status: 'In Progress',
         owner: 'Michael Brown',
@@ -421,7 +428,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_8',
         name: 'Paint the Office',
-        type: 'Personal',
+        category: 'property-development',
+        type: 'property-adaptations-dfg',
         priority: 'Low',
         status: 'Planning',
         owner: 'Matt Fay',
@@ -457,7 +465,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_9',
         name: 'Staff Wellbeing Programme Launch',
-        type: 'Company-Wide',
+        category: 'major-works',
+        type: 'major-refurbishment',
         priority: 'Medium',
         status: 'Completed',
         owner: 'Sarah Johnson',
@@ -532,7 +541,8 @@ export const mockProjects: Project[] = [
     {
         id: 'proj_10',
         name: 'Property Portfolio Review (STALLED)',
-        type: 'Team',
+        category: 'major-works',
+        type: 'planned-maintenance',
         priority: 'Medium',
         status: 'In Progress',
         owner: 'Emma Thompson',

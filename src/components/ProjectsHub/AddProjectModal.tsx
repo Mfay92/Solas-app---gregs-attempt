@@ -89,7 +89,8 @@ export default function AddProjectModal({ isOpen, onClose, onAdd }: AddProjectMo
         const newProject: Project = {
             id: generateProjectId(),
             name: name.trim(),
-            type,
+            category: type as any, // Temporary: using PROJECT_TYPES as category
+            type: undefined,
             priority,
             status,
             owner: owner.trim(),
@@ -189,7 +190,7 @@ export default function AddProjectModal({ isOpen, onClose, onAdd }: AddProjectMo
                                         onChange={(e) => setType(e.target.value as typeof type)}
                                         className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all"
                                     >
-                                        {PROJECT_TYPES.map(t => (
+                                        {PROJECT_TYPES.map((t: string) => (
                                             <option key={t} value={t}>{t}</option>
                                         ))}
                                     </select>

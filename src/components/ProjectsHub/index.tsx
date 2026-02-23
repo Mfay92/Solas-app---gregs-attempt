@@ -15,6 +15,9 @@ import {
     Project,
     ProjectStatus,
     ProjectPriority,
+    ProjectCategory,
+    PROJECT_CATEGORIES,
+    PROJECT_CATEGORY_LABELS,
     calculateProjectHealth
 } from '../../types/projects';
 import AddProjectModal from './AddProjectModal';
@@ -29,6 +32,7 @@ type SortField = 'name' | 'priority' | 'dueDate' | 'createdAt' | 'health';
 type SortDirection = 'asc' | 'desc';
 
 interface FilterConfig {
+    category: ProjectCategory | 'All';
     status: ProjectStatus | 'All';
     priority: ProjectPriority | 'All';
     owner: string;
@@ -49,6 +53,7 @@ export default function ProjectsHub() {
     const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
     const [filters, setFilters] = useState<FilterConfig>({
+        category: 'All',
         status: 'All',
         priority: 'All',
         owner: 'All',
@@ -137,6 +142,9 @@ export default function ProjectsHub() {
         }
 
         // Apply filters
+        if (filters.category !== 'All') {
+            result = result.filter(p => p.category === filters.category);
+        }
         if (filters.status !== 'All') {
             result = result.filter(p => p.status === filters.status);
         }
@@ -212,6 +220,7 @@ export default function ProjectsHub() {
 
     const handleClearFilters = () => {
         setFilters({
+            category: 'All',
             status: 'All',
             priority: 'All',
             owner: 'All',
@@ -410,7 +419,24 @@ export default function ProjectsHub() {
                 {/* Filter Panel */}
                 {showFilters && (
                     <div className="mb-6 bg-white border border-gray-200 rounded-lg p-4 animate-in slide-in-from-top-2">
-                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                            {/* Category Filter */}
+                            <div>
+                                <label className="block text-xs font-medium text-gray-700 mb-1">Category</label>
+                                <select
+                                    value={filters.category}
+                                    onChange={(e) => setFilters({ ...filters, category: e.target.value as FilterConfig['category'] })}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                >
+                                    <option value="All">All Categories</option>
+                                    {PROJECT_CATEGORIES.map(category => (
+                                        <option key={category} value={category}>
+                                            {PROJECT_CATEGORY_LABELS[category]}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
                             {/* Status Filter */}
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-1">Status</label>
@@ -420,9 +446,12 @@ export default function ProjectsHub() {
                                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                                 >
                                     <option value="All">All</option>
+                                    <option value="Pipeline">Pipeline</option>
                                     <option value="Planning">Planning</option>
+                                    <option value="Procurement">Procurement</option>
                                     <option value="In Progress">In Progress</option>
                                     <option value="On Hold">On Hold</option>
+                                    <option value="Snagging">Snagging</option>
                                     <option value="Completed">Completed</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
