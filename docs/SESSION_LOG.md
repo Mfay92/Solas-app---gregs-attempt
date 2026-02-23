@@ -134,4 +134,37 @@
 
 ---
 
+## Session 8 — 23 February 2026
+
+**Focus:** Legal Hub comprehensive build brief creation
+
+**Actions:**
+- Created comprehensive Legal Hub build brief (docs/LEGAL_HUB_PROMPT.md — 900+ lines)
+- Explored existing Legal Hub placeholder and PropertyProfile LegalTab implementation
+- Researched RP branding integration patterns (service type colours, inline CSS theming)
+- Analysed existing hub patterns (Development Hub, Address Book, Property Hub)
+- Documented complete TypeScript interfaces for legal document management system
+- Structured 10-section prompt following established pattern (Mission, Research, Features, Data, Implementation, Success Criteria, User Stories, Sector Context, Pep Talk)
+
+**Key Features Specified:**
+- Interactive document viewer (collapsible sections, highlight & explain legal jargon)
+- Rent uplift tracking with CPI/RPI integration
+- Break clause alert system (6-month notice warnings)
+- Board member dashboard (critical dates, risk properties)
+- Mike's workflow (find any document in 30 seconds)
+- Document comparison tool with fairness scoring
+- RP branding integration (rent schedules with RP colours/logos)
+- Void charge tracking and notifications
+- Property-to-Legal Hub seamless navigation
+
+**Data Structures:** Complete TypeScript interfaces for LegalDocument, DocumentSection, Clause, RentSchedule, UpliftDate, CPITracking, VoidCharges, RPBranding, LegalAlert, DocumentComparison, and more (140+ lines of types)
+
+**Implementation Guidance:** 8-phase build order, file structure (20+ components), mock data structure, integration patterns with PropertyHub and Address Book
+
+**User Stories:** Defined workflows for Mike (Head of Legal), Housing Managers, Board Members, Finance Leads, Support Workers, and Partnership Managers
+
+**Outcome:** Legal Hub prompt READY FOR IMPLEMENTATION when RP branding system is integrated. Updated TODO.md to reflect prompt completion. Prompt enables AI to build comprehensive legal document management system that makes "Mike say 'This is so much easier'".
+
+---
+
 *Update this file at the end of each significant session. Keep entries concise — what was done, what changed, what's next.*

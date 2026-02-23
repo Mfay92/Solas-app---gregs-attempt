@@ -95,11 +95,19 @@ Full kanban pipeline (11 stages), drag-drop, opportunity management, confetti on
 - [ ] Financial modelling fields (rent levels, HB eligibility, service charge structure)
 
 ### 6.2 Legal Hub Build-Out
+- [x] **Legal Hub Build Brief created** (docs/LEGAL_HUB_PROMPT.md - comprehensive 900+ line prompt ready for implementation when RP branding is integrated)
 - [ ] SLA tracker (which RP, review date, key terms, escalation contacts)
 - [ ] Lease/licence agreement library
 - [ ] Section 117 aftercare tracking
 - [ ] Tenancy type classifier (AST vs Excluded Licence vs RP lease)
 - [ ] Plain English summaries of legal clauses
+- [ ] Interactive document viewer with collapsible sections
+- [ ] Highlight and explain legal jargon feature
+- [ ] Rent uplift tracking with CPI/RPI integration
+- [ ] Break clause alert system
+- [ ] Board member dashboard (critical dates and risk properties)
+- [ ] Document comparison tool (fairness scoring)
+- [ ] Mike's workflow (find any document in 30 seconds)
 
 ### 6.3 Compliance Hub (resume from Phase 4 research)
 - [ ] Build from existing plan in docs/COMPLIANCE_HUB_PLAN.md
