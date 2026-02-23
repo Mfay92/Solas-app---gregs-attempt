@@ -31,13 +31,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
     }, []);
 
     return (
-        <div className="flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-30 shadow-sm transition-all">
+        <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200/60 sticky top-0 z-30 transition-all">
             {/* Greeting Section */}
             <div>
-                <h1 className="text-2xl font-bold text-slate-800 tracking-tight font-rounded">
-                    {greeting} <span className="text-2xl animate-wave inline-block origin-bottom-right">👋</span>
+                <h1 className="text-xl font-bold text-slate-800 tracking-tight font-rounded">
+                    {greeting} <span className="text-xl animate-wave inline-block origin-bottom-right">👋</span>
                 </h1>
-                <p className="text-slate-500 text-sm mt-0.5 font-medium animate-fade-in">
+                <p className="text-slate-500 text-xs mt-0.5 font-medium animate-fade-in">
                     {subGreeting}
                 </p>
             </div>
@@ -68,7 +68,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
                 {/* Primary Actions */}
                 <button
                     onClick={onToggleStorage}
-                    className="flex items-center gap-2 text-slate-600 hover:text-ivolve-dark hover:bg-slate-100 px-3 py-2 rounded-lg font-medium transition-all text-sm"
+                    className="flex items-center gap-2 text-slate-600 hover:text-ivolve-dark bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm active:scale-[0.98] shadow-sm hover:shadow"
                 >
                     <Package size={18} />
                     <span>Storage</span>
@@ -76,9 +76,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onAddWidget, o
 
                 <button
                     onClick={onAddWidget}
-                    className="flex items-center gap-2 bg-ivolve-mid hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+                    className="flex items-center gap-2 bg-ivolve-mid hover:bg-ivolve-dark text-white px-4 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98] text-sm"
                 >
-                    <Plus size={18} strokeWidth={3} />
+                    <Plus size={18} strokeWidth={2.5} />
                     Add Widget
                 </button>
             </div>

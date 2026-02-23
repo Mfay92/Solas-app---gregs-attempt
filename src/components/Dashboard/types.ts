@@ -13,5 +13,7 @@ export interface DashboardItem extends WidgetData {
     h: number;
     minW?: number;
     minH?: number;
+    maxW?: number;
+    maxH?: number;
     locked: boolean;
 }

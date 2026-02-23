@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import { cn } from '../../../utils';
-import { TabId } from '../TabNavigation';
+import { PropertyTabId as TabId } from '../../../types/tabs';
 
 interface CollapsibleCardProps {
     title: React.ReactNode;

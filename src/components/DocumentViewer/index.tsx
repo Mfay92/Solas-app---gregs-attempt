@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { DocumentViewerProvider } from './DocumentViewerContext';
 import DocumentViewerToolbar from './DocumentViewerToolbar';
-import RentScheduleViewer from './RentScheduleViewer';
+import { ThreeColumnLayout, TwoColumnLayout, LayoutType } from './layouts';
 import { RentScheduleDocument, ViewMode } from './types';
 
 // Re-export types for convenience
 export * from './types';
 export { DocumentViewerProvider, useDocumentViewer } from './DocumentViewerContext';
+export type { LayoutType } from './layouts';
 
 interface DocumentViewerProps {
   document: RentScheduleDocument;
   onClose?: () => void;
   defaultViewMode?: ViewMode;
+  defaultLayout?: LayoutType;
   isModal?: boolean;
   onExportPdf?: () => void;
 }
@@ -21,17 +23,51 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({
   document,
   onClose,
   defaultViewMode = 'normal',
+  defaultLayout = 'two-column',
   isModal = false,
   onExportPdf,
 }) => {
+  const [layout, setLayout] = useState<LayoutType>(defaultLayout);
+
+  // Render the appropriate layout
+  const renderLayout = () => {
+    switch (layout) {
+      case 'three-column':
+        return <ThreeColumnLayout document={document} />;
+      case 'two-column':
+      default:
+        return <TwoColumnLayout document={document} />;
+    }
+  };
+
+  // TwoColumnLayout has toolbar integrated, others need separate toolbar
+  const needsSeparateToolbar = layout === 'three-column';
+
   const content = (
     <DocumentViewerProvider defaultViewMode={defaultViewMode}>
       <div className="space-y-3">
-        <DocumentViewerToolbar onExportPdf={onExportPdf} />
-        <RentScheduleViewer document={document} propertyId={document.propertyId} />
+        {needsSeparateToolbar && (
+          <DocumentViewerToolbar
+            onExportPdf={onExportPdf}
+            layout={layout}
+            onLayoutChange={setLayout}
+          />
+        )}
+        {renderLayout()}
       </div>
     </DocumentViewerProvider>
   );
+
+  // Determine modal width based on layout
+  const getModalWidth = () => {
+    switch (layout) {
+      case 'three-column':
+        return 'max-w-6xl'; // 1152px - wide for 3 columns
+      case 'two-column':
+      default:
+        return 'max-w-5xl'; // 1024px - for 2 columns
+    }
+  };
 
   // If used as a modal, wrap with modal styling
   if (isModal && onClose) {
@@ -44,7 +80,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({
         aria-labelledby="document-viewer-title"
       >
         <div
-          className="bg-ivolve-paper rounded-xl shadow-2xl w-full max-w-3xl my-4 overflow-hidden animate-in fade-in zoom-in duration-200"
+          className={`bg-ivolve-paper rounded-xl shadow-2xl w-full ${getModalWidth()} my-4 overflow-hidden animate-in fade-in zoom-in duration-200 transition-all`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header - Compact */}

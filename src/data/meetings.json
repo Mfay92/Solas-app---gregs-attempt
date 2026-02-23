@@ -1,0 +1,1060 @@
+[
+  {
+    "id": "mtg-001",
+    "meetingRef": "MTG2026/001",
+    "title": "Support Plan Review - James Thompson",
+    "description": "Quarterly support plan review to assess progress and update goals",
+    "scheduledDate": "2026-02-05",
+    "scheduledTime": "14:00",
+    "duration": 60,
+    "location": "Montfort Court Meeting Room",
+    "recurrence": "Quarterly",
+    "organizerId": "staff-001",
+    "participants": [
+      {
+        "id": "part-001",
+        "type": "Internal",
+        "personId": "person-001",
+        "name": "James Thompson",
+        "email": "james.thompson@example.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-002",
+        "type": "Internal",
+        "name": "Tom Davies",
+        "email": "tom.davies@ivolve.com",
+        "role": "Organizer",
+        "attended": null
+      },
+      {
+        "id": "part-003",
+        "type": "External",
+        "name": "Sarah Mitchell",
+        "email": "sarah.mitchell@socialservices.gov.uk",
+        "role": "Attendee",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-001",
+        "order": 1,
+        "title": "Review current support plan goals",
+        "description": "Assess progress against goals set in November 2025",
+        "duration": 15,
+        "presenter": "Tom Davies",
+        "completed": false
+      },
+      {
+        "id": "agenda-002",
+        "order": 2,
+        "title": "Discuss independent living progress",
+        "description": "Review cooking, budgeting, and social skills development",
+        "duration": 20,
+        "presenter": "James Thompson",
+        "completed": false
+      },
+      {
+        "id": "agenda-003",
+        "order": 3,
+        "title": "Update goals for next quarter",
+        "description": "Set new SMART goals for Q2 2026",
+        "duration": 15,
+        "presenter": "Tom Davies",
+        "completed": false
+      },
+      {
+        "id": "agenda-004",
+        "order": 4,
+        "title": "Any other business",
+        "duration": 10,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "Support Review",
+    "linkedEntities": [
+      {
+        "entityType": "Person",
+        "entityId": "person-001",
+        "entityName": "James Thompson",
+        "linkedAt": "2026-01-28T10:00:00Z",
+        "linkedBy": "Tom Davies",
+        "context": "Support plan review subject"
+      },
+      {
+        "entityType": "Property",
+        "entityId": "prop-001",
+        "entityName": "Montfort Court",
+        "linkedAt": "2026-01-28T10:00:00Z",
+        "linkedBy": "Tom Davies",
+        "context": "Meeting location"
+      }
+    ],
+    "status": "Scheduled",
+    "instances": [
+      {
+        "id": "inst-001",
+        "scheduledDate": "2025-11-05",
+        "actualDate": "2025-11-05",
+        "status": "Completed",
+        "minutes": "James has made good progress with cooking skills. Completed basic budgeting course. Social integration improving - attending weekly coffee mornings. Goals for next quarter: 1) Continue cooking independence, 2) Start voluntary work placement, 3) Maintain medication compliance.",
+        "actionItems": [
+          {
+            "id": "action-old-001",
+            "title": "Arrange voluntary work placement interview",
+            "assigneeName": "Tom Davies",
+            "dueDate": "2025-11-30",
+            "status": "Completed",
+            "completedAt": "2025-11-22T14:30:00Z",
+            "completedBy": "Tom Davies",
+            "createdAt": "2025-11-05T15:00:00Z"
+          },
+          {
+            "id": "action-old-002",
+            "title": "Update medication chart with pharmacy",
+            "assigneeName": "James Thompson",
+            "dueDate": "2025-11-15",
+            "status": "Completed",
+            "completedAt": "2025-11-12T10:00:00Z",
+            "completedBy": "James Thompson",
+            "createdAt": "2025-11-05T15:00:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-001", "attended": true },
+          { "participantId": "part-002", "attended": true },
+          { "participantId": "part-003", "attended": true }
+        ]
+      },
+      {
+        "id": "inst-002",
+        "scheduledDate": "2025-08-06",
+        "actualDate": "2025-08-06",
+        "status": "Completed",
+        "minutes": "Initial quarterly review. James settling in well at Montfort Court. Identified key areas for support: cooking skills, money management, reducing social isolation. Set up weekly cooking sessions with support worker.",
+        "actionItems": [
+          {
+            "id": "action-old-003",
+            "title": "Enrol James in budgeting course",
+            "assigneeName": "Tom Davies",
+            "dueDate": "2025-08-31",
+            "status": "Completed",
+            "completedAt": "2025-08-20T11:00:00Z",
+            "completedBy": "Tom Davies",
+            "createdAt": "2025-08-06T15:00:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-001", "attended": true },
+          { "participantId": "part-002", "attended": true },
+          { "participantId": "part-003", "attended": false }
+        ]
+      }
+    ],
+    "createdAt": "2026-01-28T10:00:00Z",
+    "updatedAt": "2026-01-28T10:00:00Z",
+    "createdBy": "Tom Davies"
+  },
+  {
+    "id": "mtg-002",
+    "meetingRef": "MTG2026/002",
+    "title": "Weekly Team Handover",
+    "description": "Regular team handover meeting to discuss current cases and urgent matters",
+    "scheduledDate": "2026-02-03",
+    "scheduledTime": "09:00",
+    "duration": 45,
+    "location": "Virtual - Microsoft Teams",
+    "recurrence": "Weekly",
+    "organizerId": "staff-002",
+    "participants": [
+      {
+        "id": "part-010",
+        "type": "Internal",
+        "name": "Lisa Brown",
+        "email": "lisa.brown@ivolve.com",
+        "role": "Chair",
+        "attended": null
+      },
+      {
+        "id": "part-011",
+        "type": "Internal",
+        "name": "Tom Davies",
+        "email": "tom.davies@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-012",
+        "type": "Internal",
+        "name": "Emma Wilson",
+        "email": "emma.wilson@ivolve.com",
+        "role": "Minute Taker",
+        "attended": null
+      },
+      {
+        "id": "part-013",
+        "type": "Internal",
+        "name": "Marcus Johnson",
+        "email": "marcus.johnson@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-010",
+        "order": 1,
+        "title": "Actions from last meeting",
+        "duration": 5,
+        "completed": false
+      },
+      {
+        "id": "agenda-011",
+        "order": 2,
+        "title": "Urgent matters / incidents",
+        "duration": 10,
+        "completed": false
+      },
+      {
+        "id": "agenda-012",
+        "order": 3,
+        "title": "Case updates",
+        "duration": 20,
+        "completed": false
+      },
+      {
+        "id": "agenda-013",
+        "order": 4,
+        "title": "Staffing and rota",
+        "duration": 5,
+        "completed": false
+      },
+      {
+        "id": "agenda-014",
+        "order": 5,
+        "title": "AOB",
+        "duration": 5,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "Internal",
+    "linkedEntities": [],
+    "status": "Scheduled",
+    "instances": [
+      {
+        "id": "inst-010",
+        "scheduledDate": "2026-01-27",
+        "actualDate": "2026-01-27",
+        "status": "Completed",
+        "minutes": "No urgent incidents. Discussed upcoming support reviews. Marcus covering Tom's shift on Friday. New referral for Unit 4 at Maple House discussed.",
+        "actionItems": [
+          {
+            "id": "action-010",
+            "title": "Contact Maple House RP about new referral",
+            "assigneeName": "Lisa Brown",
+            "dueDate": "2026-01-29",
+            "status": "Completed",
+            "completedAt": "2026-01-28T09:30:00Z",
+            "completedBy": "Lisa Brown",
+            "createdAt": "2026-01-27T09:45:00Z"
+          },
+          {
+            "id": "action-011",
+            "title": "Update rota for February",
+            "assigneeName": "Emma Wilson",
+            "dueDate": "2026-01-31",
+            "status": "Completed",
+            "completedAt": "2026-01-30T16:00:00Z",
+            "completedBy": "Emma Wilson",
+            "createdAt": "2026-01-27T09:45:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-010", "attended": true },
+          { "participantId": "part-011", "attended": true },
+          { "participantId": "part-012", "attended": true },
+          { "participantId": "part-013", "attended": false }
+        ]
+      },
+      {
+        "id": "inst-011",
+        "scheduledDate": "2026-01-20",
+        "actualDate": "2026-01-20",
+        "status": "Completed",
+        "minutes": "Discussed incident at Elm View on 18th - resolved. Support plan reviews scheduled for February. Training reminder: safeguarding refresher on 25th.",
+        "actionItems": [
+          {
+            "id": "action-012",
+            "title": "Complete incident report for Elm View",
+            "assigneeName": "Tom Davies",
+            "dueDate": "2026-01-22",
+            "status": "Completed",
+            "completedAt": "2026-01-21T11:00:00Z",
+            "completedBy": "Tom Davies",
+            "createdAt": "2026-01-20T09:45:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-010", "attended": true },
+          { "participantId": "part-011", "attended": true },
+          { "participantId": "part-012", "attended": true },
+          { "participantId": "part-013", "attended": true }
+        ]
+      },
+      {
+        "id": "inst-012",
+        "scheduledDate": "2026-01-13",
+        "actualDate": "2026-01-13",
+        "status": "Completed",
+        "minutes": "Standard handover. No major issues. Reminder about annual leave requests for Easter period.",
+        "actionItems": [],
+        "attendanceRecord": [
+          { "participantId": "part-010", "attended": true },
+          { "participantId": "part-011", "attended": true },
+          { "participantId": "part-012", "attended": false },
+          { "participantId": "part-013", "attended": true }
+        ]
+      }
+    ],
+    "createdAt": "2025-01-01T08:00:00Z",
+    "updatedAt": "2026-01-27T10:00:00Z",
+    "createdBy": "Lisa Brown"
+  },
+  {
+    "id": "mtg-003",
+    "meetingRef": "MTG2026/003",
+    "title": "Local Authority Review - Elm View",
+    "description": "Annual review meeting with Birmingham City Council commissioners",
+    "scheduledDate": "2026-02-10",
+    "scheduledTime": "10:30",
+    "duration": 90,
+    "location": "Elm View, Ground Floor Meeting Room",
+    "recurrence": "One-off",
+    "organizerId": "staff-003",
+    "participants": [
+      {
+        "id": "part-020",
+        "type": "Internal",
+        "name": "Rachel Adams",
+        "email": "rachel.adams@ivolve.com",
+        "role": "Organizer",
+        "attended": null
+      },
+      {
+        "id": "part-021",
+        "type": "Internal",
+        "name": "Lisa Brown",
+        "email": "lisa.brown@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-022",
+        "type": "External",
+        "name": "David Chen",
+        "email": "david.chen@birmingham.gov.uk",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-023",
+        "type": "External",
+        "name": "Priya Sharma",
+        "email": "priya.sharma@birmingham.gov.uk",
+        "role": "Attendee",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-020",
+        "order": 1,
+        "title": "Introductions and apologies",
+        "duration": 5,
+        "completed": false
+      },
+      {
+        "id": "agenda-021",
+        "order": 2,
+        "title": "Service delivery update",
+        "description": "Overview of service delivery over the past 12 months",
+        "duration": 20,
+        "presenter": "Rachel Adams",
+        "completed": false
+      },
+      {
+        "id": "agenda-022",
+        "order": 3,
+        "title": "Occupancy and referrals",
+        "description": "Current occupancy levels and referral pipeline",
+        "duration": 15,
+        "presenter": "Lisa Brown",
+        "completed": false
+      },
+      {
+        "id": "agenda-023",
+        "order": 4,
+        "title": "Quality assurance and compliance",
+        "duration": 15,
+        "presenter": "Rachel Adams",
+        "completed": false
+      },
+      {
+        "id": "agenda-024",
+        "order": 5,
+        "title": "Budget review",
+        "duration": 15,
+        "presenter": "David Chen",
+        "completed": false
+      },
+      {
+        "id": "agenda-025",
+        "order": 6,
+        "title": "Future plans and development",
+        "duration": 15,
+        "completed": false
+      },
+      {
+        "id": "agenda-026",
+        "order": 7,
+        "title": "Summary and next steps",
+        "duration": 5,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "External",
+    "linkedEntities": [
+      {
+        "entityType": "Property",
+        "entityId": "prop-003",
+        "entityName": "Elm View",
+        "linkedAt": "2026-01-15T14:00:00Z",
+        "linkedBy": "Rachel Adams",
+        "context": "Property being reviewed"
+      }
+    ],
+    "status": "Scheduled",
+    "createdAt": "2026-01-15T14:00:00Z",
+    "updatedAt": "2026-01-15T14:00:00Z",
+    "createdBy": "Rachel Adams"
+  },
+  {
+    "id": "mtg-004",
+    "meetingRef": "MTG2026/004",
+    "title": "Safeguarding Refresher Training",
+    "description": "Mandatory annual safeguarding refresher for all support staff",
+    "scheduledDate": "2026-02-12",
+    "scheduledTime": "13:00",
+    "duration": 180,
+    "location": "Head Office Training Room",
+    "recurrence": "One-off",
+    "organizerId": "staff-004",
+    "participants": [
+      {
+        "id": "part-030",
+        "type": "Internal",
+        "name": "Karen White",
+        "email": "karen.white@ivolve.com",
+        "role": "Organizer",
+        "attended": null
+      },
+      {
+        "id": "part-031",
+        "type": "Internal",
+        "name": "Tom Davies",
+        "email": "tom.davies@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-032",
+        "type": "Internal",
+        "name": "Emma Wilson",
+        "email": "emma.wilson@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-033",
+        "type": "Internal",
+        "name": "Marcus Johnson",
+        "email": "marcus.johnson@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-034",
+        "type": "External",
+        "name": "Dr. Amira Hassan",
+        "email": "a.hassan@safeguardingtraining.co.uk",
+        "role": "Chair",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-030",
+        "order": 1,
+        "title": "Welcome and housekeeping",
+        "duration": 10,
+        "completed": false
+      },
+      {
+        "id": "agenda-031",
+        "order": 2,
+        "title": "Safeguarding legislation updates",
+        "description": "Changes to safeguarding law and policy since last training",
+        "duration": 30,
+        "presenter": "Dr. Amira Hassan",
+        "completed": false
+      },
+      {
+        "id": "agenda-032",
+        "order": 3,
+        "title": "Recognising signs of abuse",
+        "duration": 40,
+        "presenter": "Dr. Amira Hassan",
+        "completed": false
+      },
+      {
+        "id": "agenda-033",
+        "order": 4,
+        "title": "Break",
+        "duration": 15,
+        "completed": false
+      },
+      {
+        "id": "agenda-034",
+        "order": 5,
+        "title": "Case study exercises",
+        "duration": 45,
+        "completed": false
+      },
+      {
+        "id": "agenda-035",
+        "order": 6,
+        "title": "Reporting procedures",
+        "duration": 25,
+        "presenter": "Karen White",
+        "completed": false
+      },
+      {
+        "id": "agenda-036",
+        "order": 7,
+        "title": "Q&A and assessment",
+        "duration": 15,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "Training",
+    "linkedEntities": [],
+    "status": "Scheduled",
+    "createdAt": "2026-01-10T09:00:00Z",
+    "updatedAt": "2026-01-10T09:00:00Z",
+    "createdBy": "Karen White"
+  },
+  {
+    "id": "mtg-005",
+    "meetingRef": "MTG2026/005",
+    "title": "Property Inspection Planning - Q1",
+    "description": "Planning meeting for Q1 property inspections across the region",
+    "scheduledDate": "2026-02-02",
+    "scheduledTime": "11:00",
+    "duration": 60,
+    "location": "Virtual - Microsoft Teams",
+    "recurrence": "One-off",
+    "organizerId": "staff-005",
+    "participants": [
+      {
+        "id": "part-040",
+        "type": "Internal",
+        "name": "Mike Reynolds",
+        "email": "mike.reynolds@ivolve.com",
+        "role": "Chair",
+        "attended": true
+      },
+      {
+        "id": "part-041",
+        "type": "Internal",
+        "name": "Lisa Brown",
+        "email": "lisa.brown@ivolve.com",
+        "role": "Attendee",
+        "attended": true
+      },
+      {
+        "id": "part-042",
+        "type": "Internal",
+        "name": "Rachel Adams",
+        "email": "rachel.adams@ivolve.com",
+        "role": "Minute Taker",
+        "attended": true
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-040",
+        "order": 1,
+        "title": "Review inspection schedule",
+        "description": "Confirm dates and assign inspectors",
+        "duration": 20,
+        "completed": true
+      },
+      {
+        "id": "agenda-041",
+        "order": 2,
+        "title": "Outstanding remedial works",
+        "description": "Review any works from previous inspections",
+        "duration": 20,
+        "completed": true
+      },
+      {
+        "id": "agenda-042",
+        "order": 3,
+        "title": "Resource allocation",
+        "duration": 15,
+        "completed": false
+      },
+      {
+        "id": "agenda-043",
+        "order": 4,
+        "title": "Next steps",
+        "duration": 5,
+        "completed": false
+      }
+    ],
+    "minutes": "Meeting in progress. Inspection schedule confirmed for 12 properties. Montfort Court and Elm View prioritised due to upcoming LA reviews.",
+    "actionItems": [
+      {
+        "id": "action-040",
+        "title": "Send inspection schedule to all property managers",
+        "assigneeName": "Rachel Adams",
+        "dueDate": "2026-02-03",
+        "status": "Pending",
+        "createdAt": "2026-02-02T11:30:00Z"
+      },
+      {
+        "id": "action-041",
+        "title": "Order replacement fire extinguishers for Oak Lodge",
+        "assigneeName": "Mike Reynolds",
+        "dueDate": "2026-02-07",
+        "status": "Pending",
+        "createdAt": "2026-02-02T11:35:00Z"
+      }
+    ],
+    "meetingType": "Internal",
+    "linkedEntities": [
+      {
+        "entityType": "Property",
+        "entityId": "prop-001",
+        "entityName": "Montfort Court",
+        "linkedAt": "2026-02-02T11:20:00Z",
+        "linkedBy": "Mike Reynolds",
+        "context": "Priority inspection - LA review upcoming"
+      },
+      {
+        "entityType": "Property",
+        "entityId": "prop-003",
+        "entityName": "Elm View",
+        "linkedAt": "2026-02-02T11:22:00Z",
+        "linkedBy": "Mike Reynolds",
+        "context": "Priority inspection - LA review upcoming"
+      }
+    ],
+    "status": "In Progress",
+    "createdAt": "2026-01-25T10:00:00Z",
+    "updatedAt": "2026-02-02T11:35:00Z",
+    "createdBy": "Mike Reynolds"
+  },
+  {
+    "id": "mtg-006",
+    "meetingRef": "MTG2025/089",
+    "title": "Initial Assessment - Sarah Williams",
+    "description": "Initial assessment meeting for potential new tenant at Maple House",
+    "scheduledDate": "2026-01-15",
+    "scheduledTime": "14:30",
+    "duration": 75,
+    "location": "Maple House, Unit 4",
+    "recurrence": "One-off",
+    "organizerId": "staff-002",
+    "participants": [
+      {
+        "id": "part-050",
+        "type": "Internal",
+        "name": "Lisa Brown",
+        "email": "lisa.brown@ivolve.com",
+        "role": "Organizer",
+        "attended": true
+      },
+      {
+        "id": "part-051",
+        "type": "External",
+        "name": "Sarah Williams",
+        "email": null,
+        "role": "Attendee",
+        "attended": true
+      },
+      {
+        "id": "part-052",
+        "type": "External",
+        "name": "Janet Williams",
+        "email": "janet.w@example.com",
+        "role": "Attendee",
+        "attended": true
+      },
+      {
+        "id": "part-053",
+        "type": "External",
+        "name": "Mark Peters",
+        "email": "mark.peters@socialservices.gov.uk",
+        "role": "Attendee",
+        "attended": true
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-050",
+        "order": 1,
+        "title": "Introductions",
+        "duration": 5,
+        "completed": true
+      },
+      {
+        "id": "agenda-051",
+        "order": 2,
+        "title": "Tour of property and available unit",
+        "duration": 20,
+        "completed": true
+      },
+      {
+        "id": "agenda-052",
+        "order": 3,
+        "title": "Discuss support needs",
+        "duration": 25,
+        "presenter": "Lisa Brown",
+        "completed": true
+      },
+      {
+        "id": "agenda-053",
+        "order": 4,
+        "title": "Questions from Sarah and family",
+        "duration": 15,
+        "completed": true
+      },
+      {
+        "id": "agenda-054",
+        "order": 5,
+        "title": "Next steps and timeline",
+        "duration": 10,
+        "completed": true
+      }
+    ],
+    "minutes": "Positive assessment meeting. Sarah is 24, has mild learning disability and anxiety. Currently living with mother Janet who is finding it difficult to continue providing care. Sarah expressed interest in moving to Maple House - liked the private bedroom with ensuite and communal areas. Support needs: medication supervision, help with cooking, social skills support. Mark confirmed funding is in place. Sarah to visit again next week to meet other tenants. Target move-in date: early February subject to RP approval.",
+    "actionItems": [
+      {
+        "id": "action-050",
+        "title": "Submit referral paperwork to RP",
+        "assigneeName": "Lisa Brown",
+        "dueDate": "2026-01-17",
+        "status": "Completed",
+        "completedAt": "2026-01-16T16:30:00Z",
+        "completedBy": "Lisa Brown",
+        "createdAt": "2026-01-15T16:00:00Z"
+      },
+      {
+        "id": "action-051",
+        "title": "Schedule follow-up visit for Sarah",
+        "assigneeName": "Lisa Brown",
+        "dueDate": "2026-01-20",
+        "status": "Completed",
+        "completedAt": "2026-01-17T10:00:00Z",
+        "completedBy": "Lisa Brown",
+        "createdAt": "2026-01-15T16:00:00Z"
+      },
+      {
+        "id": "action-052",
+        "title": "Prepare support plan draft",
+        "assigneeName": "Lisa Brown",
+        "dueDate": "2026-01-24",
+        "status": "Completed",
+        "completedAt": "2026-01-23T14:00:00Z",
+        "completedBy": "Lisa Brown",
+        "createdAt": "2026-01-15T16:00:00Z"
+      },
+      {
+        "id": "action-053",
+        "title": "Send welcome pack to Sarah",
+        "assigneeName": "Emma Wilson",
+        "dueDate": "2026-01-31",
+        "status": "Completed",
+        "completedAt": "2026-01-29T11:30:00Z",
+        "completedBy": "Emma Wilson",
+        "createdAt": "2026-01-15T16:00:00Z"
+      }
+    ],
+    "meetingType": "External",
+    "linkedEntities": [
+      {
+        "entityType": "Property",
+        "entityId": "prop-002",
+        "entityName": "Maple House",
+        "linkedAt": "2026-01-15T16:00:00Z",
+        "linkedBy": "Lisa Brown",
+        "context": "Potential placement"
+      },
+      {
+        "entityType": "Referral",
+        "entityId": "ref-015",
+        "entityName": "Sarah Williams Referral",
+        "linkedAt": "2026-01-16T16:30:00Z",
+        "linkedBy": "Lisa Brown",
+        "context": "Referral created following assessment"
+      }
+    ],
+    "status": "Completed",
+    "createdAt": "2026-01-10T11:00:00Z",
+    "updatedAt": "2026-01-29T11:30:00Z",
+    "createdBy": "Lisa Brown"
+  },
+  {
+    "id": "mtg-007",
+    "meetingRef": "MTG2026/006",
+    "title": "Monthly Safeguarding Review",
+    "description": "Monthly review of all open safeguarding cases",
+    "scheduledDate": "2026-02-07",
+    "scheduledTime": "10:00",
+    "duration": 90,
+    "location": "Head Office - Room 2.1",
+    "recurrence": "Monthly",
+    "organizerId": "staff-004",
+    "participants": [
+      {
+        "id": "part-060",
+        "type": "Internal",
+        "name": "Karen White",
+        "email": "karen.white@ivolve.com",
+        "role": "Chair",
+        "attended": null
+      },
+      {
+        "id": "part-061",
+        "type": "Internal",
+        "name": "Lisa Brown",
+        "email": "lisa.brown@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-062",
+        "type": "Internal",
+        "name": "Rachel Adams",
+        "email": "rachel.adams@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-063",
+        "type": "Internal",
+        "name": "Mike Reynolds",
+        "email": "mike.reynolds@ivolve.com",
+        "role": "Minute Taker",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-060",
+        "order": 1,
+        "title": "Review of open cases",
+        "description": "Status update on all current safeguarding cases",
+        "duration": 45,
+        "completed": false
+      },
+      {
+        "id": "agenda-061",
+        "order": 2,
+        "title": "Recently closed cases - lessons learned",
+        "duration": 20,
+        "completed": false
+      },
+      {
+        "id": "agenda-062",
+        "order": 3,
+        "title": "Policy and procedure updates",
+        "duration": 15,
+        "completed": false
+      },
+      {
+        "id": "agenda-063",
+        "order": 4,
+        "title": "Training needs",
+        "duration": 10,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "Internal",
+    "linkedEntities": [],
+    "status": "Scheduled",
+    "instances": [
+      {
+        "id": "inst-060",
+        "scheduledDate": "2026-01-10",
+        "actualDate": "2026-01-10",
+        "status": "Completed",
+        "minutes": "3 open cases reviewed: SAF2025/042 (Level 2, monitoring), SAF2025/048 (Level 1, close to resolution), SAF2025/051 (Level 3, external investigation ongoing). No new cases since last meeting. Reminder issued about incident reporting timelines.",
+        "actionItems": [
+          {
+            "id": "action-060",
+            "title": "Chase police update on SAF2025/051",
+            "assigneeName": "Karen White",
+            "dueDate": "2026-01-17",
+            "status": "Completed",
+            "completedAt": "2026-01-15T14:00:00Z",
+            "completedBy": "Karen White",
+            "createdAt": "2026-01-10T11:30:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-060", "attended": true },
+          { "participantId": "part-061", "attended": true },
+          { "participantId": "part-062", "attended": true },
+          { "participantId": "part-063", "attended": true }
+        ]
+      },
+      {
+        "id": "inst-061",
+        "scheduledDate": "2025-12-06",
+        "actualDate": "2025-12-06",
+        "status": "Completed",
+        "minutes": "End of year review. 14 cases handled in 2025, 12 resolved satisfactorily. 2 ongoing. New safeguarding lead (Karen White) introduced. 2026 training schedule agreed.",
+        "actionItems": [
+          {
+            "id": "action-061",
+            "title": "Circulate 2026 training schedule",
+            "assigneeName": "Karen White",
+            "dueDate": "2025-12-13",
+            "status": "Completed",
+            "completedAt": "2025-12-10T09:00:00Z",
+            "completedBy": "Karen White",
+            "createdAt": "2025-12-06T11:30:00Z"
+          }
+        ],
+        "attendanceRecord": [
+          { "participantId": "part-060", "attended": true },
+          { "participantId": "part-061", "attended": false },
+          { "participantId": "part-062", "attended": true },
+          { "participantId": "part-063", "attended": true }
+        ]
+      }
+    ],
+    "createdAt": "2025-01-01T08:00:00Z",
+    "updatedAt": "2026-01-10T12:00:00Z",
+    "createdBy": "Karen White"
+  },
+  {
+    "id": "mtg-008",
+    "meetingRef": "MTG2026/007",
+    "title": "Budget Planning 2026/27",
+    "description": "Annual budget planning meeting for the upcoming financial year",
+    "scheduledDate": "2026-02-20",
+    "scheduledTime": "09:30",
+    "duration": 120,
+    "location": "Head Office - Board Room",
+    "recurrence": "One-off",
+    "organizerId": "staff-006",
+    "participants": [
+      {
+        "id": "part-070",
+        "type": "Internal",
+        "name": "Claire Morrison",
+        "email": "claire.morrison@ivolve.com",
+        "role": "Chair",
+        "attended": null
+      },
+      {
+        "id": "part-071",
+        "type": "Internal",
+        "name": "Rachel Adams",
+        "email": "rachel.adams@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-072",
+        "type": "Internal",
+        "name": "Karen White",
+        "email": "karen.white@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      },
+      {
+        "id": "part-073",
+        "type": "Internal",
+        "name": "Mike Reynolds",
+        "email": "mike.reynolds@ivolve.com",
+        "role": "Attendee",
+        "attended": null
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-070",
+        "order": 1,
+        "title": "2025/26 financial review",
+        "duration": 25,
+        "presenter": "Claire Morrison",
+        "completed": false
+      },
+      {
+        "id": "agenda-071",
+        "order": 2,
+        "title": "Staffing budget proposals",
+        "duration": 25,
+        "presenter": "Karen White",
+        "completed": false
+      },
+      {
+        "id": "agenda-072",
+        "order": 3,
+        "title": "Property maintenance budget",
+        "duration": 25,
+        "presenter": "Mike Reynolds",
+        "completed": false
+      },
+      {
+        "id": "agenda-073",
+        "order": 4,
+        "title": "Service development priorities",
+        "duration": 25,
+        "presenter": "Rachel Adams",
+        "completed": false
+      },
+      {
+        "id": "agenda-074",
+        "order": 5,
+        "title": "Summary and sign-off process",
+        "duration": 20,
+        "completed": false
+      }
+    ],
+    "minutes": null,
+    "actionItems": [],
+    "meetingType": "Internal",
+    "linkedEntities": [],
+    "status": "Scheduled",
+    "createdAt": "2026-01-20T14:00:00Z",
+    "updatedAt": "2026-01-20T14:00:00Z",
+    "createdBy": "Claire Morrison"
+  }
+]

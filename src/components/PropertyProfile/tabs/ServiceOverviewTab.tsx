@@ -7,7 +7,7 @@ import {
 import { PropertyAsset } from '../../../types';
 import StatusBadge from '../../shared/StatusBadge';
 import { formatDate } from '../../../utils';
-import { TabId } from '../TabNavigation';
+import { PropertyTabId as TabId } from '../../../types/tabs';
 
 interface TabProps {
     asset: PropertyAsset;

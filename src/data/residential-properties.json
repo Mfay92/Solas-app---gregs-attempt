@@ -1,0 +1,268 @@
+[
+  {
+    "id": "prop_residential_1",
+    "type": "Master",
+    "parentId": null,
+    "address": "Oakwood Manor",
+    "postcode": "AL3 5QT",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Patricia Clarke",
+    "serviceType": "Residential Care",
+    "status": "In Management",
+    "totalUnits": 25,
+    "occupiedUnits": 23,
+    "statusDate": "2024-01-15T00:00:00.000Z",
+    "documents": [
+      {
+        "id": "doc_res_1_1",
+        "name": "CQC Registration Certificate.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2024-01-10T00:00:00.000Z"
+      },
+      {
+        "id": "doc_res_1_2",
+        "name": "Fire Risk Assessment 2024.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2024-03-20T00:00:00.000Z"
+      },
+      {
+        "id": "doc_res_1_3",
+        "name": "Building Insurance Policy.pdf",
+        "type": "Other",
+        "url": "#",
+        "date": "2024-01-01T00:00:00.000Z"
+      }
+    ],
+    "complianceStatus": "Compliant",
+    "missingDocs": false,
+    "buildingPhone": "01727 456789",
+    "areaManager": "Sarah Mitchell",
+    "opsDirector": "David Thompson",
+    "careProvider": "Oakwood Care Services Ltd",
+    "localAuthority": "Hertfordshire County Council",
+    "landlord": "Oakwood Properties Ltd",
+    "owner": "Residential Care Investments PLC",
+    "propertyType": "Residential Care Home",
+    "unitType": "Shared Living",
+    "features": {
+      "bedrooms": 25,
+      "bathrooms": 14,
+      "floors": 2,
+      "yearBuilt": 1998,
+      "squareFeet": 8500,
+      "parking": "Car Park",
+      "garden": "Communal",
+      "heating": "Gas Central",
+      "glazing": "Double",
+      "epcRating": "C",
+      "epcExpiryDate": "2027-06-15",
+      "cctv": true,
+      "cctvCameras": 8,
+      "alarmSystem": true,
+      "secureEntry": true,
+      "adaptations": ["Wheelchair accessible throughout", "Hoists in 8 rooms", "Walk-in showers", "Nurse call system"],
+      "amenities": ["Communal lounges (2)", "Dining room", "Activities room", "Quiet room", "Garden terrace", "Hairdressing salon"]
+    },
+    "complianceItems": [
+      {
+        "id": "comp_res_1_1",
+        "type": "CQC Registration",
+        "status": "Compliant",
+        "certificateNumber": "CQC-1-123456789",
+        "issuedDate": "2024-01-10",
+        "expiryDate": "2025-01-09",
+        "contractor": "Care Quality Commission"
+      },
+      {
+        "id": "comp_res_1_2",
+        "type": "Fire Risk Assessment",
+        "status": "Compliant",
+        "certificateNumber": "FRA-2024-456",
+        "issuedDate": "2024-03-20",
+        "expiryDate": "2025-03-19",
+        "contractor": "Fire Safety Consultants"
+      },
+      {
+        "id": "comp_res_1_3",
+        "type": "Gas Safety",
+        "status": "Compliant",
+        "certificateNumber": "GS-2024-789",
+        "issuedDate": "2024-05-15",
+        "expiryDate": "2025-05-14",
+        "contractor": "SafeGas Services Ltd"
+      },
+      {
+        "id": "comp_res_1_4",
+        "type": "Legionella",
+        "status": "Compliant",
+        "certificateNumber": "LEG-2024-321",
+        "issuedDate": "2024-02-01",
+        "expiryDate": "2026-01-31",
+        "contractor": "Water Hygiene Solutions"
+      }
+    ],
+    "coordinates": {
+      "lat": 51.7489,
+      "lng": -0.3464
+    },
+    "description": "A well-established residential care home providing 24-hour care in a warm, homely environment. Specialising in dementia care and elderly care with experienced staff team.",
+    "internalNotes": "CQC rated Good. Recent refurbishment of dining room. Popular with local authority placements.",
+    "tags": ["dementia-care", "elderly-care", "24hr-care"],
+    "heroImageUrl": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200",
+    "heroImages": [
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200",
+      "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=1200",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200"
+    ]
+  },
+  {
+    "id": "prop_residential_1_unit_1",
+    "type": "Unit",
+    "parentId": "prop_residential_1",
+    "address": "Room 1",
+    "postcode": "AL3 5QT",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Patricia Clarke",
+    "serviceType": "Residential Care",
+    "status": "Occupied",
+    "totalUnits": 1,
+    "occupiedUnits": 1,
+    "statusDate": "2023-06-15T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living",
+    "tenants": [
+      {
+        "id": "resident_res_1",
+        "name": "Margaret Thompson",
+        "status": "Current",
+        "unitId": "prop_residential_1_unit_1",
+        "moveInDate": "2023-06-15",
+        "dateOfBirth": "1938-04-12",
+        "phone": "07700 900111",
+        "emergencyContact": {
+          "name": "Sarah Thompson",
+          "relationship": "Daughter",
+          "phone": "07700 900222"
+        },
+        "supportProvider": "Oakwood Care Services Ltd",
+        "careHours": 168,
+        "notes": "Prefers ground floor room. Enjoys gardening activities."
+      }
+    ]
+  },
+  {
+    "id": "prop_residential_1_unit_2",
+    "type": "Unit",
+    "parentId": "prop_residential_1",
+    "address": "Room 2",
+    "postcode": "AL3 5QT",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Patricia Clarke",
+    "serviceType": "Residential Care",
+    "status": "Occupied",
+    "totalUnits": 1,
+    "occupiedUnits": 1,
+    "statusDate": "2024-02-01T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living",
+    "tenants": [
+      {
+        "id": "resident_res_2",
+        "name": "James Wilson",
+        "status": "Current",
+        "unitId": "prop_residential_1_unit_2",
+        "moveInDate": "2024-02-01",
+        "dateOfBirth": "1942-11-08",
+        "emergencyContact": {
+          "name": "Robert Wilson",
+          "relationship": "Son",
+          "phone": "07700 900333"
+        },
+        "supportProvider": "Oakwood Care Services Ltd",
+        "careHours": 168,
+        "notes": "Dementia care. Enjoys music therapy."
+      }
+    ]
+  },
+  {
+    "id": "prop_residential_1_unit_3",
+    "type": "Unit",
+    "parentId": "prop_residential_1",
+    "address": "Room 3",
+    "postcode": "AL3 5QT",
+    "region": "South",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Patricia Clarke",
+    "serviceType": "Residential Care",
+    "status": "Void",
+    "totalUnits": 1,
+    "occupiedUnits": 0,
+    "statusDate": "2025-11-15T00:00:00.000Z",
+    "documents": [],
+    "complianceStatus": "Compliant",
+    "unitType": "Shared Living"
+  },
+  {
+    "id": "prop_residential_2",
+    "type": "Master",
+    "parentId": null,
+    "address": "Riverside Care Home",
+    "postcode": "WD3 8HP",
+    "region": "Southeast",
+    "registeredProvider": "Care Quality Commission",
+    "housingManager": "Michael Foster",
+    "serviceType": "Residential Care",
+    "status": "In Management",
+    "totalUnits": 18,
+    "occupiedUnits": 17,
+    "statusDate": "2023-09-01T00:00:00.000Z",
+    "documents": [
+      {
+        "id": "doc_res_2_1",
+        "name": "CQC Registration Certificate.pdf",
+        "type": "Compliance",
+        "url": "#",
+        "date": "2023-09-01T00:00:00.000Z"
+      }
+    ],
+    "complianceStatus": "Compliant",
+    "missingDocs": false,
+    "buildingPhone": "01923 789456",
+    "areaManager": "Emma Roberts",
+    "opsDirector": "David Thompson",
+    "careProvider": "Riverside Care Ltd",
+    "localAuthority": "Hertfordshire County Council",
+    "landlord": "Riverside Properties",
+    "propertyType": "Residential Care Home",
+    "unitType": "Shared Living",
+    "features": {
+      "bedrooms": 18,
+      "bathrooms": 10,
+      "floors": 2,
+      "yearBuilt": 2005,
+      "squareFeet": 6200,
+      "parking": "Car Park",
+      "garden": "Private",
+      "heating": "Gas Central",
+      "glazing": "Double",
+      "epcRating": "B",
+      "cctv": true,
+      "cctvCameras": 6,
+      "alarmSystem": true,
+      "secureEntry": true,
+      "adaptations": ["Wheelchair accessible", "Wet rooms", "Nurse call system"],
+      "amenities": ["Conservatory", "Garden", "Dining room", "Activities room"]
+    },
+    "description": "Modern residential care home with riverside views. Specialising in elderly care with person-centred approach.",
+    "internalNotes": "CQC rated Good. Popular property with waiting list.",
+    "tags": ["elderly-care", "riverside", "modern-facility"],
+    "heroImageUrl": "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=1200"
+  }
+]

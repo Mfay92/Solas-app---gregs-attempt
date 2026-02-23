@@ -1,66 +1,70 @@
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import PropertyHub from './components/PropertyHub';
-import RentBreakdownModal from './components/RentBreakdownModal';
+import PropertyHubEnhanced from './components/PropertyHub/PropertyHubEnhanced';
 import StyleGuide from './components/StyleGuide';
+import DeveloperSettings from './components/DeveloperSettings';
 import { DashboardLayout } from './components/Dashboard/DashboardLayout';
 import FinancePage from './components/Finance';
+import { ComplianceHub } from './components/Compliance';
+import PeopleHub from './components/PeopleHub';
+import ReferralsHub from './components/ReferralsHub';
+import VoidManagement from './components/VoidManagement';
+import MeetingsHub from './components/MeetingsHub';
+import ProjectsHub from './components/ProjectsHub';
+import ReportCentre from './components/ReportCentre';
+import DevelopmentHub from './components/DevelopmentHub';
+import RepairsHub from './components/RepairsHub';
+import LegalHub from './components/LegalHub';
+import Library from './components/Library';
+import AddressBook from './components/AddressBook';
 import { ToastProvider } from './components/ToastProvider';
 import ErrorBoundary from './components/ErrorBoundary';
-import { AppProvider, useApp } from './context/AppContext';
+import { AppProvider } from './context/AppContext';
+import { PopOutProvider } from './context/PopOutContext';
+import { MinimizedTray } from './components/PopOut';
 
-function AppContent() {
-    const { activeView } = useApp();
-    const [isRentModalOpen, setIsRentModalOpen] = useState(false);
-
-    // Mock Data for Demo
-    const mockRentItems = [
-        { id: 'rent-1', label: 'Lease Cost/Base Rent PA', amount: 228.08, description: 'The base cost of leasing the property from the landlord. This is the core rent amount before any additional charges.' },
-        { id: 'rent-2', label: 'Utilities', amount: 68.43, description: 'Covers communal utilities including water rates and any shared energy costs for communal areas.' },
-        { id: 'rent-3', label: 'Management Fee', amount: 65.00, description: 'Administrative costs for managing the tenancy, handling queries, coordinating repairs, and general property oversight.' },
-        { id: 'rent-4', label: 'Statutory Compliance', amount: 25.08, description: 'Legal safety requirements including fire safety checks, gas safety certificates, electrical testing, and health & safety compliance.' },
-        { id: 'rent-5', label: 'Cyclical Works', amount: 21.67, description: 'Planned maintenance and redecoration on a regular cycle (e.g., painting, flooring replacement) to keep the property in good condition.' },
-    ];
-
-    const renderContent = () => {
-        if (activeView === 'Properties') {
-            return <PropertyHub />;
-        }
-
-        if (activeView === 'Finance') {
-            return <FinancePage />;
-        }
-
-        if (activeView === 'Settings') {
-            return <StyleGuide />;
-        }
-
-        // Dashboard View
-        return <DashboardLayout />;
-    };
-
+function AppRoutes() {
     return (
-        <ToastProvider>
-            <Layout>
-                {renderContent()}
-
-                <RentBreakdownModal
-                    isOpen={isRentModalOpen}
-                    onClose={() => setIsRentModalOpen(false)}
-                    propertyAddress="68 Woodhurst Avenue, Watford WD25 9RW"
-                    rentItems={mockRentItems}
-                />
-            </Layout>
-        </ToastProvider>
+        <PopOutProvider>
+            <ToastProvider>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<DashboardLayout />} />
+                        <Route path="/meetings" element={<MeetingsHub />} />
+                        <Route path="/projects" element={<ProjectsHub />} />
+                        <Route path="/reports" element={<ReportCentre />} />
+                        <Route path="/development" element={<DevelopmentHub />} />
+                        <Route path="/properties" element={<PropertyHubEnhanced />} />
+                        <Route path="/properties/:propertyId" element={<PropertyHub />} />
+                        <Route path="/people" element={<PeopleHub />} />
+                        <Route path="/referrals" element={<ReferralsHub />} />
+                        <Route path="/voids" element={<VoidManagement />} />
+                        <Route path="/repairs" element={<RepairsHub />} />
+                        <Route path="/compliance" element={<ComplianceHub />} />
+                        <Route path="/legal" element={<LegalHub />} />
+                        <Route path="/finance" element={<FinancePage />} />
+                        <Route path="/library" element={<Library />} />
+                        <Route path="/address-book" element={<AddressBook />} />
+                        <Route path="/settings" element={<DeveloperSettings />} />
+                        <Route path="/settings/style-guide" element={<StyleGuide />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                    <MinimizedTray />
+                </Layout>
+            </ToastProvider>
+        </PopOutProvider>
     );
 }
 
 function App() {
     return (
         <ErrorBoundary>
-            <AppProvider>
-                <AppContent />
-            </AppProvider>
+            <BrowserRouter>
+                <AppProvider>
+                    <AppRoutes />
+                </AppProvider>
+            </BrowserRouter>
         </ErrorBoundary>
     );
 }
